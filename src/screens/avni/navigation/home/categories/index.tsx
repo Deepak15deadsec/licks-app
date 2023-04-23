@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native'
 import React from 'react'
 import { TouchableOpacity, Image } from 'react-native'
-import { FONTS, icons } from '../../../../constants'
+import { FONTS, icons } from '../../../../../constants'
 import { categoriesJson } from './categoriesData'
 
 const Categories = () => {

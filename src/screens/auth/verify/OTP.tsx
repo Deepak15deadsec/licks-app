@@ -14,6 +14,8 @@ const OTP = (props: Props) => {
 
   const otpInputRefs = useRef<any>([]);
 
+  
+
   const handleOtpChange = (index: number, value: any) => {
     const newOtp = [...props.otp];
     newOtp[index] = value;
@@ -37,15 +39,17 @@ const OTP = (props: Props) => {
           <TextInput
             key={index}
             style={{
-              marginHorizontal: 10,
-              fontSize: 24,
-              height: 63,
-              width: 63,
+              marginHorizontal: 4,
+              fontSize: 20,
+              height: 45,
+              width: 45,
               borderWidth: 1,
               borderRadius: 10,
               borderColor: props.error.otp ? '#F65C65' : '#30D792',
               textAlign: 'center',
-              color: 'black'
+              color: 'black',
+              justifyContent:'center',
+              alignContent:'center'
             }}
             value={value}
             onChangeText={(text: string) => handleOtpChange(index, text)}

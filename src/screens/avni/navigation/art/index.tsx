@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
-import { FONTS } from '../../../constants'
 import React from 'react'
+import { FONTS } from '../../../../constants'
 
-const Search = () => {
+const Art = () => {
   return (
     <View style={{
       flex:1, 
@@ -17,6 +17,8 @@ const Search = () => {
   )
 }
 
-export default Search
+export default Art
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  
+})

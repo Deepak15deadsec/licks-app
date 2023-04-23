@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native'
 import React from 'react'
 import { TouchableOpacity, Image } from 'react-native'
-import { FONTS, icons } from '../../../../constants'
+import { FONTS, icons } from '../../../../../constants'
 import { trendingJson } from './trendingJson'
 
 
@@ -86,8 +86,7 @@ const Trending = () => {
 
             <View style={{
                 gap: 12,
-                marginTop: 20,
-
+                marginTop: 20
             }}>
                 <FlatList
                     style={{ flexGrow: 0 }}

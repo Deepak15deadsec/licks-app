@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { icons, SIZES, FONTS } from '../../../constants'
 import { useNavigation } from '@react-navigation/native';
 import { AvniTextInput } from '../../../components/inputs';
@@ -8,16 +8,13 @@ import gendersTypes from './gender-types.json'
 import DatePicker from '../../../components/datepicker';
 import Checkbox from '../../../components/checkbox';
 import axios from 'axios'
-
 //@ts-ignore
-import { SERVER_BASE_URL, TWO_FACTOR_API_KEY } from '@env'
+import { SERVER_BASE_URL } from '@env'
 import { useStoreActions } from '../../../store/easy-peasy/hooks';
 import RingWave from '../../../components/RingWave';
 import Loading from '../../../components/Loading';
 
-
-
-const User = ({ route }: any) => {
+const Signup = ({ route }: any) => {
   const navigation = useNavigation()
   const user = route?.params?.user
   const [screen, setScreen] = useState<number>(1)
@@ -36,10 +33,9 @@ const User = ({ route }: any) => {
 
   let addUser = useStoreActions((store) => store.addUser)
 
-
-  const onchangeHandler = (value: any, name: string) => {
-    setInput({ ...input, [name]: value })
-  }
+  const onchangeHandler = useCallback((value:any, name:string) => {
+    setInput((prevState) => ({ ...prevState, [name]: value }));
+  }, []);
 
   const signup = async () => {
     setScreen(2)
@@ -88,7 +84,6 @@ const User = ({ route }: any) => {
                 />
               </View>
     
-    
               <View
                 style={{
                   position: 'absolute',
@@ -101,8 +96,7 @@ const User = ({ route }: any) => {
                   backgroundColor: '#ffffff80',
                 }}
               />
-    
-    
+      
               <View
                 style={{
                   position: 'absolute',
@@ -122,24 +116,19 @@ const User = ({ route }: any) => {
                   <Text style={{ ...FONTS.heading, color: 'black' }}>Let’s Get Started</Text>
                   <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>Enter your Details below to continue</Text>
     
-    
-    
                   <View style={{ marginTop: 30, gap: 10, marginBottom: 10 }}>
-    
                     <AvniTextInput
                       label="First Name"
                       value={input.first_name}
                       onChangeText={(value: any) => onchangeHandler(value, "first_name")}
                       placeholder='Enter Fisrt Name'
                     />
-    
                     <AvniTextInput
                       label="Last Name"
                       value={input.last_name}
                       onChangeText={(value: any) => onchangeHandler(value, "last_name")}
                       placeholder='Enter Last Name'
                     />
-    
                     <Picker
                       label="Gender"
                       placeholder='Select Gender'
@@ -147,30 +136,23 @@ const User = ({ route }: any) => {
                       onValueChange={(value: any) => onchangeHandler(value, "gender")}
                       gendersTypes={gendersTypes}
                     />
-    
-    
                     <DatePicker
                       label="Date of Birth"
                       placeholder='Enter Date of Birth'
                       value={input.dob}
                       onchangeHandler={onchangeHandler}
-    
                     />
-    
                     <Checkbox
                       label="Location Access"
                       value={input.location_access}
                       onchangeHandler={() => onchangeHandler(!input.location_access, "location_access")}
                     />
-    
                     <Checkbox
                       label="SMS Access"
                       value={input.sms_access}
                       onchangeHandler={() => onchangeHandler(!input.sms_access, "sms_access")}
                     />
                   </View>
-    
-    
                 </View>
     
                 <TouchableOpacity
@@ -204,7 +186,7 @@ const User = ({ route }: any) => {
   }
 }
 
-export default User
+export default Signup
 
 const styles = StyleSheet.create({
   container: {

@@ -1,4 +1,4 @@
-import { icons, images } from '../../../../constants'
+import { icons, images } from '../../../../../constants'
 export const trendingJson = [
 
     {

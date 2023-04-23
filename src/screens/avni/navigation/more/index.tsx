@@ -1,13 +1,13 @@
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../constants'
+import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 import Svg, {
   Path,
   Circle
 } from 'react-native-svg'
 import Options from './Options'
 import { useColorScheme } from 'react-native';
-import { useStoreActions, useStoreState } from '../../../store/easy-peasy/hooks';
+import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
 
 const More = () => {
   let wr = (SIZES.width / 391)

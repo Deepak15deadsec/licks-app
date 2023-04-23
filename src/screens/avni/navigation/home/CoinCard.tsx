@@ -4,7 +4,7 @@ import Svg, {
     Path,
     Circle
 } from 'react-native-svg'
-import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../constants'
+import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 
 const CoinCard = () => {
     let wr = (SIZES.width / 391)

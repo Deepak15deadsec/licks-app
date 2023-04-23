@@ -9,7 +9,7 @@ interface Props {
 const ResendOTP = (props:Props) => {
     return (
         <TouchableOpacity
-            style={{ marginTop: 40, justifyContent:'center', alignSelf:'center' }}
+            style={{ marginTop: 30, justifyContent:'center', alignSelf:'center' }}
             onPress={props.onPress}
         >
             <Text

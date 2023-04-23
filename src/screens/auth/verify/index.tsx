@@ -16,7 +16,7 @@ import Loading from '../../../components/Loading'
 const Verify = ({ route }: any) => {
   const navigation = useNavigation()
   const [screen, setScreen] = useState<number>(1)
-  const [otp, setOtp] = useState(['', '', '', '']);
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [error, setError] = useState({
     otp: false
   })
@@ -64,10 +64,8 @@ const Verify = ({ route }: any) => {
             token: data.accessToken,
             name: data.name
           })
-          //@ts-ignore
-          navigation.navigate("Signup", {
-            user: { ...user }
-          })
+
+          navigation.navigate("Signup" as never, { user } as never);
         }
       }
 
@@ -133,6 +131,7 @@ const Verify = ({ route }: any) => {
                     otp={otp}
                     setOtp={setOtp}
                     error={error} />
+
                   <ResendOTP onPress={resend} />
 
                 </View>
@@ -166,7 +165,7 @@ const Verify = ({ route }: any) => {
                   {/* next */}
                   <TouchableOpacity
                     style={{
-                      backgroundColor: otp?.join('')?.length === 4 ? '#30D792' : "#DBDBDB",
+                      backgroundColor: otp?.join('')?.length === 6 ? '#30D792' : "#DBDBDB",
                       padding: 8,
                       borderRadius: 100,
                       width: 60,
@@ -174,7 +173,7 @@ const Verify = ({ route }: any) => {
                       justifyContent: 'center',
                       alignItems: 'center'
                     }}
-                    disabled={otp?.join('')?.length < 4}
+                    disabled={otp?.join('')?.length < 6}
                     onPress={verify}
                   >
                     <Image
