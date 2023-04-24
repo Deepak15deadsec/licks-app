@@ -1,36 +1,43 @@
-import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, FlatList, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { TouchableOpacity, Image } from 'react-native'
 import { FONTS, icons } from '../../../../../constants'
-import { trendingJson } from './trendingJson'
+import { trendingJson } from '../../../data/trendingJson'
+import { SharedElement } from 'react-native-shared-element';
+import { useNavigation } from '@react-navigation/native';
 
 
 
 const Trending = () => {
+    const navigation = useNavigation()
 
     const renderItem = ({ item: trending }: any) => {
-
         return (
-            <View style={{
+            <TouchableOpacity 
+            onPress={()=>navigation.navigate('Detail' as never, {id : trending.id} as never)}
+            style={{
                 flexDirection: 'column',
             }}>
-                <Image
-                    source={trending.banner}
-                    style={{
-                        width: 231,
-                        height: 138
-                    }}
-                    resizeMode='contain'
-                />
+                {/* @ts-ignore */}
+                <SharedElement id={`banner${trending.id}`}>
+                    <Image
+                        source={trending.banner}
+                        style={{
+                            width: 231,
+                            height: 138
+                        }}
+                        resizeMode='contain'
+                    />
+                </SharedElement>
+
                 <View
                     style={{
                         marginTop: 10,
                         flexDirection: 'row',
                         justifyContent: 'space-between',
-                        alignItems:'center',
+                        alignItems: 'center',
                     }}>
                     <View style={{
-                        gap:3
+                        gap: 3
                     }}>
 
                         <View style={{
@@ -58,12 +65,12 @@ const Trending = () => {
                     </View>
 
                     <View>
-                        <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight:3}}>
+                        <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: 3 }}>
                             {trending.price}</Text>
                     </View>
 
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 

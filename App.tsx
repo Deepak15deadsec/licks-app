@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
 import { Phone, Verify, Language, Signup } from './src/screens/auth';
 import { Intro } from './src/screens/intro'
 import { Detail } from './src/screens/avni';
@@ -19,10 +19,10 @@ const theme = {
   },
 };
 
-const Stack = createNativeStackNavigator();
+const Stack = createSharedElementStackNavigator();
 
 const App = () => {
-  const authenticate = useStoreState((state:any) => state.authenticate);
+  const authenticate = useStoreState((state: any) => state.authenticate);
 
   useEffect(() => {
     SplashScreen.hide();
@@ -38,8 +38,20 @@ const App = () => {
       >
         {authenticate ? (
           <>
-          <Stack.Screen name="avni" component={BottomNavigation} />
-          <Stack.Screen name="Detail" component={Detail} />
+            <Stack.Screen name="avni" component={BottomNavigation} />
+            <Stack.Screen
+              name="Detail"
+              component={Detail}
+              sharedElements={(route, otherRoute, showing) => {
+                const { id } = route.params;
+                return [
+                  {
+                    id: `banner${id}`,
+                    animation: 'fade',
+                  },
+                ];
+              }}
+            />
           </>
         ) : (
           <>

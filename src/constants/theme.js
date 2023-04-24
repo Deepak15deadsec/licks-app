@@ -1,6 +1,9 @@
 import { Dimensions } from "react-native";
 const { width, height } = Dimensions.get("window");
 
+let wr = (width / 391)
+let hr = (height / 812)
+
 export const COLORS = {
     // base colors
     primary: "#30D792", // green
@@ -61,7 +64,9 @@ export const SIZES = {
     coin:30,
     size12:12,
     size10:10,
+    size14: wr*14,
     size16:16,
+    size17:17,
     size20:20,
 
     // app dimensions
@@ -88,8 +93,12 @@ export const FONTS = {
     coin: { fontFamily: "Inter-SemiBold", fontSize: SIZES.coin, lineHeight: 36 },
     category: { fontFamily: "Inter-Medium", fontSize: SIZES.size12, lineHeight: 14.52 },
     size12s: { fontFamily: "Inter-SemiBold", fontSize: SIZES.size12, lineHeight: 14.52 },
+    size12m: { fontFamily: "Inter-Music", fontSize: SIZES.size12, lineHeight: 14.52 },
     size10m: { fontFamily: "Inter-Medium", fontSize: SIZES.size10, lineHeight: 12.1 },
+    size14m: { fontFamily: "Inter-Medium", fontSize: SIZES.size14, lineHeight: 16 },
+    size14r: { fontFamily: "Inter-Regular", fontSize: SIZES.size14, lineHeight: 16 },
     size16b: { fontFamily: "Inter-Bold", fontSize: SIZES.size16, lineHeight: 19 },
+    size17m: { fontFamily: "Inter-Medium", fontSize: SIZES.size17, lineHeight: 21 },
     size16m: { fontFamily: "Inter-Medium", fontSize: SIZES.size16, lineHeight: 19 },
     size20s: { fontFamily: "Inter-SemiBold", fontSize: SIZES.size20, lineHeight: 24 }
 
