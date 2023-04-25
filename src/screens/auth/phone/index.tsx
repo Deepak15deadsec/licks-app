@@ -47,6 +47,7 @@ const Phone = ({ route }: any) => {
       })
     })
 
+    console.log("phone",data)
 
     if (data && data.Status === "Success") {
       //@ts-ignore

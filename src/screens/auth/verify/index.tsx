@@ -52,6 +52,7 @@ const Verify = ({ route }: any) => {
         })
       })
 
+      console.log("otp",data)
       if (data && data.Status === "Error") {
         setScreen(1)
         setError({ ...error, ["otp"]: true })
