@@ -12,11 +12,11 @@ const Trending = () => {
 
     const renderItem = ({ item: trending }: any) => {
         return (
-            <TouchableOpacity 
-            onPress={()=>navigation.navigate('Detail' as never, {id : trending.id} as never)}
-            style={{
-                flexDirection: 'column',
-            }}>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('Detail' as never, { id: trending.id } as never)}
+                style={{
+                    flexDirection: 'column',
+                }}>
                 {/* @ts-ignore */}
                 <SharedElement id={`banner${trending.id}`}>
                     <Image
@@ -27,6 +27,21 @@ const Trending = () => {
                         }}
                         resizeMode='contain'
                     />
+                    <View
+                        style={{
+                            position: 'absolute',
+                            right: 5,
+                            top: 5,
+                            padding: 4,
+                            borderRadius: 4,
+                            backgroundColor: '#30D792'
+                        }}>
+                        <Text
+                            style={{
+                                ...FONTS.size12s, letterSpacing: -0.03
+                            }}
+                        >{trending.percentDiscount} OFF</Text>
+                    </View>
                 </SharedElement>
 
                 <View
@@ -73,6 +88,8 @@ const Trending = () => {
             </TouchableOpacity>
         )
     }
+
+   
 
     return (
         <View style={{

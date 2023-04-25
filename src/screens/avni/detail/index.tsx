@@ -87,6 +87,19 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
             }}
             resizeMode='cover'
           />
+          <Animatable.View
+            animation="bounceIn"
+            delay={DURATION}
+            style={{
+              position: 'absolute',
+              right: 15,
+              top: 15,
+              padding: 8,
+              borderRadius: 4,
+              backgroundColor: '#30D792'
+            }}>
+            <Text>{trending.percentDiscount} OFF</Text>
+          </Animatable.View>
         </SharedElement>
 
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -169,8 +182,8 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
           </View>
 
           <Animatable.View
-           animation="fadeInUp"
-           delay={DURATION}
+            animation="fadeInUp"
+            delay={DURATION}
           >
             {/* Details */}
             <View style={{

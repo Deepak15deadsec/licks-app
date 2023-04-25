@@ -1,25 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Image, useColorScheme, ScrollView, KeyboardAvoidingView, Platform, FlatList } from 'react-native'
-import { COLORS, FONTS, SIZES, icons } from '../../../../constants';
+import { COLORS, FONTS, SIZES, icons } from '../../../constants';
 import Svg, {
   Path,
   Circle
 } from 'react-native-svg';
-import { useStoreState } from '../../../../store/easy-peasy/hooks';
-import { SearchInput } from '../../../../components/inputs';
-import { useKeyboard } from '../../../../utils/useKeyboard';
-import { trendingJson } from '../../data/trendingJson';
-import { recentJson } from '../../data/recentsJson';
+import { useStoreState } from '../../../store/easy-peasy/hooks';
+import { SearchInput } from '../../../components/inputs';
+import { useKeyboard } from '../../../utils/useKeyboard';
+import { recentJson } from '../data/recentsJson'
 import { useNavigation } from '@react-navigation/native';
 import { SharedElement } from 'react-native-shared-element';
 
-const Search = () => {
-
+const SearchResult = () => {
   const navigation = useNavigation()
   const [input, setInput] = useState({
     query: ""
   })
-
   const user = useStoreState((store) => store.user)
   const is_keyboard_enabled = useKeyboard()
 
@@ -29,48 +26,89 @@ const Search = () => {
   const theme = useColorScheme();
 
   const onchangeHandler = (value: string, name: string) => {
-
     setInput({ ...input, [name]: value })
   }
 
-  const renderItem = ({ item }: any) => {
+
+  const renderItem = ({ item: trending }: any) => {
     return (
-    <TouchableOpacity
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
+        <TouchableOpacity
+            onPress={() => navigation.navigate('Detail' as never, { id: trending.id } as never)}
+            style={{
+                flexDirection: 'column',
+            }}>
+            {/* @ts-ignore */}
+            <SharedElement id={`banner${trending.id}`}>
+                <Image
+                    source={trending.banner}
+                    style={{
+                        width: 231,
+                        height: 138
+                    }}
+                    resizeMode='contain'
+                />
+                <View
+                    style={{
+                        position: 'absolute',
+                        right: 5,
+                        top: 5,
+                        padding: 4,
+                        borderRadius: 4,
+                        backgroundColor: '#30D792'
+                    }}>
+                    <Text
+                        style={{
+                            ...FONTS.size12s, letterSpacing: -0.03
+                        }}
+                    >{trending.percentDiscount} OFF</Text>
+                </View>
+            </SharedElement>
 
-      <View style={{ flexDirection: 'row', gap: 12, alignItems: 'center' }}>
+            <View
+                style={{
+                    marginTop: 10,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                }}>
+                <View style={{
+                    gap: 3
+                }}>
 
-        <Image
-          source={item.icon}
-          style={{
-            width: wr * 40,
-            height: hr * 40
-          }}
-        />
+                    <View style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: 5
+                    }}>
+                        <Image
+                            source={trending.icon}
+                            style={{
+                                width: 23,
+                                height: 23
+                            }}
+                            resizeMode='contain'
+                        />
 
-        <Text
-          style={{ ...FONTS.size14r, color: 'black' }}>
-          {item.search}
-        </Text>
+                        <Text style={{ ...FONTS.category, color: '#000000' }}>
+                            {trending.name}</Text>
 
-      </View>
+                    </View>
 
-      <View>
-        <Image
-          source={item.recent}
-          style={{
-            width: wr * 20,
-            height: hr * 20
-          }}
-        />
-      </View>
+                    <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
+                        {trending.expire}</Text>
 
-    </TouchableOpacity>)
-  }
+                </View>
+
+                <View>
+                    <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: 3 }}>
+                        {trending.price}</Text>
+                </View>
+
+            </View>
+        </TouchableOpacity>
+    )
+}
+
 
 
   const renderHeader = () => {
@@ -88,7 +126,6 @@ const Search = () => {
   const renderSeparator = () => <View style={{
     padding: 8
   }} />;
-
 
   return (
     <View
@@ -161,14 +198,14 @@ const Search = () => {
 
         {/* search */}
         <View style={{
-          flex: 1,
+          flex:1,
           marginTop: 20,
         }}>
 
           <FlatList
-            contentContainerStyle={{ paddingBottom: 20 }}
+            contentContainerStyle={{paddingBottom: 20}}
             ListHeaderComponent={renderHeader}
-            data={trendingJson}
+            data={recentJson}
             renderItem={renderItem}
             ItemSeparatorComponent={renderSeparator}
             keyExtractor={item => `${item.id}`}
@@ -182,7 +219,7 @@ const Search = () => {
   )
 }
 
-export default Search
+export default SearchResult
 
 const styles = StyleSheet.create({
   container: {

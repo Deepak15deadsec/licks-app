@@ -40,8 +40,6 @@ const Verify = ({ route }: any) => {
       var phoneCode = AES.encrypt(`${user.phone}`, CRYPTO_SECRET_KEY as string).toString();
       var otpCode = AES.encrypt(`${otp.join('')}`, CRYPTO_SECRET_KEY as string).toString();
 
-
-
       const { data } = await axios({
         url: `${SERVER_BASE_URL}/oauth/verifyOtp`,
         method: "post",

@@ -22,6 +22,8 @@ const avni_logo = require("../assets/icons/avni.png")
 const avatar = require("../assets/icons/avatar.png")
 const food = require("../assets/icons/F&B.png")
 const starbacks = require("../assets/icons/starbacks.png")
+const recent = require("../assets/icons/recent.png")
+
 
 
 export default {
@@ -48,5 +50,6 @@ export default {
     avni_logo,
     avatar,
     food,
-    starbacks
+    starbacks,
+    recent
 }
