@@ -166,6 +166,7 @@ const Search = () => {
         }}>
 
           <FlatList
+          showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 20 }}
             ListHeaderComponent={renderHeader}
             data={recentJson}

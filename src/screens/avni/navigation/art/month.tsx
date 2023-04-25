@@ -86,7 +86,7 @@ const Month = () => {
                     return (
                         <View
                             style={{
-                                width: 20
+                                padding: 10
                             }} />
                     );
                 }}
