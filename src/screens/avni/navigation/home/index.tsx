@@ -10,9 +10,10 @@ import CoinCard from './CoinCard';
 import Categories from './categories';
 import Trending from './trending';
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
+import Expiring from './expiring';
 
 const Home = () => {
-  const removeUser = useStoreActions((store) => store.removeUser)
+
   const user = useStoreState((store) => store.user)
 
   let wr = (SIZES.width / 391)
@@ -37,7 +38,7 @@ const Home = () => {
 
 
           <TouchableOpacity
-            onPress={() => removeUser()}>
+            >
             <Image
               source={icons.avatar}
               style={{
@@ -55,6 +56,7 @@ const Home = () => {
         style={{
           position: 'absolute',
           bottom: 0,
+          top: 68,
           alignSelf: 'center',
           width: SIZES.width * 0.92,
           height: hr * (SIZES.height - 20),
@@ -69,6 +71,7 @@ const Home = () => {
         style={{
           position: 'absolute',
           bottom: 0,
+          top: 80,
           width: SIZES.width,
           height: hr * (SIZES.height - 30),
           borderTopLeftRadius: 30,
@@ -86,7 +89,7 @@ const Home = () => {
           <CoinCard />
           <Categories />
           <Trending />
-          <Trending />
+          <Expiring />
         </ScrollView>
       </View>
 

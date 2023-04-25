@@ -52,6 +52,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
         style={{
           position: 'absolute',
           bottom: 0,
+          top: 58,
           alignSelf: 'center',
           width: SIZES.width * 0.92,
           height: hr * (SIZES.height - 20),
@@ -66,6 +67,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
         style={{
           position: 'absolute',
           bottom: 0,
+          top: 70,
           width: SIZES.width,
           height: hr * (SIZES.height - 30),
           borderTopLeftRadius: 30,
@@ -76,7 +78,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
       >
 
         {/* @ts-ignore */}
-        <SharedElement id={`banner${trending.id}`}>
+        <View id={`banner${trending.id}`}>
           <Image
             source={trending.banner}
             style={{
@@ -100,7 +102,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
             }}>
             <Text>{trending.percentDiscount} OFF</Text>
           </Animatable.View>
-        </SharedElement>
+        </View>
 
         <ScrollView showsVerticalScrollIndicator={false}>
 

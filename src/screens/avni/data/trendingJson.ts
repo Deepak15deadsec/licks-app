@@ -5,6 +5,7 @@ export const trendingJson = [
     name: "Starbucks",
     icon: icons.starbacks,
     banner: images.banner,
+    year: "June 22",
     percentDiscount: "10%",
     offer: {
       category: "Food & Beverage",
@@ -30,6 +31,7 @@ export const trendingJson = [
     name: "Starbucks",
     icon: icons.starbacks,
     banner: images.banner,
+    year: "June 22",
     percentDiscount: "10%",
     offer: {
       category: "Food & Beverage",
@@ -55,6 +57,7 @@ export const trendingJson = [
     name: "Starbucks",
     icon: icons.starbacks,
     banner: images.banner,
+    year: "June 22",
     percentDiscount: "10%",
     offer: {
       category: "Food & Beverage",
@@ -80,6 +83,7 @@ export const trendingJson = [
     name: "Starbucks",
     icon: icons.starbacks,
     banner: images.banner,
+    year: "June 22",
     percentDiscount: "10%",
     offer: {
       category: "Food & Beverage",

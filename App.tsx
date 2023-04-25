@@ -9,6 +9,8 @@ import SplashScreen from 'react-native-splash-screen';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import 'react-native-reanimated'
 import 'react-native-gesture-handler'
+import Profile from './src/screens/avni/navigation/more/profile';
+import Support from './src/screens/avni/navigation/more/support';
 
 
 const theme = {
@@ -39,6 +41,8 @@ const App = () => {
         {authenticate ? (
           <>
             <Stack.Screen name="avni" component={BottomNavigation} />
+            <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="Support" component={Support} />
             <Stack.Screen
               name="Detail"
               component={Detail}

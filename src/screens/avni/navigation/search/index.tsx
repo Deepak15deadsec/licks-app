@@ -168,7 +168,7 @@ const Search = () => {
           <FlatList
             contentContainerStyle={{ paddingBottom: 20 }}
             ListHeaderComponent={renderHeader}
-            data={trendingJson}
+            data={recentJson}
             renderItem={renderItem}
             ItemSeparatorComponent={renderSeparator}
             keyExtractor={item => `${item.id}`}
