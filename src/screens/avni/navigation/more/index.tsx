@@ -40,7 +40,7 @@ const More = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-          top:58,
+     
           alignSelf: 'center',
           width: SIZES.width * 0.92,
           height: hr * (SIZES.height - 20),
@@ -56,19 +56,43 @@ const More = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-          top: 70,
+      
           width: SIZES.width,
           height: hr * (SIZES.height - 30),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',
-          paddingLeft: 24,
-          paddingRight: 24,
-          paddingTop: 36,
-          paddingBottom: 50
+       
+         
         }}
       >
+ <TouchableOpacity
+        
+          style={{
+            flexDirection: 'row',
+            backgroundColor: '#333333',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: 30,
+            borderTopLeftRadius: 12,
+            borderTopRightRadius: 12,
+          }}
+        >
 
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+
+            
+            <Text style={{
+              ...FONTS.size16m,
+              color: '#fff'
+            }}>More</Text>
+
+          </View>
+
+          
+
+
+        </TouchableOpacity>
 
         <Options />
 

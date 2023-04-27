@@ -28,7 +28,10 @@ const Options = () => {
         bottom: 0,
         top: 10,
         rowGap: 22,
-
+        paddingLeft: 24,
+        paddingRight: 24,
+        paddingTop: 20,
+        paddingBottom: 50
       }}>
         <TouchableOpacity
         onPress={() => navigation.navigate('Profile' as never)}
@@ -95,6 +98,7 @@ const Options = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
+        onPress={() => navigation.navigate('Terms' as never)}
           style={{
             flexDirection: 'row',
             backgroundColor: '#30D792',
@@ -128,6 +132,7 @@ const Options = () => {
 
 
         <TouchableOpacity
+         onPress={() => navigation.navigate('Invite' as never)}
           style={{
             flexDirection: 'row',
             backgroundColor: '#30D792',

@@ -15,7 +15,7 @@ const MessageInput = (props: any) => {
             height: 263,
             paddingLeft: 15,
             paddingRight: 15,
-            paddingTop: 10,
+            paddingTop: 0,
             paddingBottom: 10
 
         }}>
@@ -33,10 +33,10 @@ const MessageInput = (props: any) => {
                 {...props}
                 placeholderTextColor="#00000080"
                 style={{
-                    marginTop: 10,
+                    
                     ...FONTS.paragraph,
                     color: '#4E656F',
-                    height: 45
+                    height: 265
                 }}
             />
 

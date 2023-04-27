@@ -23,6 +23,10 @@ const avatar = require("../assets/icons/avatar.png")
 const food = require("../assets/icons/F&B.png")
 const starbacks = require("../assets/icons/starbacks.png")
 const recent = require("../assets/icons/recent.png")
+const facebook = require("../assets/images/facebook.png")
+const whatsapp = require("../assets/images/whatsapp.png")
+const twitter = require("../assets/images/twitter.png")
+const insta = require("../assets/images/insta.png")
 
 
 
@@ -51,5 +55,9 @@ export default {
     avatar,
     food,
     starbacks,
-    recent
+    recent,
+    facebook,
+    whatsapp,
+    twitter,
+    insta
 }

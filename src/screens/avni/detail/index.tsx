@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import FaqAccordion from './faq';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable';
+import swipe from "../../../components/swipe"
 
 let DURATION = 400
 
@@ -78,7 +79,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
       >
 
         {/* @ts-ignore */}
-        <View >
+        <SharedElement >
           <Image
             source={trending.banner}
             style={{
@@ -102,7 +103,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
             }}>
             <Text>{trending.percentDiscount} OFF</Text>
           </Animatable.View>
-        </View>
+        </SharedElement>
 
         <ScrollView showsVerticalScrollIndicator={false}>
 
@@ -219,6 +220,8 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
                 </Text>
               </TouchableOpacity>
             </View>
+
+            
 
             {/* faq */}
             <View style={{

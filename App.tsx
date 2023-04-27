@@ -11,6 +11,8 @@ import 'react-native-reanimated'
 import 'react-native-gesture-handler'
 import Profile from './src/screens/avni/navigation/more/profile';
 import Support from './src/screens/avni/navigation/more/support';
+import Invite from './src/screens/avni/navigation/more/invite';
+import Terms from './src/screens/avni/navigation/more/terms';
 
 
 const theme = {
@@ -43,6 +45,8 @@ const App = () => {
             <Stack.Screen name="avni" component={BottomNavigation} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="Support" component={Support} />
+            <Stack.Screen name="Invite" component={Invite} />
+            <Stack.Screen name="Terms" component={Terms} />
             <Stack.Screen
               name="Detail"
               component={Detail}
