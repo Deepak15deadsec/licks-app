@@ -77,10 +77,10 @@ const Home = () => {
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',
-          paddingLeft: 24,
-          paddingRight: 24,
-          paddingTop: 36,
-          paddingBottom: 50
+          paddingLeft: wr*24,
+          paddingRight: wr*24,
+          paddingTop: hr*36,
+          paddingBottom: hr*50
         }}
       >
 

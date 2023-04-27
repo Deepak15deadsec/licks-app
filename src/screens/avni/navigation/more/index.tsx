@@ -19,10 +19,10 @@ const More = () => {
 
       <View style={{ flexDirection: "row", alignItems: 'center', gap: 20, padding: 20 }}>
 
-      <Text style={{
+      {/* <Text style={{
         ...FONTS.size20s,
         color: '#fff'
-      }}>More</Text>
+      }}>More</Text> */}
 
 
         {/* <TouchableOpacity

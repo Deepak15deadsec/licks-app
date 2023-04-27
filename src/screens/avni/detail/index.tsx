@@ -78,7 +78,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
       >
 
         {/* @ts-ignore */}
-        <View id={`banner${trending.id}`}>
+        <View >
           <Image
             source={trending.banner}
             style={{
@@ -144,7 +144,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
                   padding: 10,
                   backgroundColor: '#FFFFFF',
                   borderRadius: 5,
-                  borderWidth: 1,
+                  borderWidth: 2,
                   borderColor: '#DBDBDB'
                 }}
               >
