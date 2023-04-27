@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import FaqAccordion from './faq';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable';
-import swipe from "../../../components/swipe"
+import SwipeButton from "../../../components/swipe"
 
 let DURATION = 400
 
@@ -20,7 +20,9 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
   const navigation = useNavigation()
   const trending: any = trendingJson.find((x) => x.id === id)
   const user = useStoreState((store) => store.user)
-
+  const handleToggle = (isToggled: boolean) => {
+    console.log(`Button toggled: ${isToggled}`);
+  };
 
   let offerKeys = Object.keys(trending.offer);
   let { offer } = trending
@@ -79,7 +81,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
       >
 
         {/* @ts-ignore */}
-        <SharedElement >
+        <SharedElement id={`banner${trending.id}`} >
           <Image
             source={trending.banner}
             style={{
@@ -206,6 +208,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
               style={{
                 paddingLeft: 20,
                 paddingRight: 20,
+                gap: 5,
               }}>
               <TouchableOpacity style={{
                 padding: 10,
@@ -219,6 +222,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
                   You will {trending.offer.point}
                 </Text>
               </TouchableOpacity>
+              <SwipeButton onToggle={handleToggle} />
             </View>
 
             

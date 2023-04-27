@@ -16,14 +16,14 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useState } from 'react';
 
-const BUTTON_WIDTH = 350;
+const BUTTON_WIDTH = 330;
 const BUTTON_HEIGHT = 100;
 const BUTTON_PADDING = 10;
 const SWIPEABLE_DIMENSIONS = BUTTON_HEIGHT - 2 * BUTTON_PADDING;
 
 const H_WAVE_RANGE = SWIPEABLE_DIMENSIONS + 2 * BUTTON_PADDING;
 const H_SWIPE_RANGE = BUTTON_WIDTH - 2 * BUTTON_PADDING - SWIPEABLE_DIMENSIONS;
-const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
+const AnimatedLinearGradients = Animated.createAnimatedComponent(LinearGradient);
 
 const SwipeButton = ({ onToggle }: any) => {
     // Animated value for X translation
@@ -113,7 +113,7 @@ const SwipeButton = ({ onToggle }: any) => {
 
     return (
         <Animated.View style={[styles.swipeCont, AnimatedStyles.swipeCont]}>
-            <AnimatedLinearGradient
+            <AnimatedLinearGradients
                 style={[AnimatedStyles.colorWave, styles.colorWave]}
                 colors={['#06d6a0', '#1b9aaa']}
                 start={{ x: 0.0, y: 0.5 }}
@@ -123,7 +123,7 @@ const SwipeButton = ({ onToggle }: any) => {
                 <Animated.View style={[styles.swipeable, AnimatedStyles.swipeable]} />
             </PanGestureHandler>
             <Animated.Text style={[styles.swipeText, AnimatedStyles.swipeText]}>
-                Swipe Me
+                Claim
             </Animated.Text>
         </Animated.View>
     );
