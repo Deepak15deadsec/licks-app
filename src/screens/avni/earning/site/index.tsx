@@ -17,7 +17,7 @@ const Item = ({ title, description }: any) => (
     </View>
 );
 
-const Month = () => {
+const Site = () => {
     const renderItem = ({ item: trending }: any) => {
         return (
             <TouchableOpacity
@@ -76,7 +76,6 @@ const Month = () => {
     return (
         <View style={styles.container}>
             <FlatList
-                
                 contentContainerStyle={{ paddingLeft: 0 }}
                 data={trendingJson}
                 renderItem={renderItem}
@@ -99,7 +98,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        paddingTop: 22,
+        paddingTop: 6,
     },
     item: {
         padding: 10,
@@ -116,4 +115,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Month;
+export default Site;
