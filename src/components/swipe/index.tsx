@@ -15,9 +15,10 @@ import Animated, {
     runOnJS,
 } from 'react-native-reanimated';
 import { useState } from 'react';
+import { FONTS, SIZES } from '../../constants';
 
-const BUTTON_WIDTH = 330;
-const BUTTON_HEIGHT = 100;
+const BUTTON_WIDTH = SIZES.width - 40;
+const BUTTON_HEIGHT = 60;
 const BUTTON_PADDING = 10;
 const SWIPEABLE_DIMENSIONS = BUTTON_HEIGHT - 2 * BUTTON_PADDING;
 
@@ -25,23 +26,25 @@ const H_WAVE_RANGE = SWIPEABLE_DIMENSIONS + 2 * BUTTON_PADDING;
 const H_SWIPE_RANGE = BUTTON_WIDTH - 2 * BUTTON_PADDING - SWIPEABLE_DIMENSIONS;
 const AnimatedLinearGradients = Animated.createAnimatedComponent(LinearGradient);
 
-const SwipeButton = ({ onToggle }: any) => {
+const SwipeButton = ({ swipe }: any) => {
+
     // Animated value for X translation
+
     const X = useSharedValue(0);
     // Toggled State
-    const [toggled, setToggled] = useState(false);
 
+    const [toggled, setToggled] = swipe
     // Fires when animation ends
     const handleComplete = (isToggled: any) => {
         if (isToggled !== toggled) {
             setToggled(isToggled);
-            onToggle(isToggled);
+
         }
     };
 
     // Gesture Handler Events
     const animatedGestureHandler = useAnimatedGestureHandler({
-        onStart: (_, ctx:any) => {
+        onStart: (_, ctx: any) => {
             ctx.completed = toggled;
         },
         onActive: (e, ctx) => {
@@ -122,7 +125,7 @@ const SwipeButton = ({ onToggle }: any) => {
             <PanGestureHandler onGestureEvent={animatedGestureHandler}>
                 <Animated.View style={[styles.swipeable, AnimatedStyles.swipeable]} />
             </PanGestureHandler>
-            <Animated.Text style={[styles.swipeText, AnimatedStyles.swipeText]}>
+            <Animated.Text style={[{ ...FONTS.size24b, lineHeight: 40, color: '#333333' }, AnimatedStyles.swipeText]}>
                 Claim
             </Animated.Text>
         </Animated.View>
@@ -133,7 +136,7 @@ const styles = StyleSheet.create({
     swipeCont: {
         height: BUTTON_HEIGHT,
         width: BUTTON_WIDTH,
-        backgroundColor: '#fff',
+        backgroundColor: '#eeeeee',
         borderRadius: BUTTON_HEIGHT,
         padding: BUTTON_PADDING,
         display: 'flex',
@@ -155,13 +158,7 @@ const styles = StyleSheet.create({
         borderRadius: SWIPEABLE_DIMENSIONS,
         zIndex: 3,
     },
-    swipeText: {
-        alignSelf: 'center',
-        fontSize: 20,
-        fontWeight: 'bold',
-        zIndex: 2,
-        color: '#1b9aaa',
-    },
+
 });
 
 export default SwipeButton;

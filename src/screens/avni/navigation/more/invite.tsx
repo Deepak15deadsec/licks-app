@@ -81,6 +81,7 @@ const Invite = () => {
                         borderWidth: 1,
                         borderStyle: 'dotted',
                         borderRadius: 4,
+                        borderColor: '#30D792',
                         padding: 12,
                     }}>
                     <Text style={{ ...FONTS.category, color: '#000000' }}>
@@ -174,6 +175,7 @@ const Invite = () => {
                         backgroundColor: '#E8FFF5',
                         borderStyle: 'dotted',
                         borderRadius: 4,
+                        borderColor: '#30D792',
                         padding: 5,
                         flexDirection: 'row',
                         justifyContent: 'space-between',
@@ -215,6 +217,7 @@ const Invite = () => {
                             width: 60,
                             borderWidth: 1,
                             borderRadius: 100,
+                            borderColor: '#30D792',
                             padding: 8,
                             height: 60,
                             justifyContent: 'center',
@@ -241,6 +244,7 @@ const Invite = () => {
                             padding: 8,
                             borderWidth: 1,
                             borderRadius: 100,
+                            borderColor: '#30D792',
                             width: 60,
                             height: 60,
                             justifyContent: 'center',

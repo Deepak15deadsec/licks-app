@@ -61,13 +61,14 @@ export const SIZES = {
     heading: 16,
     paragraph: 16,
     label: 14,
-    coin:30,
-    size12:12,
-    size10:10,
-    size14: wr*14,
-    size16:16,
-    size17:17,
-    size20:20,
+    coin: 30,
+    size12: 12,
+    size10: 10,
+    size14: wr * 14,
+    size16: 16,
+    size17: 17,
+    size20: 20,
+    size24: 24,
 
     // app dimensions
     width,
@@ -100,8 +101,8 @@ export const FONTS = {
     size16b: { fontFamily: "Inter-Bold", fontSize: SIZES.size16, lineHeight: 19 },
     size17m: { fontFamily: "Inter-Medium", fontSize: SIZES.size17, lineHeight: 21 },
     size16m: { fontFamily: "Inter-Medium", fontSize: SIZES.size16, lineHeight: 19 },
-    size20s: { fontFamily: "Inter-SemiBold", fontSize: SIZES.size20, lineHeight: 24 }
-
+    size20s: { fontFamily: "Inter-SemiBold", fontSize: SIZES.size20, lineHeight: 24 },
+    size24b: { fontFamily: "Inter-Bold", fontSize: SIZES.size24 }
 };
 
 export const TYPES = {
