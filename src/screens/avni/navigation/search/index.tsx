@@ -120,6 +120,7 @@ const Search = () => {
         style={{
           position: 'absolute',
           bottom: 0,
+          top: 68,
           alignSelf: 'center',
           width: SIZES.width * 0.92,
           height: is_keyboard_enabled ? hr * (SIZES.height - 190) : hr * (SIZES.height - 20),
@@ -134,6 +135,7 @@ const Search = () => {
         style={{
           position: 'absolute',
           bottom: 0,
+          top: 80,
           width: SIZES.width,
           height: is_keyboard_enabled ? hr * (SIZES.height - 200) : hr * (SIZES.height - 30),
           borderTopLeftRadius: 30,

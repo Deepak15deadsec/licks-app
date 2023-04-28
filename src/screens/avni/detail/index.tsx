@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity } from 'react-native'
 import { SharedElement } from 'react-native-shared-element';
 import { trendingJson } from '../data/trendingJson'
-import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../constants'
+import { COLORS, FONTS, SIZES, icons, TYPES, images } from '../../../constants'
 import Svg, {
   Path,
   Circle
@@ -12,6 +12,8 @@ import { useNavigation } from '@react-navigation/native';
 import FaqAccordion from './faq';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable';
+import SwipeButton from "../../../components/swipe"
+import Instruction from '../../../components/instruction';
 
 let DURATION = 400
 
@@ -19,6 +21,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
   const navigation = useNavigation()
   const trending: any = trendingJson.find((x) => x.id === id)
   const user = useStoreState((store) => store.user)
+  const [toggled, setToggled] = useState(false);
 
 
   let offerKeys = Object.keys(trending.offer);
@@ -52,6 +55,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
         style={{
           position: 'absolute',
           bottom: 0,
+          top: 58,
           alignSelf: 'center',
           width: SIZES.width * 0.92,
           height: hr * (SIZES.height - 20),
@@ -66,6 +70,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
         style={{
           position: 'absolute',
           bottom: 0,
+          top: 70,
           width: SIZES.width,
           height: hr * (SIZES.height - 30),
           borderTopLeftRadius: 30,
@@ -76,7 +81,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
       >
 
         {/* @ts-ignore */}
-        <SharedElement id={`banner${trending.id}`}>
+        <View  >
           <Image
             source={trending.banner}
             style={{
@@ -100,9 +105,13 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
             }}>
             <Text>{trending.percentDiscount} OFF</Text>
           </Animatable.View>
-        </SharedElement>
+        </View>
 
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          style={{
+            marginBottom: 50
+          }}
+          showsVerticalScrollIndicator={false}>
 
 
           {/* title */}
@@ -142,7 +151,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
                   padding: 10,
                   backgroundColor: '#FFFFFF',
                   borderRadius: 5,
-                  borderWidth: 1,
+                  borderWidth: 2,
                   borderColor: '#DBDBDB'
                 }}
               >
@@ -186,7 +195,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
             delay={DURATION}
           >
             {/* Details */}
-            <View style={{
+            {/* <View style={{
               paddingLeft: 20,
               paddingRight: 20
             }}>
@@ -196,41 +205,129 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
               <Text style={{ ...FONTS.size14r, letterSpacing: -0.03, textAlign: 'justify', color: '#5C595F' }}>
                 {trending.detail}
               </Text>
-            </View>
+            </View> */}
 
             {/* point */}
             <View
               style={{
                 paddingLeft: 20,
                 paddingRight: 20,
+                flex: 1,
+                alignItems: 'center'
               }}>
-              <TouchableOpacity style={{
+              {toggled && (
+                <View
+                  style={{
+                    borderWidth: 1,
+                    padding: 10,
+                    height: hr * 253,
+                    width: wr * 251,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderColor: '#30D792',
+                    borderRadius: 10,
+
+                  }}>
+                  <View
+                    style={{
+
+
+                      alignItems: 'center',
+                      justifyContent: 'center',
+
+                    }}>
+
+                    <Image
+                      source={images.qr}
+                      style={{
+                        width: wr * 203,
+                        height: hr * 205,
+                      }}
+                      resizeMode="contain"
+                    />
+                  </View>
+
+                  <View
+                    style={{
+                      gap: 40,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Text style={{ ...FONTS.size12m, color: '#000000' }}>
+                      1x32314sasb
+                    </Text>
+
+
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: true ? '#30D792' : "#DBDBDB",
+                        borderRadius: 10,
+                        justifyContent: 'center',
+                        height: 28,
+                        width: 80,
+                        alignItems: 'center',
+
+
+                      }}
+
+                    //@ts-ignore
+
+                    >
+                      <Text style={{
+                        ...FONTS.category,
+                        color: '#fff'
+                      }}>Copy Code</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+
+              )}
+              {/* <TouchableOpacity style={{
                 padding: 10,
                 backgroundColor: '#FFFFFF',
                 borderRadius: 5,
                 borderWidth: 1,
                 borderColor: '#DBDBDB',
                 alignItems: 'center'
+
               }}>
                 <Text style={{ ...FONTS.size14r, letterSpacing: -0.03, textAlign: 'justify', color: '#5C595F' }}>
                   You will {trending.offer.point}
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+
             </View>
 
+            <View
+              style={{
+                marginTop: 10,
+                paddingRight: 20,
+                paddingLeft: 20
+              }}>
+              <SwipeButton swipe={[toggled, setToggled]} />
+            </View>
+
+
+
             {/* faq */}
-            <View style={{
-              marginTop: 12,
-              marginBottom: 12,
-              gap: 12
-            }}>
+            <View
+              style={{
+                marginTop: 10,
+                paddingRight: 20,
+                paddingLeft: 20,
+                gap: 10
+              }}>
               {
-                trending.faqs?.map(({ question, answer }: { question: string, answer: string }, index: number) => {
+                trending.instructions?.map(({ title, points }: { title: string, points: [] }, index: number) => {
                   return (
-                    <FaqAccordion question={question} answer={answer} />
+                    <Instruction title={title} points={points} />
                   )
                 })
               }
+
             </View>
           </Animatable.View>
         </ScrollView>

@@ -5,6 +5,7 @@ export const trendingJson = [
     name: "Starbucks",
     icon: icons.starbacks,
     banner: images.banner,
+    year: "June 22",
     percentDiscount: "10%",
     offer: {
       category: "Food & Beverage",
@@ -14,14 +15,24 @@ export const trendingJson = [
     price: "+10 Avni",
     expire: "Expiring in 2 Days",
     detail: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the...",
-    faqs: [
+    instructions: [
       {
-        "question": "How to Redeem",
-        "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the."
+        "title": "How to Redeem",
+        "points": [
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+        ]
       },
       {
-        "question": "Terms & Conditions",
-        "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the."
+        "title": "Terms & Conditions",
+        "points": [
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+        ]
       }
     ]
   },
@@ -30,6 +41,7 @@ export const trendingJson = [
     name: "Starbucks",
     icon: icons.starbacks,
     banner: images.banner,
+    year: "June 22",
     percentDiscount: "10%",
     offer: {
       category: "Food & Beverage",
@@ -39,14 +51,24 @@ export const trendingJson = [
     price: "+10 Avni",
     expire: "Expiring in 2 Days",
     detail: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the...",
-    faqs: [
+    instructions: [
       {
-        "question": "How to Redeem",
-        "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the."
+        "title": "How to Redeem",
+        "points": [
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+        ]
       },
       {
-        "question": "Terms & Conditions",
-        "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the."
+        "title": "Terms & Conditions",
+        "points": [
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+        ]
       }
     ]
   },
@@ -55,6 +77,7 @@ export const trendingJson = [
     name: "Starbucks",
     icon: icons.starbacks,
     banner: images.banner,
+    year: "June 22",
     percentDiscount: "10%",
     offer: {
       category: "Food & Beverage",
@@ -64,14 +87,24 @@ export const trendingJson = [
     price: "+10 Avni",
     expire: "Expiring in 2 Days",
     detail: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the...",
-    faqs: [
+    instructions: [
       {
-        "question": "How to Redeem",
-        "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the."
+        "title": "How to Redeem",
+        "points": [
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+        ]
       },
       {
-        "question": "Terms & Conditions",
-        "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the."
+        "title": "Terms & Conditions",
+        "points": [
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+        ]
       }
     ]
   },
@@ -80,6 +113,7 @@ export const trendingJson = [
     name: "Starbucks",
     icon: icons.starbacks,
     banner: images.banner,
+    year: "June 22",
     percentDiscount: "10%",
     offer: {
       category: "Food & Beverage",
@@ -89,14 +123,24 @@ export const trendingJson = [
     price: "+10 Avni",
     expire: "Expiring in 2 Days",
     detail: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the...",
-    faqs: [
+    instructions: [
       {
-        "question": "How to Redeem",
-        "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the."
+        "title": "How to Redeem",
+        "points": [
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+        ]
       },
       {
-        "question": "Terms & Conditions",
-        "answer": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the."
+        "title": "Terms & Conditions",
+        "points": [
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry"
+        ]
       }
     ]
   }

@@ -120,7 +120,7 @@ const BottomNavigation = () => {
           bottom: 0,
           left: 0,
           right: 0,
-          backgroundColor: COLORS.transparent,
+          backgroundColor: COLORS.white,
           elevation: 0
 
         }
