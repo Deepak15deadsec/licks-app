@@ -12,6 +12,10 @@ interface Props {
     }
 }
 
+
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
+
 const PhoneInput = (props: Props) => {
 
     return (
@@ -19,12 +23,12 @@ const PhoneInput = (props: Props) => {
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginTop: 30,
-                height: 63,
+                marginTop: hr*30,
+                height: hr*63,
                 borderRadius: 10,
-                borderWidth: 1,
-                marginBottom: 15,
-                padding: 8,
+                borderWidth: wr*1,
+                marginBottom: hr*15,
+                padding: hr*8,
                 borderColor: '#30D792'
             }}>
 

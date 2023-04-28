@@ -35,41 +35,41 @@ const Search = () => {
 
   const renderItem = ({ item }: any) => {
     return (
-    <TouchableOpacity
-      style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }}>
+      <TouchableOpacity
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
 
-      <View style={{ flexDirection: 'row', gap: 12, alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', gap: 12, alignItems: 'center' }}>
 
-        <Image
-          source={item.icon}
-          style={{
-            width: wr * 40,
-            height: hr * 40
-          }}
-        />
+          <Image
+            source={item.icon}
+            style={{
+              width: wr * 40,
+              height: hr * 40
+            }}
+          />
 
-        <Text
-          style={{ ...FONTS.size14r, color: 'black' }}>
-          {item.search}
-        </Text>
+          <Text
+            style={{ ...FONTS.size14r, color: 'black' }}>
+            {item.search}
+          </Text>
 
-      </View>
+        </View>
 
-      <View>
-        <Image
-          source={item.recent}
-          style={{
-            width: wr * 20,
-            height: hr * 20
-          }}
-        />
-      </View>
+        <View>
+          <Image
+            source={item.recent}
+            style={{
+              width: wr * 20,
+              height: hr * 20
+            }}
+          />
+        </View>
 
-    </TouchableOpacity>)
+      </TouchableOpacity>)
   }
 
 
@@ -168,7 +168,7 @@ const Search = () => {
         }}>
 
           <FlatList
-          showsVerticalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 20 }}
             ListHeaderComponent={renderHeader}
             data={recentJson}
