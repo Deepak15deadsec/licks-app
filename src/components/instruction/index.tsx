@@ -30,6 +30,7 @@ const Instruction = ({ title, points }: { title: string, points: [] }) => {
                 {points.map((point: string, index: number) => {
                     return (
                         <Text
+                            key={index}
                             style={{
                                 ...FONTS.size12s,textAlign:'justify', lineHeight: 20, color: 'black'
                             }}

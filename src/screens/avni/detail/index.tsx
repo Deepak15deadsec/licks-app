@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, Animated } from 'react-native'
 import { SharedElement } from 'react-native-shared-element';
 import { trendingJson } from '../data/trendingJson'
 import { COLORS, FONTS, SIZES, icons, TYPES, images } from '../../../constants'
@@ -14,6 +14,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable';
 import SwipeButton from "../../../components/swipe"
 import Instruction from '../../../components/instruction';
+
 
 let DURATION = 400
 
@@ -31,11 +32,9 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
   let wr = (SIZES.width / 391)
   let hr = (SIZES.height / 812)
 
-  const theme = useColorScheme();
 
   return (
     <View style={styles.container}>
-
 
       <TouchableOpacity
         onPress={() => navigation.goBack()}
@@ -55,7 +54,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
         style={{
           position: 'absolute',
           bottom: 0,
-          top: 58,
+          //top: 58,
           alignSelf: 'center',
           width: SIZES.width * 0.92,
           height: hr * (SIZES.height - 20),
@@ -70,7 +69,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
         style={{
           position: 'absolute',
           bottom: 0,
-          top: 70,
+          //top: 70,
           width: SIZES.width,
           height: hr * (SIZES.height - 30),
           borderTopLeftRadius: 30,
@@ -109,7 +108,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
 
         <ScrollView
           style={{
-            marginBottom: 50
+            marginBottom: 5
           }}
           showsVerticalScrollIndicator={false}>
 
@@ -117,8 +116,8 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
           {/* title */}
           <View
             style={{
-              padding: 20,
-              gap: 12
+              padding: 10,
+              gap: 8
             }}>
 
             <View style={{
@@ -194,44 +193,30 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
             animation="fadeInUp"
             delay={DURATION}
           >
-            {/* Details */}
-            {/* <View style={{
-              paddingLeft: 20,
-              paddingRight: 20
-            }}>
-              <Text style={{ ...FONTS.size16m, letterSpacing: -0.03, color: '#5C595F' }}>
-                Details
-              </Text>
-              <Text style={{ ...FONTS.size14r, letterSpacing: -0.03, textAlign: 'justify', color: '#5C595F' }}>
-                {trending.detail}
-              </Text>
-            </View> */}
 
             {/* point */}
             <View
               style={{
-                paddingLeft: 20,
-                paddingRight: 20,
                 flex: 1,
-                alignItems: 'center'
+                alignItems: 'center',
               }}>
               {toggled && (
                 <View
                   style={{
                     borderWidth: 1,
-                    padding: 10,
-                    height: hr * 253,
-                    width: wr * 251,
+                    paddingHorizontal: 5,
+                    paddingVertical: 7,
                     alignItems: 'center',
+                    borderStyle: 'dotted',
                     justifyContent: 'center',
-                    borderColor: '#30D792',
+                    borderColor: '#000',
+                    backgroundColor: '#E8FFF5',
                     borderRadius: 10,
+                    gap: 4
 
                   }}>
                   <View
                     style={{
-
-
                       alignItems: 'center',
                       justifyContent: 'center',
 
@@ -282,22 +267,7 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
                     </TouchableOpacity>
                   </View>
                 </View>
-
-
               )}
-              {/* <TouchableOpacity style={{
-                padding: 10,
-                backgroundColor: '#FFFFFF',
-                borderRadius: 5,
-                borderWidth: 1,
-                borderColor: '#DBDBDB',
-                alignItems: 'center'
-
-              }}>
-                <Text style={{ ...FONTS.size14r, letterSpacing: -0.03, textAlign: 'justify', color: '#5C595F' }}>
-                  You will {trending.offer.point}
-                </Text>
-              </TouchableOpacity> */}
 
             </View>
 
@@ -315,15 +285,14 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
             {/* faq */}
             <View
               style={{
-                marginTop: 10,
-                paddingRight: 20,
-                paddingLeft: 20,
+                marginTop: 30,
+                paddingHorizontal: 20,
                 gap: 10
               }}>
               {
-                trending.instructions?.map(({ title, points }: { title: string, points: [] }, index: number) => {
+                trending.instructions?.map(({ title, points,  }: { title: string, points: [] }, index: number) => {
                   return (
-                    <Instruction title={title} points={points} />
+                    <Instruction title={title} points={points}  key={index}/>
                   )
                 })
               }

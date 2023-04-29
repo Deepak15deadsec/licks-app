@@ -4,6 +4,7 @@ import { icons, SIZES, FONTS } from '../../constants'
 import Svg, {
     Path
 } from 'react-native-svg'
+import { Keyboard } from 'react-native'
 
 const SearchInput = (props: any) => {
     return (
@@ -24,12 +25,13 @@ const SearchInput = (props: any) => {
             </Svg>
 
             <TextInput
+                
                 {...props}
                 placeholderTextColor="#00000080"
                 style={{
                     ...FONTS.size14m,
                     color: '#4E656F',
-                    opacity: 0.25,
+                    opacity: 0.8,
                     flex: 1
                 }}
             />

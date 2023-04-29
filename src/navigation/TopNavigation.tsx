@@ -2,13 +2,8 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Site, Month, Category } from '../screens/avni/earning'
 import { Promotion, Receipt, Sent } from '../screens/avni/email';
-import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigation/material-top-tabs';
-import Svg, {
-    Path
-} from 'react-native-svg'
-import { isIphoneX } from 'react-native-iphone-x-helper'
-import { useColorScheme } from 'react-native';
-import { COLORS, icons, TYPES, FONTS } from "../constants"
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { COLORS, FONTS } from "../constants"
 
 const Tab = createMaterialTopTabNavigator();
 
