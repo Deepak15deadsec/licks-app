@@ -11,6 +11,7 @@ import { AvniTextInput } from '../../../../components/inputs';
 
 
 const Profile = () => {
+  const removeUser = useStoreActions((store) => store.removeUser)
   const navigation = useNavigation()
 
   let wr = (SIZES.width / 391)
@@ -139,7 +140,25 @@ const Profile = () => {
           }}>Update</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity
+        onPress={() => removeUser()}
+          style={{
+            backgroundColor: true ? '#30D792' : "#DBDBDB",
+            borderRadius: 10,
+            justifyContent: 'center',
+            height: 52,
+            alignItems: 'center',
+            marginTop: 10
+          }}
 
+        //@ts-ignore
+
+        >
+          <Text style={{
+            ...FONTS.paragraph,
+            color: '#fff'
+          }}>Logout</Text>
+        </TouchableOpacity>
 
       </View>
 

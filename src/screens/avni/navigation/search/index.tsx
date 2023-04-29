@@ -227,7 +227,9 @@ const Search = () => {
             />
           </Svg>
 
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Profile' as never)}
+          >
             <Image
               source={icons.avatar}
               style={{

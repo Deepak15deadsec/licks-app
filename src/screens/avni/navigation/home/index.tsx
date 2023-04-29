@@ -11,10 +11,12 @@ import Categories from './categories';
 import Trending from './trending';
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
 import Expiring from './expiring';
+import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
 
   const user = useStoreState((store) => store.user)
+  const navigation = useNavigation()
 
   let wr = (SIZES.width / 391)
   let hr = (SIZES.height / 812)
@@ -38,6 +40,7 @@ const Home = () => {
 
 
           <TouchableOpacity
+          onPress={() => navigation.navigate('Profile' as never)}
             >
             <Image
               source={icons.avatar}

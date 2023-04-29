@@ -13,6 +13,7 @@ import Profile from './src/screens/avni/navigation/more/profile';
 import Support from './src/screens/avni/navigation/more/support';
 import Invite from './src/screens/avni/navigation/more/invite';
 import Terms from './src/screens/avni/navigation/more/terms';
+import mail from './src/screens/avni/navigation/more/mail';
 
 
 const theme = {
@@ -47,6 +48,7 @@ const App = () => {
             <Stack.Screen name="Support" component={Support} />
             <Stack.Screen name="Invite" component={Invite} />
             <Stack.Screen name="Terms" component={Terms} />
+            <Stack.Screen name="Mail" component={mail} />
             <Stack.Screen
               name="Detail"
               component={Detail}
