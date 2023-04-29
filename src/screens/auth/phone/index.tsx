@@ -33,7 +33,6 @@ const Phone = ({ route }: any) => {
 
 
   const requestForOtp = async () => {
-
     let phone = detail.callingCode.concat(detail.phone)
     var phoneCode = AES.encrypt(`${phone}`, CRYPTO_SECRET_KEY as string).toString();
     const { data } = await axios({
@@ -47,7 +46,6 @@ const Phone = ({ route }: any) => {
       })
     })
 
-    console.log("phone",data)
 
     if (data && data.Status === "Success") {
       //@ts-ignore

@@ -12,6 +12,8 @@ const Options = () => {
   const removeUser = useStoreActions((store) => store.removeUser)
   const navigation = useNavigation()
   
+  
+  
   return (
     <View style={{
       flexDirection: 'column',
@@ -19,8 +21,6 @@ const Options = () => {
       
 
     }}>
-
-     
 
       <View style={{
         flexDirection: 'column',
@@ -130,7 +130,6 @@ const Options = () => {
 
         </TouchableOpacity>
 
-
         <TouchableOpacity
          onPress={() => navigation.navigate('Invite' as never)}
           style={{
@@ -160,7 +159,6 @@ const Options = () => {
             </Svg>
           </View>
         </TouchableOpacity>
-
 
         <TouchableOpacity
           style={{

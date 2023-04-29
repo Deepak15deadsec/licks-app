@@ -19,7 +19,7 @@ const More = () => {
 
       <View style={{ flexDirection: "row", alignItems: 'center', gap: 20, padding: 20 }}>
 
-      {/* <Text style={{
+        {/* <Text style={{
         ...FONTS.size20s,
         color: '#fff'
       }}>More</Text> */}
@@ -40,7 +40,7 @@ const More = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-     
+
           alignSelf: 'center',
           width: SIZES.width * 0.92,
           height: hr * (SIZES.height - 20),
@@ -56,18 +56,18 @@ const More = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-      
+
           width: SIZES.width,
           height: hr * (SIZES.height - 30),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',
-       
-         
+
+
         }}
       >
- <TouchableOpacity
-        
+        <TouchableOpacity
+
           style={{
             flexDirection: 'row',
             backgroundColor: '#333333',
@@ -81,7 +81,7 @@ const More = () => {
 
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
 
-            
+
             <Text style={{
               ...FONTS.size16m,
               color: '#fff'
@@ -89,7 +89,7 @@ const More = () => {
 
           </View>
 
-          
+
 
 
         </TouchableOpacity>

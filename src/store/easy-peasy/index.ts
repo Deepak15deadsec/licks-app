@@ -7,7 +7,6 @@ export interface EasyPeasyStore {
   user: User;
   addUser: Action<this, User>;
   removeUser : Action<this>,
-
 }
 
 const initialState = {
@@ -27,8 +26,8 @@ export const store = createStore<EasyPeasyStore>(
       state.authenticate = true
     }),
     removeUser: action((state: any) => {
-      state.user = { name: '', id: '', token: '', email: '' },
-        state.authenticate = false
+      state.user = { name: '', id: '', token: ''},
+      state.authenticate = false
     })
   },
     {
