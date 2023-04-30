@@ -57,13 +57,8 @@ const SwipeButton = ({ swipe }: any) => {
             }
         },
         onEnd: () => {
-            if (X.value < BUTTON_WIDTH / 2 - SWIPEABLE_DIMENSIONS / 2) {
-                X.value = withSpring(0);
-                runOnJS(handleComplete)(false);
-            } else {
-                X.value = withSpring(H_SWIPE_RANGE);
-                runOnJS(handleComplete)(true);
-            }
+            X.value = withSpring(H_SWIPE_RANGE);
+            runOnJS(handleComplete)(true);
         },
     });
 
