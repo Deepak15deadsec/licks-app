@@ -8,6 +8,7 @@ import Svg, { Path } from 'react-native-svg'
 import { searchEnum } from '../search/search.enum'
 import { useNavigation } from '@react-navigation/native'
 import { rewardJson } from '../../data/rewardJson'
+import { trendingJson } from '../../data/trendingJson'
 
 const Reward = () => {
     const navigation = useNavigation()
@@ -69,7 +70,10 @@ const Reward = () => {
 
                             }}>
 
-                                <Image
+                                <TouchableOpacity 
+                                  onPress={() => navigation.navigate('Detail' as never, { id: reward.advertiser_id } as never)}
+                                >
+                                    <Image
                                     source={reward.icon}
                                     style={{
                                         width: 58,
@@ -77,6 +81,7 @@ const Reward = () => {
                                     }}
                                     resizeMode='contain'
                                 />
+                                </TouchableOpacity>
 
 
                                 <View style={{

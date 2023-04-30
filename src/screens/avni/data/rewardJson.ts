@@ -10,7 +10,8 @@ export const rewardJson = [
     discount: "Flat 20% Off on 5th Purchase",
     expiry: "15th January, 2024",
     level: 2,
-    maxLevel: 7
+    maxLevel: 7,
+    advertiser_id:'123'
   },
   {
     id: "345",
@@ -22,7 +23,8 @@ export const rewardJson = [
     discount: "Flat 35% Off on 5th Purchase",
     expiry: "20th January, 2024",
     level: 3,
-    maxLevel: 7
+    maxLevel: 7,
+    advertiser_id:'234'
   },
   {
     id: "234",
@@ -34,7 +36,8 @@ export const rewardJson = [
     discount: "Flat 30% Off on 5th Purchase",
     expiry: "25th January, 2024",
     level: 7,
-    maxLevel: 7
+    maxLevel: 7,
+    advertiser_id:'345'
   },
 
 ]
