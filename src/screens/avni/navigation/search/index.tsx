@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SharedElement } from 'react-native-shared-element';
 import { CommonFlatlist } from '../../../../components/flatlist';
 import { searchEnum } from './search.enum'
+import Dropdown from '../../../../components/dropdown';
 
 const Search = () => {
 
@@ -210,9 +211,9 @@ const Search = () => {
     setPage(page + 1)
   }
 
-  useEffect(()=>{
-   //api call
-  },[page])
+  useEffect(() => {
+    //api call
+  }, [page])
 
 
   return (
@@ -278,8 +279,10 @@ const Search = () => {
           padding: 0,
           gap: 6,
         }}>
+          
+            <Text style={{ ...FONTS.heading, color: 'black' }}>Search</Text>
+        
 
-          <Text style={{ ...FONTS.heading, color: 'black' }}>Search</Text>
           <SearchInput
             value={input.query}
             onChangeText={(value: any) => onchangeHandler(value, "query")}
