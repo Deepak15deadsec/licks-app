@@ -38,7 +38,7 @@ const Profile = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-          top: 58,
+          //top: 58,
           alignSelf: 'center',
           width: SIZES.width * 0.92,
           height: hr * (SIZES.height - 20),
@@ -53,7 +53,7 @@ const Profile = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-          top: 70,
+          //top: 70,
           width: SIZES.width,
           height: hr * (SIZES.height - 30),
           borderTopLeftRadius: 30,

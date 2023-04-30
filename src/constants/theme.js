@@ -102,7 +102,8 @@ export const FONTS = {
     size17m: { fontFamily: "Inter-Medium", fontSize: SIZES.size17, lineHeight: 21 },
     size16m: { fontFamily: "Inter-Medium", fontSize: SIZES.size16, lineHeight: 19 },
     size20s: { fontFamily: "Inter-SemiBold", fontSize: SIZES.size20, lineHeight: 24 },
-    size24b: { fontFamily: "Inter-Bold", fontSize: SIZES.size24 }
+    size24b: { fontFamily: "Inter-Bold", fontSize: SIZES.size24},
+    size14b: { fontFamily: "Inter-Bold", fontSize: SIZES.size14},
 };
 
 export const TYPES = {

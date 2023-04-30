@@ -2,42 +2,39 @@ import { icons, images } from '../../../constants'
 export const rewardJson = [
   {
     id: "123",
-    name: "Starbucks",
-    domain: "starbucks.com",
+    name: "Starbucks India",
     icon: icons.starbacks,
-    qrImage: images.qr,
-    qrCode: "AC-10012312",
+    reward: 20,
+    qrImage: "",
+    qrCode: "",
     discount: "Flat 20% Off on 5th Purchase",
-    expiry: "15th January, 2024"
-  },
-  {
-    id: "234",
-    name: "Starbucks",
-    domain: "starbucks.com",
-    icon: icons.starbacks,
-    qrImage: images.qr,
-    qrCode: "AC-10012312",
-    discount: "Flat 20% Off on 5th Purchase",
-    expiry: "15th January, 2024"
+    expiry: "15th January, 2024",
+    level: 2,
+    maxLevel: 7
   },
   {
     id: "345",
-    name: "Starbucks",
-    domain: "starbucks.com",
+    name: "Starbucks India",
+    reward: 35,
     icon: icons.starbacks,
-    qrImage: images.qr,
-    qrCode: "AC-10012312",
-    discount: "Flat 20% Off on 5th Purchase",
-    expiry: "15th January, 2024"
+    qrImage: "",
+    qrCode: "",
+    discount: "Flat 35% Off on 5th Purchase",
+    expiry: "20th January, 2024",
+    level: 3,
+    maxLevel: 7
   },
   {
-    id: "456",
-    name: "Starbucks",
-    domain: "starbucks.com",
+    id: "234",
+    name: "Starbucks India",
     icon: icons.starbacks,
+    reward: 30,
     qrImage: images.qr,
-    qrCode: "AC-10012312",
-    discount: "Flat 20% Off on 5th Purchase",
-    expiry: "15th January, 2024"
-  }
+    qrCode: "AC-10012316",
+    discount: "Flat 30% Off on 5th Purchase",
+    expiry: "25th January, 2024",
+    level: 7,
+    maxLevel: 7
+  },
+
 ]

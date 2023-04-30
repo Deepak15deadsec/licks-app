@@ -53,7 +53,7 @@ const Invite = () => {
                 style={{
                     position: 'absolute',
                     bottom: 0,
-                    top: 70,
+                    // top: 70,
                     width: SIZES.width,
                     height: hr * (SIZES.height - 30),
                     borderTopLeftRadius: 30,
@@ -159,6 +159,7 @@ const Invite = () => {
                 <View style={{ marginTop: 30, gap: 20, marginBottom: 10, overflow: 'hidden' }}>
 
                     <MessageInput
+                        
                         label="Or Share"
                         value="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the.
                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..."
