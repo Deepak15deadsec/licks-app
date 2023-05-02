@@ -17,7 +17,7 @@ const More = () => {
     <View style={styles.container}>
 
 
-      <View style={{ flexDirection: "row", alignItems: 'center', gap: 20, padding: 20 }}>
+      <View style={{ flexDirection: "row", alignItems: 'center', gap: 20, paddingHorizontal: wr*20, paddingVertical:hr*20  }}>
 
         {/* <Text style={{
         ...FONTS.size20s,

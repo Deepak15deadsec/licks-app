@@ -27,6 +27,7 @@ export const MialNavigation = (props: any) => {
 
                             return (
                                 <TouchableOpacity
+                                key={index}
                                     onPress={() => props.navigation.navigate(route)}
                                     style={{
                                         paddingVertical: 10,

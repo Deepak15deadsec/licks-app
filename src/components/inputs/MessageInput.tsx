@@ -36,7 +36,7 @@ const MessageInput = (props: any) => {
                     
                     ...FONTS.paragraph,
                     color: '#4E656F',
-                    height: 265
+                    height: 195
                 }}
             />
 

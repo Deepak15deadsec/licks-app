@@ -27,7 +27,7 @@ const Home = () => {
     <View style={styles.container}>
 
 
-      <View style={{ flexDirection: "row", justifyContent: 'space-between', gap: 20, alignItems: 'center', padding: 20 }}>
+      <View style={{ flexDirection: "row", justifyContent: 'space-between', gap: 20, alignItems: 'center', paddingHorizontal: wr*20, paddingVertical:hr*20 }}>
 
         <Text style={{ ...FONTS.heading, color: 'white' }}>Welcome Back, {user.name}</Text>
 
@@ -58,11 +58,10 @@ const Home = () => {
       <View
         style={{
           position: 'absolute',
-          bottom: 0,
-          top: 68,
+          bottom: 0,       
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height: hr * (SIZES.height - 20),
+          height: hr * (SIZES.height - 83),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -74,9 +73,8 @@ const Home = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-          top: 80,
           width: SIZES.width,
-          height: hr * (SIZES.height - 30),
+          height: hr * (SIZES.height - 95),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',

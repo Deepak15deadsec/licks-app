@@ -37,10 +37,10 @@ const Support = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-          top: 58,
+       
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height: hr * (SIZES.height - 20),
+          height: hr * (SIZES.height - 70),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -52,9 +52,9 @@ const Support = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-          top: 70,
+      
           width: SIZES.width,
-          height: hr * (SIZES.height - 30),
+          height: hr * (SIZES.height - 82),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',
@@ -85,9 +85,11 @@ const Support = () => {
               placeholder='Select'
             />
             <MessageInput
-              label="Complain"
-              value=""
-              placeholder='Please Enter Complaint'
+              label="Message"
+             
+              placeholder='Please Enter the message'
+              multiline={true}
+              numberOfLines={4}
             />
 
           </View>

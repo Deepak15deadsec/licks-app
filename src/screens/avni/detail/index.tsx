@@ -54,10 +54,10 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
         style={{
           position: 'absolute',
           bottom: 0,
-          //top: 58,
+      
           alignSelf: 'center',
-          width: SIZES.width * 0.92,
-          height: hr * (SIZES.height - 20),
+          width: wr * (SIZES.width * 0.92),
+          height: hr * (SIZES.height - 70),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -69,9 +69,9 @@ const Detail = ({ route: { params: { id } } }: { route: { params: { id: string }
         style={{
           position: 'absolute',
           bottom: 0,
-          //top: 70,
+        
           width: SIZES.width,
-          height: hr * (SIZES.height - 30),
+          height: hr * (SIZES.height - 82),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',

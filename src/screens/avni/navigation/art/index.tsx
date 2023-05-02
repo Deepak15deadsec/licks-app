@@ -45,10 +45,10 @@ const Art = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-          top: 68,
+       
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height: hr * (SIZES.height - 20),
+          height: hr * (SIZES.height - 83),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -59,9 +59,9 @@ const Art = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-          top: 80,
+       
           width: SIZES.width,
-          height: hr * (SIZES.height - 30),
+          height: hr * (SIZES.height - 95),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',

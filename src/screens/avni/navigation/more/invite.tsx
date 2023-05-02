@@ -38,10 +38,10 @@ const Invite = () => {
                 style={{
                     position: 'absolute',
                     bottom: 0,
-                    top: 58,
+                 
                     alignSelf: 'center',
                     width: SIZES.width * 0.92,
-                    height: hr * (SIZES.height - 20),
+                    height: hr * (SIZES.height - 70),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#ffffff80',
@@ -53,9 +53,9 @@ const Invite = () => {
                 style={{
                     position: 'absolute',
                     bottom: 0,
-                    // top: 70,
+             
                     width: SIZES.width,
-                    height: hr * (SIZES.height - 30),
+                    height: hr * (SIZES.height - 82),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#FFFFFF',
@@ -83,8 +83,9 @@ const Invite = () => {
                         borderRadius: 4,
                         borderColor: '#30D792',
                         padding: 12,
+                        marginTop: 5,
                     }}>
-                    <Text style={{ ...FONTS.category, color: '#000000' }}>
+                    <Text style={{ ...FONTS.size14b, color: '#000000' }}>
                         why invite?</Text>
 
                     <View
@@ -125,12 +126,38 @@ const Invite = () => {
 
                     <View style={{ marginTop: 30, gap: 20, marginBottom: 10 }}>
 
+                        <View
+                            style={{
+                                borderWidth: 1,
+                                borderStyle: 'dotted',
+                                borderRadius: 4,
+                                borderColor: '#30D792',
+                                padding: 12,
+                            }}>
+                            <Text style={{ ...FONTS.category, color: '#000000' }}>
+                                Email</Text>
 
-                        <AvniTextInput
-                            label="Email"
-                            value="deepak.a@avni.club"
-                            placeholder=''
-                        />
+                            <View
+
+                                style={{
+                                    marginTop: 5,
+                                    flexDirection: 'row',
+
+                                    alignItems: 'center',
+
+                                }}>
+
+
+
+                                <View>
+                                    <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: 3 }}>
+                                        deepak.a@avni.club</Text>
+                                </View>
+
+                            </View>
+                        </View>
+
+
 
 
 
@@ -156,10 +183,10 @@ const Invite = () => {
                     }}>Send</Text>
                 </TouchableOpacity>
 
-                <View style={{ marginTop: 30, gap: 20, marginBottom: 10, overflow: 'hidden' }}>
+                <View style={{ marginTop: 10, gap: 20, marginBottom: 10, overflow: 'hidden' }}>
 
                     <MessageInput
-                        
+
                         label="Or Share"
                         value="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the.
                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..."
@@ -210,7 +237,7 @@ const Invite = () => {
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ position: 'absolute', flexDirection: 'row',gap: 10, alignSelf: 'center', bottom: 60 }}>
+                <View style={{ position: 'absolute', flexDirection: 'row', gap: 10, alignSelf: 'center', bottom: 20 }}>
 
                     <TouchableOpacity
                         style={{
@@ -275,7 +302,7 @@ const Invite = () => {
                             height: 60,
                             justifyContent: 'center',
                             alignItems: 'center',
-                         
+
                         }}
 
                     >

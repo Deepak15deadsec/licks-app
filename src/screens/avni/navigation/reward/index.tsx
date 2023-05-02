@@ -71,7 +71,7 @@ const Reward = () => {
                             }}>
 
                                 <TouchableOpacity 
-                                  onPress={() => navigation.navigate('Detail' as never, { id: reward.advertiser_id } as never)}
+                                //   onPress={() => navigation.navigate('Detail' as never, { id: reward.advertiser_id } as never)}
                                 >
                                     <Image
                                     source={reward.icon}
@@ -240,7 +240,7 @@ const Reward = () => {
 
                     alignSelf: 'center',
                     width: SIZES.width * 0.92,
-                    height: hr * (SIZES.height - 20),
+                    height: hr * (SIZES.height - 37),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#ffffff80',
@@ -255,7 +255,7 @@ const Reward = () => {
                     bottom: 0,
 
                     width: SIZES.width,
-                    height: hr * (SIZES.height - 30),
+                    height: hr * (SIZES.height - 50),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#FFFFFF',

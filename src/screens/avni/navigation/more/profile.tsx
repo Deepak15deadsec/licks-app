@@ -8,6 +8,7 @@ import Svg, {
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
 import { useNavigation } from '@react-navigation/native';
 import { AvniTextInput } from '../../../../components/inputs';
+import DatePicker from '../../../../components/datepicker';
 
 
 const Profile = () => {
@@ -41,7 +42,7 @@ const Profile = () => {
           //top: 58,
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height: hr * (SIZES.height - 20),
+          height: hr * (SIZES.height - 70),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -55,14 +56,14 @@ const Profile = () => {
           bottom: 0,
           //top: 70,
           width: SIZES.width,
-          height: hr * (SIZES.height - 30),
+          height: hr * (SIZES.height - 82),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',
-          paddingLeft: 24,
-          paddingRight: 24,
-          paddingTop: 20,
-          paddingBottom: 50
+          paddingLeft: wr*24,
+          paddingRight: wr*24,
+          paddingTop: hr*20,
+          paddingBottom: hr*50
         }}
       >
 
@@ -112,10 +113,10 @@ const Profile = () => {
               placeholder=''
             />
 
-            <AvniTextInput
+            <DatePicker
               label="Date of Birth"
-              value="21/12/82"
-              placeholder=''
+              placeholder='Enter Date of Birth'
+
             />
 
           </View>
@@ -141,7 +142,7 @@ const Profile = () => {
         </TouchableOpacity>
 
         <TouchableOpacity
-        onPress={() => removeUser()}
+          onPress={() => removeUser()}
           style={{
             backgroundColor: true ? '#30D792' : "#DBDBDB",
             borderRadius: 10,
