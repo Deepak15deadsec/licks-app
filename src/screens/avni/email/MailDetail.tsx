@@ -1,16 +1,19 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
-import { MialNavigation } from '../../../../navigation/MailNavigation'
-import { SIZES, FONTS } from '../../../../constants'
+import { MialNavigation } from '../../../navigation/MailNavigation'
+import { SIZES, FONTS } from '../../../constants'
 import { useNavigation } from '@react-navigation/native'
 import Svg, { Path } from 'react-native-svg'
+import { trendingJson } from '../data/trendingJson';
+import Trending from '../navigation/home/trending'
 
-const Mail = () => {
+const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: string } } }) => {
 
     let wr = (SIZES.width / 391)
     let hr = (SIZES.height / 812)
-
+    const trending: any = trendingJson.find((x) => x.id === id)
     const navigation = useNavigation()
+
     return (
         <View style={styles.container}>
 
@@ -67,15 +70,30 @@ const Mail = () => {
             >
 
                 <View style={{
-                    padding: 0,
-                    gap: 6,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: 5
                 }}>
+                    <Image
+                        source={trending.icon}
+                        style={{
+                            width: 63,
+                            height: 63
+                        }}
+                        resizeMode='contain'
+                    />
 
-                    <Text style={{ ...FONTS.heading, color: 'black' }}>Mails pv@avniclub.com</Text>
+                    <View 
+                    style={{gap:0}}>
+                        <Text style={{ ...FONTS.heading,lineHeight: 20, color: 'black' }}>
+                            Your {trending.name} Receipt</Text>
+                        <Text style={{ ...FONTS.paragraph, lineHeight: 20, color: 'black' }}>
+                            from :{trending.domain} </Text>
+                    </View>
 
                 </View>
 
-                <MialNavigation />
+
             </View>
 
 
@@ -83,7 +101,7 @@ const Mail = () => {
     )
 }
 
-export default Mail
+export default MailDetail
 
 const styles = StyleSheet.create({
     container: {

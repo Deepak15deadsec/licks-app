@@ -13,7 +13,9 @@ import Profile from './src/screens/avni/navigation/more/profile';
 import Support from './src/screens/avni/navigation/more/support';
 import Invite from './src/screens/avni/navigation/more/invite';
 import Terms from './src/screens/avni/navigation/more/terms';
-import mail from './src/screens/avni/navigation/more/mail';
+import Mailid from './src/screens/auth/mailid';
+import MailDetail from './src/screens/avni/email/MailDetail';
+import Mail from './src/screens/avni/navigation/more/mail';
 
 
 const theme = {
@@ -48,7 +50,9 @@ const App = () => {
             <Stack.Screen name="Support" component={Support} />
             <Stack.Screen name="Invite" component={Invite} />
             <Stack.Screen name="Terms" component={Terms} />
-            <Stack.Screen name="Mail" component={mail} />
+            <Stack.Screen name="Mail" component={Mail} />
+            <Stack.Screen name="Mailid" component={Mailid} />
+            <Stack.Screen name="Maildetail" component={MailDetail} />
             <Stack.Screen
               name="Detail"
               component={Detail}
@@ -70,6 +74,7 @@ const App = () => {
             <Stack.Screen name="Phone" component={Phone} />
             <Stack.Screen name="Verify" component={Verify} />
             <Stack.Screen name="Signup" component={Signup} />
+           
           </>
         )}
       </Stack.Navigator>

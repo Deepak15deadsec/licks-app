@@ -3,6 +3,7 @@ import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react
 import { SharedElement } from 'react-native-shared-element';
 import { FONTS } from '../../../../constants';
 import { trendingJson } from '../../data/trendingJson';
+import { useNavigation } from '@react-navigation/native';
 
 const DATA = [
     { id: '1', title: 'Starbucks', description: 'June 22' },
@@ -18,10 +19,11 @@ const Item = ({ title, description }: any) => (
 );
 
 const Receipt = () => {
+    const navigation = useNavigation()
     const renderItem = ({ item: trending }: any) => {
         return (
             <TouchableOpacity
-
+            onPress={() => navigation.navigate('Maildetail' as never, { id: trending.id } as never)}
                 style={{
                     flexDirection: 'column',
                 }}>
@@ -53,13 +55,21 @@ const Receipt = () => {
                                 resizeMode='contain'
                             />
 
+                            <View 
+                          
+                            >
                             <Text style={{ ...FONTS.category, color: '#000000' }}>
                                 Your {trending.name} Receipt</Text>
 
+                                <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
+                            {trending. domain}</Text>
+                            </View>
+
+                          
+
                         </View>
 
-                        <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
-                            {trending. domain}</Text>
+                       
 
                     </View>
 
