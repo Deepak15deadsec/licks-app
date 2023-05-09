@@ -180,7 +180,7 @@ const Reward = () => {
                         </View>
                     ) :
                         (
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'flex-start', width: '100%', gap: 5 }}>
                                 {Array.from({ length: reward.maxLevel }, (_, i) => i + 1).map((x) => {
                                     return (
                                         <View key={x} style={{
@@ -243,8 +243,8 @@ const Reward = () => {
                         <Image
                             source={icons.avatar}
                             style={{
-                                width: 38,
-                                height: 38
+                                width: wr*38,
+                                height: hr*38
                             }}
                             resizeMode='contain'
                         />
@@ -260,7 +260,7 @@ const Reward = () => {
 
                     alignSelf: 'center',
                     width: SIZES.width * 0.92,
-                    height: hr * (SIZES.height - 83),
+                    height: (SIZES.height - 83),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#ffffff80',
@@ -275,7 +275,7 @@ const Reward = () => {
                     bottom: 0,
 
                     width: SIZES.width,
-                    height: hr * (SIZES.height - 95),
+                    height: (SIZES.height - 95),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#FFFFFF',

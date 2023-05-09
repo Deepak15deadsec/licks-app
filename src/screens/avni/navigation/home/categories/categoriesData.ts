@@ -4,31 +4,32 @@ export const categoriesJson = [
     {
         id: 1,
         name: "Food & Beverage",
-        icon: icons.food
+        icon: icons.foodicon
     },
     {
         id: 2,
-        name: "Food & Beverage",
-        icon: icons.food
+        name: "Travel",
+        icon: icons.travelicon
     },
     {
         id: 3,
-        name: "Food & Beverage",
-        icon: icons.food
+        name: "Entertainment",
+        icon: icons.videoicon
     },
     {
         id: 4,
-        name: "Food & Beverage",
-        icon: icons.food
+        name: "Fashion",
+        icon: icons.fashionicon
     },
     {
         id: 5,
-        name: "Food & Beverage",
-        icon: icons.food
+        name: "Grocery",
+        icon: icons.groceryicon
     },
     {
         id: 6,
-        name: "Food & Beverage",
-        icon: icons.food
-    }
+        name: "Electronics",
+        icon: icons.electronicsicon
+    },
+   
 ]

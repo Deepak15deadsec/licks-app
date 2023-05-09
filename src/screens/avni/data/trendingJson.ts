@@ -39,10 +39,10 @@ export const trendingJson = [
   },
   {
     id: "234",
-    name: "Starbucks",
-    icon: icons.starbacks,
-    domain: "starbucks.com",
-    banner: images.banner,
+    name: "Missfits",
+    icon: icons.missfits,
+    domain: "misfitsmarket.com",
+    banner: images.missfits,
     year: "June 22",
     percentDiscount: "10%",
     offer: {
@@ -76,10 +76,10 @@ export const trendingJson = [
   },
   {
     id: "345",
-    name: "Starbucks",
-    domain: "starbucks.com",
-    icon: icons.starbacks,
-    banner: images.banner,
+    name: "Blue Bottle",
+    domain: "bluebottlecoffee.com",
+    icon: icons.bluebottle,
+    banner: images.bluebottle,
     year: "June 22",
     percentDiscount: "10%",
     offer: {

@@ -1,44 +1,47 @@
 import { icons, images } from '../../../constants'
 export const rewardJson = [
  
-  {
-    id: "345",
-    name: "Starbucks India",
-    reward: 35,
-    icon: icons.starbacks,
-    qrImage: "",
-    qrCode: "",
-    discount: "Flat 35% Off on 5th Purchase",
-    expiry: "20th January, 2024",
-    level: 3,
-    maxLevel: 7,
-    advertiser_id:'234'
-  },
-  {
-    id: "234",
-    name: "Starbucks India",
-    icon: icons.starbacks,
-    reward: 30,
-    qrImage: images.qr,
-    qrCode: "AC-10012316",
-    discount: "Flat 30% Off on 5th Purchase",
-    expiry: "25th January, 2024",
-    level: 6,
-    maxLevel: 7,
-    advertiser_id:'345'
-  },
+
   {
     id: "237",
-    name: "Starbucks India",
-    icon: icons.starbacks,
-    reward: 30,
+    name: "Bluebottle ",
+    icon: icons.bluebottle,
+    reward: 20,
     qrImage: images.qr,
     qrCode: "AC-10012316",
-    discount: "Flat 30% Off on 5th Purchase",
-    expiry: "25th January, 2024",
+    discount: "Hurry You've  earned a FREE Coffee",
+    expiry: "30th May, 2023",
     level: 7,
     maxLevel: 7,
     advertiser_id:'345'
   },
+  
+  {
+    id: "345",
+    name: "Walmart ",
+    reward: 55,
+    icon: icons.walmart,
+    qrImage: "",
+    qrCode: "",
+    discount: "$20 Off on 5th shopping",
+    expiry: "30th June, 2023",
+    level: 2,
+    maxLevel: 5,
+    advertiser_id:'234'
+  },
+  {
+    id: "234",
+    name: "Instamart ",
+    icon: icons.swiggy,
+    reward: 38,
+    qrImage: images.qr,
+    qrCode: "AC-10012316",
+    discount: "$25 Off on 10th purchase",
+    expiry: "30th August, 2023",
+    level: 6,
+    maxLevel: 10,
+    advertiser_id:'345'
+  },
+  
 
 ]

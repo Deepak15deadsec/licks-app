@@ -49,6 +49,14 @@ class SpinWheel extends Component<{}, State> {
     this.child._onPress();
   };
 
+  getWinnerCallback = (value: any, index: any) => {
+    if (index === 6) { // If the selected index is 3 (corresponding to %40 in participants array)
+      this.child._tryAgain(); // Spin the wheel again
+    } else {
+      this.setState({winnerValue: value, winnerIndex: index}); // Set the winner
+    }
+  };
+
   render() {
     const wheelOptions = {
       rewards: participants,
@@ -56,10 +64,10 @@ class SpinWheel extends Component<{}, State> {
       borderWidth: 5,
       borderColor: '#fff',
       innerRadius: 30,
-      duration: 6000,
+      duration: 1000,
       backgroundColor: 'transparent',
       textAngle: 'horizontal',
-      Source: require("../../assets/images/knob.png"),
+      Source: images.kno,
       onRef: (ref: any) => (this.child = ref),
     };
     return (
@@ -67,9 +75,7 @@ class SpinWheel extends Component<{}, State> {
         <StatusBar barStyle={'light-content'} />
         <WheelOfFortune
           options={wheelOptions}
-          getWinner={(value: any, index: any) => {
-            this.setState({winnerValue: value, winnerIndex: index});
-          }}
+          getWinner={this.getWinnerCallback}
         />
         {!this.state.started && (
           <View style={styles.startButtonView}>

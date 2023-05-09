@@ -234,8 +234,8 @@ const Search = () => {
             <Image
               source={icons.avatar}
               style={{
-                width: 38,
-                height: 38
+                width: wr*38,
+                height: hr*38
               }}
               resizeMode='contain'
             />
@@ -251,7 +251,7 @@ const Search = () => {
          
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height: is_keyboard_enabled ? hr * (SIZES.height - 190) : hr * (SIZES.height - 83),
+          height: is_keyboard_enabled ?  (SIZES.height - 190) : (SIZES.height - 83),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -265,7 +265,7 @@ const Search = () => {
           bottom: 0,
    
           width: SIZES.width,
-          height: is_keyboard_enabled ? hr * (SIZES.height - 200) : hr * (SIZES.height - 95),
+          height: is_keyboard_enabled ?  (SIZES.height - 200) :  (SIZES.height - 95),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',

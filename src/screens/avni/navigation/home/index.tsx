@@ -45,8 +45,8 @@ const Home = () => {
             <Image
               source={icons.avatar}
               style={{
-                width: 38,
-                height: 38
+                width: wr*38,
+                height: hr*38
               }}
               resizeMode='contain'
             />
@@ -61,7 +61,7 @@ const Home = () => {
           bottom: 0,       
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height: hr * (SIZES.height - 83),
+          height:  (SIZES.height - 83),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -74,7 +74,7 @@ const Home = () => {
           position: 'absolute',
           bottom: 0,
           width: SIZES.width,
-          height: hr * (SIZES.height - 95),
+          height:  (SIZES.height - 95),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',

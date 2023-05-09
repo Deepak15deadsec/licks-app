@@ -28,14 +28,14 @@ const CoinCard = () => {
             <Text style={{
                 ...FONTS.label,
                 color: COLORS.white
-            }}>You Have</Text>
+            }}>You Earned</Text>
 
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                <Text style={{ ...FONTS.coin, color: 'white' }}>2,000</Text>
+                <Text style={{ ...FONTS.coin, color: 'white' }}>2,130</Text>
                 <Text style={{
                     ...FONTS.label,
                     color: COLORS.white
-                }}>Avni</Text>
+                }}>ART</Text>
             </View>
 
 

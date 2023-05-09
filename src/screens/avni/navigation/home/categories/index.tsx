@@ -43,14 +43,26 @@ const Categories = () => {
                             gap:8,
                             //backgroundColor:'red'
                         }}>
-                            <Image
+                            <View
+                             style={{
+                                backgroundColor:  "#f0fcfa",
+                                borderRadius: 20,
+                                justifyContent: 'center',  
+                                alignItems: 'center',
+                                padding: 10,
+                                borderWidth: 0.5
+                            }}
+                            >
+                                <Image
                                 source={category.icon}
                                 style={{
-                                    width: 40,
-                                    height: 40
+                                    width: 28,
+                                    height: 28
                                 }}
                                 resizeMode='contain'
                             />
+                             </View>
+                            
                             <Text style={{ ...FONTS.category, color: '#5C595F' }}>{category.name}</Text>
                         </View>
 

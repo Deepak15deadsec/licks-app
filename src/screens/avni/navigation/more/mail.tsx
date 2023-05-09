@@ -38,7 +38,7 @@ const Mail = () => {
 
                     alignSelf: 'center',
                     width: SIZES.width * 0.92,
-                    height: hr * (SIZES.height - 70),
+                    height: (SIZES.height - 70),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#ffffff80',
@@ -53,7 +53,7 @@ const Mail = () => {
                     bottom: 0,
 
                     width: SIZES.width,
-                    height: hr * (SIZES.height - 82),
+                    height:  (SIZES.height - 82),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#FFFFFF',
@@ -71,7 +71,7 @@ const Mail = () => {
                     gap: 6,
                 }}>
 
-                    <Text style={{ ...FONTS.heading, color: 'black' }}>Mails pv@avniclub.com</Text>
+                    <Text style={{ ...FONTS.heading, color: 'black' }}>Mails akash@avniclub.com</Text>
 
                 </View>
 

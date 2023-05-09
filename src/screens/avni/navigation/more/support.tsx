@@ -40,7 +40,7 @@ const Support = () => {
        
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height: hr * (SIZES.height - 70),
+          height:  (SIZES.height - 70),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -54,7 +54,7 @@ const Support = () => {
           bottom: 0,
       
           width: SIZES.width,
-          height: hr * (SIZES.height - 82),
+          height:  (SIZES.height - 82),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',

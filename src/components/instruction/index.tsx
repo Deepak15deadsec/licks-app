@@ -32,7 +32,7 @@ const Instruction = ({ title, points }: { title: string, points: [] }) => {
                         <Text
                             key={index}
                             style={{
-                                ...FONTS.size12s,textAlign:'justify', lineHeight: 20, color: 'black'
+                                ...FONTS.size12s,textAlign:'justify', lineHeight: 16, color: 'black'
                             }}
                         >
                             {index + 1}. {point}

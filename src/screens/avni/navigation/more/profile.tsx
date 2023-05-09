@@ -42,7 +42,7 @@ const Profile = () => {
           //top: 58,
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height: hr * (SIZES.height - 70),
+          height:  (SIZES.height - 70),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -56,7 +56,7 @@ const Profile = () => {
           bottom: 0,
           //top: 70,
           width: SIZES.width,
-          height: hr * (SIZES.height - 82),
+          height:  (SIZES.height - 82),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',
@@ -92,18 +92,18 @@ const Profile = () => {
           <View style={{ marginTop: 30, gap: 20, marginBottom: 10 }}>
             <AvniTextInput
               label="First Name"
-              value="deepak"
+              value="akash"
               placeholder='Enter Fisrt Name'
             />
             <AvniTextInput
               label="Last Name"
-              value=""
+              value="kumar"
               placeholder='Enter Last Name'
             />
 
             <AvniTextInput
               label="Email"
-              value="deepak.a@avni.club"
+              value="akash.a@avni.club"
               placeholder=''
             />
 
