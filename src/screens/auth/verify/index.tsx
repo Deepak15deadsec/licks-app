@@ -66,7 +66,7 @@ const Verify = ({ route }: any) => {
             name: data.name
           })
 
-          navigation.navigate("Avni" as never ,{ user } as never);
+          navigation.navigate("Mailid" as never ,{ user } as never);
         }
         else{
           console.log("mail",data)

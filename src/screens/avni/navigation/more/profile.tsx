@@ -92,18 +92,18 @@ const Profile = () => {
           <View style={{ marginTop: 30, gap: 20, marginBottom: 10 }}>
             <AvniTextInput
               label="First Name"
-              value="akash"
+              value="prdeep"
               placeholder='Enter Fisrt Name'
             />
             <AvniTextInput
               label="Last Name"
-              value="kumar"
+              value="vallat"
               placeholder='Enter Last Name'
             />
 
             <AvniTextInput
               label="Email"
-              value="akash.a@avni.club"
+              value="pradeep.v@avni.club"
               placeholder=''
             />
 

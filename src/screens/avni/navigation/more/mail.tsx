@@ -71,7 +71,7 @@ const Mail = () => {
                     gap: 6,
                 }}>
 
-                    <Text style={{ ...FONTS.heading, color: 'black' }}>Mails akash@avniclub.com</Text>
+                    <Text style={{ ...FONTS.heading, color: 'black' }}>Mails pradeep@avniclub.com</Text>
 
                 </View>
 
