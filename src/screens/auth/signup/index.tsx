@@ -48,13 +48,13 @@ const Signup = ({ route }: any) => {
       data: JSON.stringify({
         "phone": user.phone,
         "name": `${input.first_name.trim()} ${input.last_name.trim()}`,
-        "smsAccess": input.sms_access,
-        "locationAccess": input.location_access,
-        "gender": input.gender,
-        "age": input.dob
+        "smsAccess": input?.sms_access,
+        "locationAccess": input?.location_access,
+        "gender": input?.gender,
+        "age": input?.dob
       })
     })
-
+    console.log("signup",data)
     if (data && data.status === 200 && data.accessToken) {
       addUser({
         id: data.id,

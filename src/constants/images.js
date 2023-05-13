@@ -3,6 +3,8 @@ const banner = require("../assets/images/banner.png");
 const promoBanner = require("../assets/images/promo-banner.png");
 const focus = require("../assets/images/focus.png");
 const kno = require("../assets/images/kno.png");
+const gstar = require("../assets/images/gstar.png");
+const estar = require("../assets/images/estar.png");
 
 // Dummy
 const usFlag = require("../assets/images/us-flag.jpg");
@@ -17,6 +19,8 @@ export default {
     focus,
     qr,
     kno,
+    estar,
+    gstar,
 
     // Dummy
     usFlag,

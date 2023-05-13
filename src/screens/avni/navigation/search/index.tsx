@@ -265,7 +265,7 @@ const Search = () => {
           bottom: 0,
    
           width: SIZES.width,
-          height: is_keyboard_enabled ?  (SIZES.height - 200) :  (SIZES.height - 95),
+          height: is_keyboard_enabled ?  (SIZES.height - 250) :  (SIZES.height - 95),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',

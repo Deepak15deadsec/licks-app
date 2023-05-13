@@ -4,12 +4,12 @@ export const rewardJson = [
 
   {
     id: "237",
-    name: "Bluebottle ",
+    name: "Blue bottle coffee",
     icon: icons.bluebottle,
     reward: 20,
     qrImage: images.qr,
-    qrCode: "AC-10012316",
-    discount: "Hurry You've  earned a FREE Coffee",
+    qrCode: "AC10012316",
+    discount: "Hurry, You've  earned a FREE Coffee",
     expiry: "30th May, 2023",
     level: 7,
     maxLevel: 7,
@@ -31,7 +31,7 @@ export const rewardJson = [
   },
   {
     id: "234",
-    name: "Instamart ",
+    name: "Instacart ",
     icon: icons.swiggy,
     reward: 38,
     qrImage: images.qr,

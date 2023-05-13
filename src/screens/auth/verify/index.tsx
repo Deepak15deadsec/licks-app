@@ -70,7 +70,7 @@ const Verify = ({ route }: any) => {
         }
         else{
           console.log("mail",data)
-          navigation.navigate("Mailid" as never ,{ user } as never);
+          navigation.navigate("Signup" as never ,{ user } as never);
         }
       }
 

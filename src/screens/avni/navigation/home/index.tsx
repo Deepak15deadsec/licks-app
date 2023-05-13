@@ -12,6 +12,7 @@ import Trending from './trending';
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
 import Expiring from './expiring';
 import { useNavigation } from '@react-navigation/native';
+import Card from './Card';
 
 const Home = () => {
 
@@ -27,7 +28,7 @@ const Home = () => {
     <View style={styles.container}>
 
 
-      <View style={{ flexDirection: "row", justifyContent: 'space-between', gap: 20, alignItems: 'center', paddingHorizontal: wr*20, paddingVertical:hr*20 }}>
+      <View style={{ flexDirection: "row", justifyContent: 'space-between', gap: 20, alignItems: 'center', paddingHorizontal: wr * 20, paddingVertical: hr * 20 }}>
 
         <Text style={{ ...FONTS.heading, color: 'white' }}>Welcome Back, {user.name}</Text>
 
@@ -40,13 +41,13 @@ const Home = () => {
 
 
           <TouchableOpacity
-          onPress={() => navigation.navigate('Profile' as never)}
-            >
+            onPress={() => navigation.navigate('Profile' as never)}
+          >
             <Image
               source={icons.avatar}
               style={{
-                width: wr*38,
-                height: hr*38
+                width: wr * 38,
+                height: hr * 38
               }}
               resizeMode='contain'
             />
@@ -58,10 +59,10 @@ const Home = () => {
       <View
         style={{
           position: 'absolute',
-          bottom: 0,       
+          bottom: 0,
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height:  (SIZES.height - 83),
+          height: (SIZES.height - 83),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -74,20 +75,27 @@ const Home = () => {
           position: 'absolute',
           bottom: 0,
           width: SIZES.width,
-          height:  (SIZES.height - 95),
+          height: (SIZES.height - 95),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',
-          paddingLeft: wr*24,
-          paddingRight: wr*24,
-          paddingTop: hr*36,
-          paddingBottom: hr*50
+          paddingLeft: wr * 24,
+          paddingRight: wr * 24,
+          paddingTop: hr * 36,
+          paddingBottom: hr * 50
         }}
       >
 
         <ScrollView
           showsVerticalScrollIndicator={false}>
           <CoinCard />
+          <Text style={{
+            marginTop: 15,
+            fontSize: 20,
+            fontWeight: 'bold',
+            color: '#37918A'
+          }}>Action Rewarded </Text>
+          <Card />
           <Categories />
           <Trending />
           <Expiring />

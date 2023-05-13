@@ -39,7 +39,7 @@ const Reward = () => {
                 <View
 
                     style={{
-                        backgroundColor: '#F3E182',
+                        backgroundColor: '#ffffff',
                         borderTopRightRadius: 20,
                         borderTopLeftRadius: 20,
                         height: 70,
@@ -54,6 +54,7 @@ const Reward = () => {
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             alignItems: 'center',
+                           
                         }}>
 
                         <View style={{
@@ -115,7 +116,7 @@ const Reward = () => {
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    backgroundColor: "#F3E182",
+                    backgroundColor: "#ffffff",
                     alignItems: 'center',
                     paddingHorizontal: 25,
                     height: 40,
@@ -123,25 +124,25 @@ const Reward = () => {
                     <View style={{
                         borderRadius: 1000,
                         position: 'absolute',
-                        backgroundColor: '#fff',
+                        backgroundColor: '#eeeeee',
                         width: 40,
-                        height: '100%',
+                        height: '50%',
                         left: -20,
                         zIndex: 1000
                     }} />
                     <View style={{
                         flex: 1,
                         width: '100%',
-                        borderWidth: 0.5,
-                        borderColor: '#fff',
+                        borderWidth: 1.5,
+                        borderColor: '#eeeeee',
                         borderStyle: 'dashed',
                     }} />
                     <View style={{
                         position: 'absolute',
                         borderRadius: 1000,
-                        backgroundColor: '#fff',
+                        backgroundColor: '#eeeeee',
                         width: 40,
-                        height: '100%',
+                        height: '50%',
                         right: -20,
                         zIndex: 1000
                     }} />
@@ -150,13 +151,13 @@ const Reward = () => {
 
                 <View
                     style={{
-                        backgroundColor: '#F3E182',
+                        backgroundColor: '#ffffff',
                         borderBottomLeftRadius: 20,
                         borderBottomRightRadius: 20,
                         height: reward && reward.level === reward.maxLevel ? 100 : 70,
                         paddingHorizontal: 20,
                         paddingVertical: reward && reward.level === reward.maxLevel ? 0 : 5,
-                        alignItems: 'center',
+                        justifyContent: 'flex-start',
                         gap: 9
                     }}>
 
@@ -175,26 +176,31 @@ const Reward = () => {
                                     height: 65
                                 }} />
 
-                            <Text style={{ ...FONTS.size14m, color: '#5C595F', letterSpacing: -0.03 }}>{reward.qrCode}</Text>
+                            <Text style={{ ...FONTS.h2, color: '#5C595F', letterSpacing: -0.03}}>{reward.qrCode}</Text>
 
                         </View>
                     ) :
                         (
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-start', width: '100%', gap: 5 }}>
                                 {Array.from({ length: reward.maxLevel }, (_, i) => i + 1).map((x) => {
+                                    const fill = x <= reward.level ? images.gstar : images.estar;
                                     return (
-                                        <View key={x} style={{
+                                        <Image
+                                        key={x}
+                                        source={fill}
+                                        style={{
                                             width: 25,
                                             height: 25,
-                                            backgroundColor: x <= reward.level ? '#30D792' : '#D9D9D9'
-                                        }} />
+                                        }}
+                                        resizeMode='contain'
+                                    />
                                     )
                                 })}
                             </View>
                         )
                     }
 
-                    <Text style={{ ...FONTS.size14m, color: '#5C595F', letterSpacing: -0.03 }}>Valid upto : {reward.expiry}</Text>
+                    <Text style={{ ...FONTS.size14m, color: '#5C595F', letterSpacing: -0.03 }}>Valid upto  {reward.expiry}</Text>
 
                 </View>
             </View>
@@ -278,7 +284,7 @@ const Reward = () => {
                     height: (SIZES.height - 95),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
-                    backgroundColor: '#FFFFFF',
+                    backgroundColor: '#eeeeee',
                     paddingLeft: 24,
                     paddingRight: 24,
                     paddingTop: 20,
