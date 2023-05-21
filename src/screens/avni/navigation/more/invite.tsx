@@ -13,6 +13,7 @@ import MessageInput from '../../../../components/inputs/MessageInput';
 
 const Invite = () => {
     const navigation = useNavigation()
+    const user = useStoreState((store) => store.user)
 
     let wr = (SIZES.width / 391)
     let hr = (SIZES.height / 812)
@@ -151,7 +152,7 @@ const Invite = () => {
 
                                 <View>
                                     <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: 3 }}>
-                                        deepak.a@avni.club</Text>
+                                    {user.email}</Text>
                                 </View>
 
                             </View>

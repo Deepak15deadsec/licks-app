@@ -4,12 +4,14 @@ import { MialNavigation } from '../../../../navigation/MailNavigation'
 import { SIZES, FONTS } from '../../../../constants'
 import { useNavigation } from '@react-navigation/native'
 import Svg, { Path } from 'react-native-svg'
+import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
 
 const Mail = () => {
 
     let wr = (SIZES.width / 391)
     let hr = (SIZES.height / 812)
 
+    const user = useStoreState((store) => store.user)
     const navigation = useNavigation()
     return (
         <View style={styles.container}>
@@ -71,7 +73,7 @@ const Mail = () => {
                     gap: 6,
                 }}>
 
-                    <Text style={{ ...FONTS.heading, color: 'black' }}>Mails pradeep@avniclub.com</Text>
+                    <Text style={{ ...FONTS.heading, color: 'black' }}>Mails {user.email}</Text>
 
                 </View>
 

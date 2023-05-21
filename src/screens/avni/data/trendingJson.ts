@@ -44,7 +44,7 @@ export const trendingJson = [
     domain: "misfitsmarket.com",
     banner: images.missfits,
     year: "June 22",
-    percentDiscount: "10%",
+    percentDiscount: "30%",
     offer: {
       category: "Grocery",
       title: "Grocery. $15 Off ",
@@ -81,7 +81,7 @@ export const trendingJson = [
     icon: icons.bluebottle,
     banner: images.bluebottle,
     year: "June 22",
-    percentDiscount: "10%",
+    percentDiscount: "3%",
     offer: {
       category: "Food & Beverage",
       title: "10% off your coffee",

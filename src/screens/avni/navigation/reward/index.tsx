@@ -154,7 +154,7 @@ const Reward = () => {
                         backgroundColor: '#ffffff',
                         borderBottomLeftRadius: 20,
                         borderBottomRightRadius: 20,
-                        height: reward && reward.level === reward.maxLevel ? 100 : 70,
+                        height: reward && reward.level === reward.maxLevel ? 115 : 80,
                         paddingHorizontal: 20,
                         paddingVertical: reward && reward.level === reward.maxLevel ? 0 : 5,
                         justifyContent: 'flex-start',
@@ -201,7 +201,7 @@ const Reward = () => {
                     }
 
                     <Text style={{ ...FONTS.size14m, color: '#5C595F', letterSpacing: -0.03 }}>Valid upto  {reward.expiry}</Text>
-
+                    <Text style={{ ...FONTS.size14m, color: '#5C595F', letterSpacing: -0.03, marginTop: -5 }}>Terms & conditions </Text>
                 </View>
             </View>
 
@@ -299,7 +299,7 @@ const Reward = () => {
                     gap: 6,
                 }}>
 
-                    <Text style={{ ...FONTS.heading, color: 'black' }}>Milestone Rewards</Text>
+                    <Text style={{ ...FONTS.heading, color: 'black', marginBottom: 8 }}>Milestone Rewards</Text>
 
                 </View>
 

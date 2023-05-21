@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import Svg, {
     Path,
@@ -28,9 +28,10 @@ const CoinCard = () => {
             <Text style={{
                 ...FONTS.label,
                 color: COLORS.white
-            }}>You Earned</Text>
+            }}>Earning...</Text>
 
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+            <Image style={{ height: 25, width: 25 }} source={icons.coin} resizeMode='contain' />
                 <Text style={{ ...FONTS.coin, color: 'white' }}>2,130</Text>
                 <Text style={{
                     ...FONTS.label,

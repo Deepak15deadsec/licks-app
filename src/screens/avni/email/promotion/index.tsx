@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SharedElement } from 'react-native-shared-element';
 import { FONTS } from '../../../../constants';
 import { trendingJson } from '../../data/trendingJson';
+import { useNavigation } from '@react-navigation/native';
+import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
 
+//@ts-ignore
+import { SERVER_BASE_URL } from '@env'
+import axios from 'axios';
 const DATA = [
     { id: '1', title: 'Starbucks', description: 'June 22' },
     { id: '2', title: 'Title 2', description: 'Description 2' },
@@ -18,15 +23,58 @@ const Item = ({ title, description }: any) => (
 );
 
 const Promotion = () => {
-    const renderItem = ({ item: trending }: any) => {
+    const user = useStoreState((store) => store.user)
+    const navigation = useNavigation()
+
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchMails = async () => {
+
+            try {
+                const { data } = await axios({
+                    method: "GET",
+                    url: `${SERVER_BASE_URL}/avni-inbox?userId=${user.id}&receipt=false`,
+                    headers: {
+                        "Authorization": `Bearer ${user.token}`
+                    }
+                })
+
+                setData(data)
+
+               //console.log("promotion", data)
+            } catch (error) {
+                console.log(error)
+
+            }
+        }
+
+        if (user.token) {
+            user.token && fetchMails()
+        }
+
+    }, [user.token])
+
+    const renderItem = ({ item: data }: any) => {
+        const dateStringg = data?.from;
+        
+        const nameInitial = dateStringg
+        ? dateStringg.split('@')[1].charAt(0).toUpperCase()
+        : '';
+
+        const dateString = data?.updatedAt;
+        const formattedDate = new Date(dateString).toLocaleDateString('en-US', {
+            day: 'numeric',
+            month: 'short'
+        });
         return (
             <TouchableOpacity
-
+                onPress={() => navigation.navigate('Maildetail' as never, { s3id: data?.s3PathId } as never)}
                 style={{
                     flexDirection: 'column',
                 }}>
                 {/* @ts-ignore */}
-              
+
 
                 <View
                     style={{
@@ -44,43 +92,53 @@ const Promotion = () => {
                             alignItems: 'center',
                             gap: 5
                         }}>
-                            <Image
+                            <View style={styles.circle}>
+                                <Text style={styles.initial}>{nameInitial}</Text>
+                            </View>
+                            {/* <Image
                                 source={trending.icon}
                                 style={{
                                     width: 23,
                                     height: 23
                                 }}
                                 resizeMode='contain'
-                            />
+                            /> */}
 
-                            <Text style={{ ...FONTS.category, color: '#000000' }}>
-                                Your {trending.name} Receipt</Text>
+                            <View
+
+                            >
+                                <Text style={{ ...FONTS.h4, color: '#000000' }}>
+                                     {data?.subject} </Text>
+
+                                <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
+                                    {data?.from}</Text>
+                            </View>
+
+
 
                         </View>
 
-                        <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
-                            {trending. domain}</Text>
+
 
                     </View>
 
                     <View>
                         <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: 3 }}>
-                            {trending.price}</Text>
+                            {formattedDate}</Text>
                     </View>
 
                 </View>
             </TouchableOpacity>
         )
     }
-
     return (
         <View style={styles.container}>
             <FlatList
                 contentContainerStyle={{ paddingLeft: 0 }}
-                data={trendingJson}
+                data={data}
                 renderItem={renderItem}
                 nestedScrollEnabled={true}
-                keyExtractor={item => `${item.id}`}
+                keyExtractor={(item: any) => `${item.id}`}
                 ItemSeparatorComponent={() => {
                     return (
                         <View
@@ -113,6 +171,19 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#888',
     },
+    circle: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: '#5C595F',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 5
+    },
+    initial: {
+        fontSize: 20,
+        color: 'white'
+    },
 });
 
-export default Promotion ;
+export default Promotion;

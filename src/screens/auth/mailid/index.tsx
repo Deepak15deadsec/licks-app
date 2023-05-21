@@ -8,33 +8,50 @@ import { SERVER_BASE_URL, CRYPTO_SECRET_KEY } from '@env'
 import { useStoreActions } from '../../../store/easy-peasy/hooks'
 import RingWave from '../../../components/RingWave'
 import Loading from '../../../components/Loading'
+import axios from 'axios'
 
 const Mailid = ({ route }: any) => {
   const navigation = useNavigation()
   const [screen, setScreen] = useState<number>(1)
+  const [error, setError] = useState({ email: false });
   const user = route?.params?.user
 
   let wr = (SIZES.width / 391)
   let hr = (SIZES.height / 812)
 
-
-
-  const [text, setText] = useState('');
+  const [email, setEmail] = useState('');
 
   const handleInputChange = (value: string) => {
-    setText(value);
+    setEmail(value);
   };
 
-  const handleInputSubmit = () => {
-    setText(text + '@gmail.com');
-  };
+  const handleInputSubmit = async () => {
+    try {
+      const { data } = await axios({
+        url: `${SERVER_BASE_URL}/users/validate-email/${email.concat('@avniclub.com')}`,
+        method: "GET",
+        headers: {
+          "content-type": "application/json"
+        },
 
+      })
+     
+      if (data.status == 200 && data.is_exist ) {
+        setError({ ...error, ["email"]: true });
+      }
+      else{
+        setError({ ...error, ["email"]: false });
+      }
+    } catch (e) {
+      setError({ ...error, ["email"]: true });
+    }
+
+  };
+  console.log("error", error)
 
   const verify = async () => {
 
-
-          navigation.navigate("avni" as never);
-
+    navigation.navigate("Signup" as never, { user: { ...user, email: email.concat('@avniclub.com') } } as never);
   }
 
   switch (screen) {
@@ -94,12 +111,18 @@ const Mailid = ({ route }: any) => {
                     <TextInput
                       style={styles.input}
                       placeholder="Enter your id"
-                      value={text}
+                      value={email}
                       onChangeText={handleInputChange}
                       onSubmitEditing={handleInputSubmit}
                     />
                     <Text style={{ marginLeft: 5 }}>@avniclub.com</Text>
                   </View>
+                  {error.email && <Text style={{
+                    color: '#F65C65',
+                    ...FONTS.size16b,
+                    letterSpacing: -1.03,
+                    marginTop: 12
+                  }}>Username already taken, try another</Text>}
 
                 </View>
 
@@ -132,7 +155,7 @@ const Mailid = ({ route }: any) => {
                   {/* next */}
                   <TouchableOpacity
                     style={{
-                      backgroundColor: !text ? "#DBDBDB" : '#30D792' ,
+                      backgroundColor: error.email ? "#DBDBDB" : '#30D792',
                       padding: 8,
                       borderRadius: 100,
                       width: 60,
@@ -140,7 +163,7 @@ const Mailid = ({ route }: any) => {
                       justifyContent: 'center',
                       alignItems: 'center'
                     }}
-                    disabled={!text}
+                    disabled={ error.email}
                     onPress={verify}
                   >
                     <Image
@@ -184,7 +207,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginTop: 10,
-    
+
   },
   input: {
     flex: 1,

@@ -37,6 +37,11 @@ const travelicon = require("../assets/icons/airplane.png")
 const groceryicon = require("../assets/icons/grocery.png")
 const fashionicon = require("../assets/icons/fashion.png")
 const electronicsicon = require("../assets/icons/responsive.png")
+const forward = require("../assets/icons/foward.png")
+const reply = require("../assets/icons/reply.png")
+const dots = require("../assets/icons/dots.png")
+const googleicon = require("../assets/icons/google.png")
+const coin = require("../assets/icons/coinnikel.png")
 
 export default {
     back,
@@ -77,5 +82,10 @@ export default {
     travelicon,
     groceryicon,
     fashionicon,
-    electronicsicon
+    electronicsicon,
+    forward,
+    reply,
+    googleicon,
+    dots,
+    coin
 }

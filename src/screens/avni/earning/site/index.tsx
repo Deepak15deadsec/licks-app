@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SharedElement } from 'react-native-shared-element';
 import { FONTS } from '../../../../constants';
 import { trendingJson } from '../../data/trendingJson';
+import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
+
+//@ts-ignore
+import { SERVER_BASE_URL } from '@env'
+import axios from 'axios';
+import moment from 'moment';
 
 const DATA = [
     { id: '1', title: 'Starbucks', description: 'June 22' },
@@ -18,7 +24,49 @@ const Item = ({ title, description }: any) => (
 );
 
 const Site = () => {
-    const renderItem = ({ item: trending }: any) => {
+
+    const { user, query }: { user: any, query: Date } = useStoreState((store) => store)
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchSites = async () => {
+
+            try {
+                const { data } = await axios({
+                    method: "GET",
+                    url: `${SERVER_BASE_URL}/earning?userId=${user.id}&type=site&date=${moment(query).format("YYYY-MM")}`,
+                    headers: {
+                        "Authorization": `Bearer ${user.token}`
+                    }
+                })
+
+                setData(data)
+
+                console.log("sites", data)
+            } catch (error) {
+                console.log(error)
+
+            }
+        }
+
+        if (user.token) {
+            user.token && fetchSites()
+        }
+
+    }, [ query])
+
+    const renderItem = ({ item: data }: any) => {
+
+        const dateStringg = data?.name;
+        const nameInitial = dateStringg ? dateStringg.charAt(0).toUpperCase() : '';
+
+        const dateString = data?.createdAt;
+        const formattedDate = new Date(dateString).toLocaleDateString('en-US', {
+            day: 'numeric',
+            month: 'short'
+        });
+
+
         return (
             <TouchableOpacity
 
@@ -26,7 +74,7 @@ const Site = () => {
                     flexDirection: 'column',
                 }}>
                 {/* @ts-ignore */}
-              
+
 
                 <View
                     style={{
@@ -45,7 +93,7 @@ const Site = () => {
                             gap: 5
                         }}>
                             <Image
-                                source={trending.icon}
+                                source={data?.icon}
                                 style={{
                                     width: 23,
                                     height: 23
@@ -53,19 +101,25 @@ const Site = () => {
                                 resizeMode='contain'
                             />
 
-                            <Text style={{ ...FONTS.category, color: '#000000' }}>
-                                {trending.name}</Text>
+                            {/* <View style={styles.circle}>
+                                <Text style={styles.initial}>{nameInitial}</Text>
+                            </View> */}
+                            <View style={{gap:5}}>
+                                <Text style={{ ...FONTS.category, color: '#000000' }}>
+                                    {data?.name}</Text>
+                                <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
+                                    {formattedDate}</Text>
+                            </View>
 
                         </View>
 
-                        <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
-                            {trending.year}</Text>
+
 
                     </View>
 
                     <View>
                         <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: 3 }}>
-                            {trending.price}</Text>
+                            {data?.totalRewardedAmount}</Text>
                     </View>
 
                 </View>
@@ -77,10 +131,10 @@ const Site = () => {
         <View style={styles.container}>
             <FlatList
                 contentContainerStyle={{ paddingLeft: 0 }}
-                data={trendingJson}
+                data={data}
                 renderItem={renderItem}
                 nestedScrollEnabled={true}
-                keyExtractor={item => `${item.id}`}
+                keyExtractor={(item: any) => `${item.id}`}
                 ItemSeparatorComponent={() => {
                     return (
                         <View

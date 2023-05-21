@@ -13,6 +13,7 @@ import DatePicker from '../../../../components/datepicker';
 
 const Profile = () => {
   const removeUser = useStoreActions((store) => store.removeUser)
+  const user = useStoreState((store) => store.user)
   const navigation = useNavigation()
 
   let wr = (SIZES.width / 391)
@@ -92,18 +93,18 @@ const Profile = () => {
           <View style={{ marginTop: 30, gap: 20, marginBottom: 10 }}>
             <AvniTextInput
               label="First Name"
-              value="prdeep"
+              value="akash"
               placeholder='Enter Fisrt Name'
             />
             <AvniTextInput
               label="Last Name"
-              value="vallat"
+              value="kumar"
               placeholder='Enter Last Name'
             />
 
             <AvniTextInput
               label="Email"
-              value="pradeep.v@avni.club"
+              value="akash@avniclub.com"
               placeholder=''
             />
 

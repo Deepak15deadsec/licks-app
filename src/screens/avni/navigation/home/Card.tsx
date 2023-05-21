@@ -28,7 +28,7 @@ const Card = () => {
             <Text style={{
                 ...FONTS.label,
                 color: COLORS.darker
-            }}>Your Profile</Text>
+            }}>complete your profile</Text>
 
 
 

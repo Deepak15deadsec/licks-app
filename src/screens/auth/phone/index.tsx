@@ -108,8 +108,8 @@ const Phone = ({ route }: any) => {
           >
 
             <View>
-              <Text style={{ ...FONTS.heading, color: 'black' }}>Number</Text>
-              <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>Enter Your Number</Text>
+              <Text style={{ ...FONTS.heading, color: 'black' }}>Membership Application</Text>
+              <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>tell us your mobile number</Text>
               <PhoneInput
                 setDetail={setDetail}
                 detail={detail}

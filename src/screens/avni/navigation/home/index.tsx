@@ -13,6 +13,8 @@ import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hoo
 import Expiring from './expiring';
 import { useNavigation } from '@react-navigation/native';
 import Card from './Card';
+import Google from './Google';
+import Orbit from '../../../../components/orbit/Orbit';
 
 const Home = () => {
 
@@ -30,7 +32,7 @@ const Home = () => {
 
       <View style={{ flexDirection: "row", justifyContent: 'space-between', gap: 20, alignItems: 'center', paddingHorizontal: wr * 20, paddingVertical: hr * 20 }}>
 
-        <Text style={{ ...FONTS.heading, color: 'white' }}>Welcome Back, {user.name}</Text>
+        <Text style={{ ...FONTS.heading, color: 'white' }}>Welcome Back, {user.firstName}</Text>
 
         <View style={{ flexDirection: 'row', gap: 16, justifyContent: 'space-between', alignItems: 'center' }}>
           <Svg width="18" height="20" viewBox="0 0 18 20" fill="none">
@@ -91,14 +93,14 @@ const Home = () => {
           <CoinCard />
           <Text style={{
             marginTop: 15,
-            fontSize: 20,
-            fontWeight: 'bold',
-            color: '#37918A'
-          }}>Action Rewarded </Text>
+            ...FONTS.paragraph, color: '#5C595F'
+          }}>Action required </Text>
           <Card />
+          <Google />
           <Categories />
           <Trending />
           <Expiring />
+          <Orbit />
         </ScrollView>
       </View>
 

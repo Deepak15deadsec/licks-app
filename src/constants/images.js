@@ -5,6 +5,8 @@ const focus = require("../assets/images/focus.png");
 const kno = require("../assets/images/kno.png");
 const gstar = require("../assets/images/gstar.png");
 const estar = require("../assets/images/estar.png");
+const orbit = require("../assets/images/orbit.png");
+const sparkle = require("../assets/images/sparkler.png");
 
 // Dummy
 const usFlag = require("../assets/images/us-flag.jpg");
@@ -21,6 +23,8 @@ export default {
     kno,
     estar,
     gstar,
+    orbit,
+    sparkle,
 
     // Dummy
     usFlag,

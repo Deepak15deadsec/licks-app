@@ -98,6 +98,7 @@ const Trending = () => {
             <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: 'center' }}>
                 <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>Trending Offers</Text>
                 <TouchableOpacity
+                 onPress={() => navigation.navigate('Search' as never)}
                     style={{
                         borderRadius: 9,
                         padding: 8,

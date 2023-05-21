@@ -1,20 +1,60 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions, ActivityIndicator, ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { MialNavigation } from '../../../navigation/MailNavigation'
 import { SIZES, FONTS } from '../../../constants'
 import { useNavigation } from '@react-navigation/native'
 import Svg, { Path } from 'react-native-svg'
 import { trendingJson } from '../data/trendingJson';
 import Trending from '../navigation/home/trending'
+import Dropdown from '../../../components/dropdown'
+import { useStoreActions, useStoreState } from '../../../store/easy-peasy/hooks';
+import { useRoute } from '@react-navigation/native';
+
+//@ts-ignore
+import { SERVER_BASE_URL } from '@env'
+import axios from 'axios';
+import WebView from 'react-native-webview'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: string } } }) => {
 
     let wr = (SIZES.width / 391)
     let hr = (SIZES.height / 812)
     const trending: any = trendingJson.find((x) => x.id === id)
+    const { width } = useWindowDimensions();
     const navigation = useNavigation()
+    const route = useRoute();
+    const { s3id }: any = route.params;
+    const user = useStoreState((store) => store.user)
+    const [data, setData]: any = useState()
+
+
+    useEffect(() => {
+
+        const fetchDetails = async () => {
+            try {
+                const { data } = await axios({
+                    method: "GET",
+                    url: `${SERVER_BASE_URL}/avni-inbox/get-html?s3_path_id=${s3id}`,
+                    headers: {
+                        "Authorization": `Bearer ${user.token}`
+                    },
+
+
+                })
+                setData(data)
+                console.log("details", data)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        if (user.token) { fetchDetails() }
+
+
+    }, [user.token])
 
     return (
+
         <View style={styles.container}>
 
             <TouchableOpacity
@@ -38,7 +78,6 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                 style={{
                     position: 'absolute',
                     bottom: 0,
-
                     alignSelf: 'center',
                     width: SIZES.width * 0.92,
                     height: hr * (SIZES.height - 70),
@@ -54,7 +93,6 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                 style={{
                     position: 'absolute',
                     bottom: 0,
-
                     width: SIZES.width,
                     height: hr * (SIZES.height - 82),
                     borderTopLeftRadius: 30,
@@ -72,26 +110,68 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
-                    gap: 5
+                    
+                    justifyContent: 'space-between'
                 }}>
-                    <Image
-                        source={trending.icon}
+                    <View
                         style={{
-                            width: 63,
-                            height: 63
+                            flexDirection: 'row',
+                            flex:1,
+                            justifyContent: 'space-between',
+                            gap: 5,
                         }}
-                        resizeMode='contain'
-                    />
+                    >
+                        {/* <Image
+                            source={trending.icon}
+                            style={{
+                                width: 63,
+                                height: 63
+                            }}
+                            resizeMode='contain'
+                        /> */}
 
-                    <View 
-                    style={{gap:0}}>
-                        <Text style={{ ...FONTS.heading,lineHeight: 20, color: 'black' }}>
-                            Your {trending.name} Receipt</Text>
-                        <Text style={{ ...FONTS.paragraph, lineHeight: 20, color: 'black' }}>
-                            from :{trending.domain} </Text>
+                        <View
+                            style={{ gap: 0 }}>
+                            <Text style={{ ...FONTS.heading, lineHeight: 20, color: 'black' }}>
+                                {data?.subject} </Text>
+                            <Text style={{ ...FONTS.paragraph, lineHeight: 20, color: 'black' }}>
+                                {data?.from} </Text>
+                        </View>
+                        <View>
+                            <Dropdown sendData={data} />
+                        </View>
+
                     </View>
 
+
                 </View>
+
+                <SafeAreaView
+                    style={
+                        {
+                            flex: 1,
+                            height: "100%",
+                            width: "100%"
+                            
+                        }
+                    }
+                >
+                    {/* <ScrollView showsVerticalScrollIndicator={true}  contentContainerStyle={styles.scrollContainer}> */}
+                    <WebView
+                        style={styles.webview}
+                        source={{ html: data?.html }}
+                        startInLoadingState={true}
+                        renderLoading={() => (
+                            <View style={styles.loadingContainer}>
+                                <ActivityIndicator size="large" color="black" />
+                            </View>
+                        )}
+                        scalesPageToFit={true}
+                        
+                    />
+                    {/* </ScrollView> */}
+                </SafeAreaView>
+
 
 
             </View>
@@ -107,5 +187,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#30D792'
-    }
+    },
+    webview: {
+        flex: 1,
+        width:"120%",
+       
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    scrollContainer: {
+        flexGrow: 1,
+    },
 })

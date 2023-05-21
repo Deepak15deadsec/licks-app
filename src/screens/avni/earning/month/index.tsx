@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SharedElement } from 'react-native-shared-element';
 import { FONTS } from '../../../../constants';
 import { trendingJson } from '../../data/trendingJson';
+import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
+import { formatDate } from '../../../../utils/formatDate';
 
-const DATA = [
-    { id: '1', title: 'Starbucks', description: 'June 22' },
-    { id: '2', title: 'Title 2', description: 'Description 2' },
-    { id: '3', title: 'Title 3', description: 'Description 3' },
-];
+//@ts-ignore
+import { SERVER_BASE_URL } from '@env'
+import axios from 'axios';
+import moment from 'moment';
+
 
 const Item = ({ title, description }: any) => (
     <View style={styles.item}>
@@ -18,7 +20,53 @@ const Item = ({ title, description }: any) => (
 );
 
 const Month = () => {
-    const renderItem = ({ item: trending }: any) => {
+    const { user, query }: { user: any, query: Date } = useStoreState((store) => store)
+
+    const [data, setData] = useState([]);
+
+
+
+    useEffect(() => {
+        const fetchEarnings = async () => {
+            // const to = formatDate(query)
+
+            //console.log("jur",moment(query).format("YYYY-MM")); // Output: "2023-05-05"
+
+            
+            const { data } = await axios({
+                method: "GET",
+                url: `${SERVER_BASE_URL}/earning?userId=${user.id}&type=month&date=${moment(query).format("YYYY-MM")}`,
+                headers: {
+                    "Authorization": `Bearer ${user.token}`
+                }
+            })
+
+            setData(data)
+
+            console.log("month", data)
+
+        }
+
+
+        fetchEarnings()
+
+
+    }, [query])
+
+
+
+    const renderItem = ({ item: data }: any) => {
+
+        const dateStringg = data?.name;
+        const nameInitial = dateStringg ? dateStringg.charAt(0).toUpperCase() : '';
+
+        const dateString = data?.updatedAt;
+        const formattedDate = new Date(dateString).toLocaleDateString('en-US', {
+            day: 'numeric',
+            month: 'short'
+        });
+
+
         return (
             <TouchableOpacity
 
@@ -26,7 +74,7 @@ const Month = () => {
                     flexDirection: 'column',
                 }}>
                 {/* @ts-ignore */}
-              
+
 
                 <View
                     style={{
@@ -44,28 +92,34 @@ const Month = () => {
                             alignItems: 'center',
                             gap: 5
                         }}>
-                            <Image
-                                source={trending.icon}
+                            {/* <Image
+                                source={data?.icon}
                                 style={{
                                     width: 23,
                                     height: 23
                                 }}
                                 resizeMode='contain'
-                            />
+                            /> */}
 
-                            <Text style={{ ...FONTS.category, color: '#000000' }}>
-                                {trending.name}</Text>
+                            <View style={styles.circle}>
+                                <Text style={styles.initial}>{nameInitial}</Text>
+                            </View>
+                            <View style={{ gap: 5 }}>
+                                <Text style={{ ...FONTS.category, color: '#000000' }}>
+                                    {data?.name}</Text>
+                                <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
+                                    {formattedDate}</Text>
+                            </View>
 
                         </View>
 
-                        <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
-                            {trending.year}</Text>
+
 
                     </View>
 
                     <View>
                         <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: 3 }}>
-                            {trending.price}</Text>
+                            {data?.rewardedAmount}</Text>
                     </View>
 
                 </View>
@@ -77,10 +131,10 @@ const Month = () => {
         <View style={styles.container}>
             <FlatList
                 contentContainerStyle={{ paddingLeft: 0 }}
-                data={trendingJson}
+                data={data}
                 renderItem={renderItem}
                 nestedScrollEnabled={true}
-                keyExtractor={item => `${item.id}`}
+                keyExtractor={(item: any) => `${item.id}`}
                 ItemSeparatorComponent={() => {
                     return (
                         <View
@@ -112,6 +166,19 @@ const styles = StyleSheet.create({
     description: {
         fontSize: 14,
         color: '#888',
+    },
+    circle: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: '#5C595F',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 5
+    },
+    initial: {
+        fontSize: 20,
+        color: 'white'
     },
 });
 
