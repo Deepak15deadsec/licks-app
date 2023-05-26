@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Animated as AnimatedRN, Text } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -29,17 +29,14 @@ const AnimatedLinearGradients = Animated.createAnimatedComponent(LinearGradient)
 const SwipeButton = ({ swipe }: any) => {
 
     // Animated value for X translation
-
     const X = useSharedValue(0);
+
     // Toggled State
-
     const [toggled, setToggled] = swipe
-    // Fires when animation ends
-    const handleComplete = (isToggled: any) => {
-        if (isToggled !== toggled) {
-            setToggled(isToggled);
 
-        }
+    // Fires when animation ends
+    const handleComplete = (is_toggled: any) => {
+        setToggled(is_toggled);
     };
 
     // Gesture Handler Events
@@ -60,17 +57,13 @@ const SwipeButton = ({ swipe }: any) => {
             }
         },
         onEnd: () => {
-            if (X.value < BUTTON_WIDTH / 2 - SWIPEABLE_DIMENSIONS / 2) {
-                X.value = withSpring(0);
-                runOnJS(handleComplete)(false);
-            } else {
-                X.value = withSpring(H_SWIPE_RANGE);
-                runOnJS(handleComplete)(true);
-            }
+            X.value = withSpring(H_SWIPE_RANGE);
+            runOnJS(handleComplete)(true);
         },
     });
 
     const InterpolateXInput = [0, H_SWIPE_RANGE];
+
     const AnimatedStyles = {
         swipeCont: useAnimatedStyle(() => {
             return {};
@@ -114,8 +107,79 @@ const SwipeButton = ({ swipe }: any) => {
         }),
     };
 
+
+    let offerTime = 1;
+    let initialTime = offerTime * 60;
+
+    const [duration, setDuration] = React.useState(initialTime)
+    const inputRef = React.useRef<any>(null)
+    const timerAnimation = React.useRef(new AnimatedRN.Value(0)).current
+
+    const textInputAnimation = React.useRef(new AnimatedRN.Value(initialTime)).current
+
+    React.useEffect(() => {
+        const listener = textInputAnimation.addListener(({ value }) => {
+            inputRef?.current?.setNativeProps({
+                text: Math.ceil(value).toString()
+            })
+            setDuration(value)
+        })
+        return () => {
+            textInputAnimation.removeListener(listener)
+            textInputAnimation.removeAllListeners()
+        }
+    })
+
+    const animation = React.useCallback(() => {
+        textInputAnimation.setValue(duration)
+        AnimatedRN.sequence([
+            AnimatedRN.timing(timerAnimation, {
+                toValue: 0,
+                duration: BUTTON_WIDTH - 2 * 20,
+                useNativeDriver: true
+            }),
+            AnimatedRN.parallel([
+                AnimatedRN.timing(textInputAnimation, {
+                    toValue: 0,
+                    duration: duration * 1000,
+                    useNativeDriver: true
+                }),
+                AnimatedRN.timing(timerAnimation, {
+                    toValue: BUTTON_WIDTH,
+                    duration: duration * 1000,
+                    useNativeDriver: true
+                }),
+            ]),
+
+        ]).start(() => {
+            textInputAnimation.setValue(duration)
+            X.value = 0;
+            setToggled(false)
+        })
+    }, [duration])
+
+
+    function secondsToTime(e: any) {
+        const h = Math.floor(e / 3600).toString().padStart(2, '0'),
+            m = Math.floor(e % 3600 / 60).toString().padStart(2, '0'),
+            s = Math.floor(e % 60).toString().padStart(2, '0');
+
+        return m + ':' + s;
+    }
+
+    React.useEffect(() => {
+        if (toggled) {
+            animation()
+        }
+    }, [toggled])
+
     return (
         <Animated.View style={[styles.swipeCont, AnimatedStyles.swipeCont]}>
+            {
+                toggled && (<Text ref={inputRef} style={styles.text}>
+                    {secondsToTime(duration)}
+                </Text>)
+            }
             <AnimatedLinearGradients
                 style={[AnimatedStyles.colorWave, styles.colorWave]}
                 colors={['#06d6a0', '#1b9aaa']}
@@ -158,6 +222,15 @@ const styles = StyleSheet.create({
         borderRadius: SWIPEABLE_DIMENSIONS,
         zIndex: 3,
     },
+    text: {
+        ...FONTS.size24b,
+        lineHeight: 40,
+        color: '#333333',
+        zIndex: 1000,
+        position: 'absolute',
+        width: 200,
+        textAlign: 'center'
+    }
 
 });
 

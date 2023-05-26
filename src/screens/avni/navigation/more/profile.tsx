@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, Platform } from 'react-native'
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 import Svg, {
   Path,
@@ -8,13 +8,32 @@ import Svg, {
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
 import { useNavigation } from '@react-navigation/native';
 import { AvniTextInput } from '../../../../components/inputs';
+import DatePicker from '../../../../components/datepicker';
 
 
 const Profile = () => {
+  const removeUser = useStoreActions((store) => store.removeUser)
+  const user = useStoreState((store) => store.user)
   const navigation = useNavigation()
 
   let wr = (SIZES.width / 391)
   let hr = (SIZES.height / 812)
+
+  const validateFields = () => {
+    // Check if any of the required fields are empty or null
+    if (
+      !user.firstName ||
+      !user.lastName ||
+      !user.email ||
+      !user.phone ||
+      !user.gender ||
+      !user.age
+    ) {
+      return false; // Fields are not filled
+    }
+    return true; // All fields are filled
+  };
+  
   return (
     <View style={styles.container}>
 
@@ -22,10 +41,10 @@ const Profile = () => {
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={{
-          paddingTop: 30,
-          paddingBottom: 30,
-          paddingLeft: 25,
-          paddingRight: 25
+          paddingTop: Platform.OS === 'android' ? hr*30 : hr*50,
+          paddingBottom: hr * 30,
+          paddingLeft: wr * 25,
+          paddingRight: wr * 25
         }}
       >
         <Svg width="20" height="16" viewBox="0 0 20 16" fill="none">
@@ -37,10 +56,10 @@ const Profile = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-          top: 58,
+          //top: 58,
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height: hr * (SIZES.height - 20),
+          height: Platform.OS === 'android' ? (SIZES.height - 70) :(SIZES.height - 90),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -52,16 +71,16 @@ const Profile = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-          top: 70,
+          //top: 70,
           width: SIZES.width,
-          height: hr * (SIZES.height - 30),
+          height: Platform.OS === 'android' ? (SIZES.height - 82) : (SIZES.height - 102),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',
-          paddingLeft: 24,
-          paddingRight: 24,
-          paddingTop: 20,
-          paddingBottom: 50
+          paddingLeft: wr * 24,
+          paddingRight: wr * 24,
+          paddingTop: hr * 20,
+          paddingBottom: hr * 50
         }}
       >
 
@@ -75,46 +94,53 @@ const Profile = () => {
         </View>
 
         <View>
-          <View style={{ alignSelf: 'center', marginTop: 10 }}>
+          <View style={{ alignSelf: 'center', marginTop: hr * 10, }}>
             <Image
               source={icons.avatar}
               style={{
-                width: 88,
-                height: 88
+                width: wr * 88,
+                height: hr * 88
               }}
               resizeMode='contain'
             />
+
+          </View>
+
+          <View style={{ alignSelf: 'center', marginTop: hr * 10, flexDirection: 'column' }}>
+            <Text style={{ ...FONTS.heading, color: 'black' }}>{user.email}</Text>
+            <Text style={{ ...FONTS.heading, color: 'black' }}>{user.phone}</Text>
           </View>
 
 
-          <View style={{ marginTop: 30, gap: 20, marginBottom: 10 }}>
+          <View style={{ marginTop: hr * 30, gap: 14, marginBottom: hr * 10 }}>
             <AvniTextInput
               label="First Name"
-              value="deepak"
+              value={user?.firstName}
               placeholder='Enter Fisrt Name'
             />
             <AvniTextInput
               label="Last Name"
-              value=""
+              value={user?.lastName}
               placeholder='Enter Last Name'
             />
 
-            <AvniTextInput
+            {/* <AvniTextInput
               label="Email"
-              value="deepak.a@avni.club"
+              value="akash@avniclub.com"
               placeholder=''
-            />
+            /> */}
 
             <AvniTextInput
               label="Gender"
-              value="Male"
+              value={user?.gender}
               placeholder=''
             />
 
-            <AvniTextInput
+            <DatePicker
               label="Date of Birth"
-              value="21/12/82"
-              placeholder=''
+              placeholder='Enter Date of Birth'
+          value={user?.age}
+          
             />
 
           </View>
@@ -125,11 +151,11 @@ const Profile = () => {
             backgroundColor: true ? '#30D792' : "#DBDBDB",
             borderRadius: 10,
             justifyContent: 'center',
-            height: 52,
+            height: hr * 52,
             alignItems: 'center',
-            marginTop: 10
+            marginTop: hr * 10
           }}
-
+          //disabled={!validateFields()}
         //@ts-ignore
 
         >
@@ -139,7 +165,25 @@ const Profile = () => {
           }}>Update</Text>
         </TouchableOpacity>
 
+        {/* <TouchableOpacity
+          onPress={() => removeUser()}
+          style={{
+            backgroundColor: true ? '#30D792' : "#DBDBDB",
+            borderRadius: 10,
+            justifyContent: 'center',
+            height: hr*52,
+            alignItems: 'center',
+            marginTop: hr*10
+          }}
 
+        //@ts-ignore
+
+        >
+          <Text style={{
+            ...FONTS.paragraph,
+            color: '#fff'
+          }}>Logout</Text>
+        </TouchableOpacity> */}
 
       </View>
 
@@ -151,7 +195,9 @@ export default Profile
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#30D792'
+    //flex: 1,
+    backgroundColor: '#30D792',
+    height: SIZES.height,
+    width: SIZES.width,
   }
 })

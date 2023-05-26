@@ -35,10 +35,11 @@ const Verify = ({ route }: any) => {
 
     try {
       //api call
-      setScreen(2)
+      //setScreen(2)
 
       var phoneCode = AES.encrypt(`${user.phone}`, CRYPTO_SECRET_KEY as string).toString();
       var otpCode = AES.encrypt(`${otp.join('')}`, CRYPTO_SECRET_KEY as string).toString();
+      console.log("phone", user.phone, "otp", otp.join(""))
 
       const { data } = await axios({
         url: `${SERVER_BASE_URL}/oauth/verifyOtp`,
@@ -52,24 +53,44 @@ const Verify = ({ route }: any) => {
         })
       })
 
-      console.log("otp",data)
+      //console.log("user",data)
       if (data && data.Status === "Error") {
         setScreen(1)
+
         setError({ ...error, ["otp"]: true })
       } else {
         if (data && data.status === 200 && data.accessToken) {
           addUser({
             id: data.id,
             token: data.accessToken,
-            name: data.name
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phone: !!data.phone ? data.phone : "",
+            gender: !!data.gender ? data.gender : "",
+            age: !!data.age ? data.age : ""
+
           })
 
-          navigation.navigate("Signup" as never, { user } as never);
+          navigation.navigate("Avni" as never, { user } as never);
+        }
+
+        if (data && data.status === 404 && data.message === 'Credentials not found!') {
+          console.log("mail", data)
+          navigation.navigate("Mailid" as never, { user } as never);
         }
       }
 
     } catch (error) {
+      if (error instanceof TypeError) {
+        console.error('A type error occurred:', error);
+      } else if (error instanceof RangeError) {
+        console.error('A range error occurred:', error);
+      } else {
+        console.error('An unknown error occurred:', error);
+      }
       setScreen(1)
+
     }
   }
 
@@ -87,8 +108,8 @@ const Verify = ({ route }: any) => {
                 <Image
                   source={icons.avni_logo}
                   style={{
-                    width: wr * 77,
-                    height: hr * 105
+                    width: wr * 80,
+                    height: hr * 115
                   }}
                 />
               </View>
@@ -124,8 +145,8 @@ const Verify = ({ route }: any) => {
               >
 
                 <View>
-                  <Text style={{ ...FONTS.heading, color: 'black' }}>Verify Number</Text>
-                  <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>Please enter the OTP</Text>
+                  <Text style={{ ...FONTS.heading, color: 'black' }}>Membership Application</Text>
+                  <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}> enter the OTP sent to your {user.phone} </Text>
                   <OTP
                     otp={otp}
                     setOtp={setOtp}

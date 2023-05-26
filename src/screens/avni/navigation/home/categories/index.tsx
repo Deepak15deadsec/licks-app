@@ -3,10 +3,11 @@ import React from 'react'
 import { TouchableOpacity, Image } from 'react-native'
 import { FONTS, icons } from '../../../../../constants'
 import { categoriesJson } from './categoriesData'
+import { useNavigation } from '@react-navigation/native';
 
 const Categories = () => {
 
-
+    const navigation = useNavigation()
 
     return (
         <View style={{
@@ -16,6 +17,7 @@ const Categories = () => {
             <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: 'center' }}>
                 <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>Categories</Text>
                 <TouchableOpacity
+                     onPress={() => navigation.navigate('Allcategories' as never)}
                     style={{
                         borderRadius: 9,
                         padding: 8,
@@ -43,14 +45,26 @@ const Categories = () => {
                             gap:8,
                             //backgroundColor:'red'
                         }}>
-                            <Image
+                            <View
+                             style={{
+                                backgroundColor:  "#f0fcfa",
+                                borderRadius: 20,
+                                justifyContent: 'center',  
+                                alignItems: 'center',
+                                padding: 10,
+                                borderWidth: 0.5
+                            }}
+                            >
+                                <Image
                                 source={category.icon}
                                 style={{
-                                    width: 40,
-                                    height: 40
+                                    width: 28,
+                                    height: 28
                                 }}
                                 resizeMode='contain'
                             />
+                             </View>
+                            
                             <Text style={{ ...FONTS.category, color: '#5C595F' }}>{category.name}</Text>
                         </View>
 

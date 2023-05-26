@@ -4,4 +4,5 @@ import More from "./navigation/more"
 import Art from "./navigation/art"
 import Search from "./navigation/search"
 import Detail from "./detail"
-export {Home, More, Art, Search, Detail}
+import Reward from "./navigation/reward"
+export {Home, More, Art, Search, Detail, Reward}

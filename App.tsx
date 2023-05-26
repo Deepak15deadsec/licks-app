@@ -13,6 +13,15 @@ import Profile from './src/screens/avni/navigation/more/profile';
 import Support from './src/screens/avni/navigation/more/support';
 import Invite from './src/screens/avni/navigation/more/invite';
 import Terms from './src/screens/avni/navigation/more/terms';
+import Mailid from './src/screens/auth/mailid';
+import MailDetail from './src/screens/avni/email/MailDetail';
+import Mail from './src/screens/avni/navigation/more/mail';
+import ReplyScreen from './src/screens/avni/email/ReplyScreen';
+import FowardScreen from './src/screens/avni/email/FowardScreen';
+import Token from './src/screens/avni/navigation/more/faqtoken';
+import Googlepage from './src/components/googlefq';
+import SentDetail from './src/screens/avni/email/SentDetail';
+import AllCategories from './src/screens/avni/navigation/home/categories/AllCategories';
 
 
 const theme = {
@@ -47,6 +56,14 @@ const App = () => {
             <Stack.Screen name="Support" component={Support} />
             <Stack.Screen name="Invite" component={Invite} />
             <Stack.Screen name="Terms" component={Terms} />
+            <Stack.Screen name="Token" component={Token} />
+            <Stack.Screen name="Mail" component={Mail} />
+            <Stack.Screen name="Maildetail" component={MailDetail} />
+            <Stack.Screen name="Sentdetail" component={SentDetail} />
+            <Stack.Screen name="Reply" component={ReplyScreen} />
+            <Stack.Screen name="Forward" component={FowardScreen} />
+            <Stack.Screen name="Google" component={Googlepage} />
+            <Stack.Screen name="Allcategories" component={AllCategories} />
             <Stack.Screen
               name="Detail"
               component={Detail}
@@ -67,7 +84,9 @@ const App = () => {
             <Stack.Screen name="Language" component={Language} />
             <Stack.Screen name="Phone" component={Phone} />
             <Stack.Screen name="Verify" component={Verify} />
+            <Stack.Screen name="Mailid" component={Mailid} />
             <Stack.Screen name="Signup" component={Signup} />
+           
           </>
         )}
       </Stack.Navigator>

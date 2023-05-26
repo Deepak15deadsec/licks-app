@@ -27,8 +27,25 @@ const facebook = require("../assets/images/facebook.png")
 const whatsapp = require("../assets/images/whatsapp.png")
 const twitter = require("../assets/images/twitter.png")
 const insta = require("../assets/images/insta.png")
-
-
+const missfits = require("../assets/icons/fitsicon.png")
+const bluebottle = require("../assets/icons/blueicon.png")
+const walmart = require("../assets/icons/walmart.png")
+const swiggy = require("../assets/icons/swiggy.png")
+const foodicon = require("../assets/icons/restaurant.png")
+const videoicon = require("../assets/icons/video.png")
+const travelicon = require("../assets/icons/airplane.png")
+const groceryicon = require("../assets/icons/grocery.png")
+const fashionicon = require("../assets/icons/fashion.png")
+const electronicsicon = require("../assets/icons/responsive.png")
+const forward = require("../assets/icons/foward.png")
+const reply = require("../assets/icons/reply.png")
+const dots = require("../assets/icons/dots.png")
+const googleicon = require("../assets/icons/google.png")
+const coin = require("../assets/icons/coinnikel.png")
+const question = require("../assets/icons/question-mark.png")
+const power = require("../assets/icons/power-off.png")
+const copyb = require("../assets/icons/copyb.png")
+const copyg = require("../assets/icons/copyg.png")
 
 export default {
     back,
@@ -59,5 +76,24 @@ export default {
     facebook,
     whatsapp,
     twitter,
-    insta
+    insta,
+    missfits,
+    bluebottle,
+    walmart,
+    swiggy,
+    foodicon,
+    videoicon,
+    travelicon,
+    groceryicon,
+    fashionicon,
+    electronicsicon,
+    forward,
+    reply,
+    googleicon,
+    dots,
+    coin,
+    question,
+    power,
+    copyb,
+    copyg
 }

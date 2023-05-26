@@ -5,17 +5,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export interface EasyPeasyStore {
   authenticate: Boolean;
   user: User;
+  query: Date;
+  setQuery: Action<this, Date>;
   addUser: Action<this, User>;
   removeUser : Action<this>,
-
 }
 
 const initialState = {
   authenticate: false,
+  query: new Date(),
   user: {
     id: "",
     token: "",
-    name: ""
+    firstName: "",
+    lastName: "",
+    email:"",
+    phone:"",
+    age:"",
+    gender:""
+    
   }
 };
 
@@ -27,9 +35,13 @@ export const store = createStore<EasyPeasyStore>(
       state.authenticate = true
     }),
     removeUser: action((state: any) => {
-      state.user = { name: '', id: '', token: '', email: '' },
-        state.authenticate = false
-    })
+      state.user = { firstName: '',lastName: '', id: '', token: '', email:'', phone: '', age: '', gender:''},
+      state.authenticate = false
+    }),
+    setQuery: action((state: any, query: Date) => {
+      state.query = query
+      
+    }),
   },
     {
       storage: {

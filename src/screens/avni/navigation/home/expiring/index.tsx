@@ -32,7 +32,7 @@ const Expiring = () => {
                 <View
                     style={{
                         marginTop: 10,
-                        marginBottom: 62,
+                        marginBottom: 22,
                         flexDirection: 'row',
                         justifyContent: 'space-between',
                         alignItems: 'center',

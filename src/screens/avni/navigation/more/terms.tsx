@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, Platform } from 'react-native'
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 import Svg, {
     Path,
@@ -22,7 +22,7 @@ const Terms = () => {
             <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={{
-                    paddingTop: 30,
+                    paddingTop: Platform.OS === 'android' ? hr*30 : hr*50,
                     paddingBottom: 30,
                     paddingLeft: 25,
                     paddingRight: 25
@@ -37,10 +37,10 @@ const Terms = () => {
                 style={{
                     position: 'absolute',
                     bottom: 0,
-                    top: 58,
+               
                     alignSelf: 'center',
                     width: SIZES.width * 0.92,
-                    height: hr * (SIZES.height - 20),
+                    height: Platform.OS === 'android' ? (SIZES.height - 70) :(SIZES.height - 90),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#ffffff80',
@@ -52,16 +52,16 @@ const Terms = () => {
                 style={{
                     position: 'absolute',
                     bottom: 0,
-                    top: 70,
+              
                     width: SIZES.width,
-                    height: hr * (SIZES.height - 30),
+                    height: Platform.OS === 'android' ? (SIZES.height - 82) : (SIZES.height - 102),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#FFFFFF',
-                    paddingLeft: 24,
-                    paddingRight: 24,
-                    paddingTop: 20,
-                    paddingBottom: 50
+                    paddingLeft: wr*24,
+                    paddingRight: wr*24,
+                    paddingTop: hr*20,
+                    paddingBottom: hr*50
                 }}
             >
 
@@ -80,6 +80,8 @@ const Terms = () => {
                     <WebView
                         source={{ uri: 'https://avni.club/terms-and-conditions' }}
                         style={styles.webview}
+                        overScrollMode="never"
+                        contentContainerStyle={styles.contentContainer}
                     />
                 </SafeAreaView>
 
@@ -100,5 +102,8 @@ const styles = StyleSheet.create({
     webview: {
         flex: 1,
         
-    }
+    },
+    contentContainer: {
+        width: '100%',
+      },
 })

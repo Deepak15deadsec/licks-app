@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Platform } from 'react-native'
 import React from 'react'
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 import Svg, {
@@ -11,23 +11,43 @@ import Categories from './categories';
 import Trending from './trending';
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
 import Expiring from './expiring';
+import { useNavigation } from '@react-navigation/native';
+import Card from './Card';
+import Google from './Google';
+import Orbit from '../../../../components/orbit/Orbit';
 
 const Home = () => {
 
   const user = useStoreState((store) => store.user)
+  const navigation = useNavigation()
 
   let wr = (SIZES.width / 391)
   let hr = (SIZES.height / 812)
 
   const theme = useColorScheme();
 
+  const isProfileComplete = () => {
+    // Check if all the required fields in the user object are filled
+    if (
+      user.firstName &&
+      user.lastName &&
+      user.email &&
+      user.phone &&
+      user.gender &&
+      user.age
+    ) {
+      return true; // Profile is complete
+    }
+    return false; // Profile is not complete
+  };
+
   return (
     <View style={styles.container}>
 
 
-      <View style={{ flexDirection: "row", justifyContent: 'space-between', gap: 20, alignItems: 'center', padding: 20 }}>
+      <View style={{ flexDirection: "row", justifyContent: 'space-between', gap: 20, alignItems: 'center', paddingHorizontal: wr * 20, paddingVertical: Platform.OS === 'android' ? hr * 20 : hr*50 }}>
 
-        <Text style={{ ...FONTS.heading, color: 'white' }}>Welcome Back, {user.name}</Text>
+        <Text style={{ ...FONTS.heading, color: 'white' }}>Welcome Back, {user.firstName}</Text>
 
         <View style={{ flexDirection: 'row', gap: 16, justifyContent: 'space-between', alignItems: 'center' }}>
           <Svg width="18" height="20" viewBox="0 0 18 20" fill="none">
@@ -38,12 +58,13 @@ const Home = () => {
 
 
           <TouchableOpacity
-            >
+            onPress={() => navigation.navigate('Profile' as never)}
+          >
             <Image
               source={icons.avatar}
               style={{
-                width: 38,
-                height: 38
+                width: wr * 38,
+                height: hr * 38
               }}
               resizeMode='contain'
             />
@@ -56,10 +77,9 @@ const Home = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-          top: 68,
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height: hr * (SIZES.height - 20),
+          height: Platform.OS === 'android' ? (SIZES.height - 83) : (SIZES.height - 110),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -71,25 +91,32 @@ const Home = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-          top: 80,
           width: SIZES.width,
-          height: hr * (SIZES.height - 30),
+          height: Platform.OS === 'android' ? (SIZES.height - 95) : (SIZES.height - 123),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',
-          paddingLeft: wr*24,
-          paddingRight: wr*24,
-          paddingTop: hr*36,
-          paddingBottom: hr*50
+          paddingLeft: wr * 24,
+          paddingRight: wr * 24,
+          paddingTop: hr * 36,
+          paddingBottom: hr * 50
         }}
       >
 
         <ScrollView
           showsVerticalScrollIndicator={false}>
+     
           <CoinCard />
+          <Text style={{
+            marginTop: 15,
+            ...FONTS.paragraph, color: '#5C595F'
+          }}>Action required </Text>
+     {!isProfileComplete() && <Card />}
+          <Google />
           <Categories />
           <Trending />
           <Expiring />
+          <Orbit />
         </ScrollView>
       </View>
 

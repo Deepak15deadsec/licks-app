@@ -39,8 +39,7 @@ const PhoneInput = (props: Props) => {
                     countryCode={props.detail.countryCode}
                     withCallingCode={true}
                     onSelect={(country) => {
-                        console.log("code", country)
-                        props.setDetail({ ...props.detail, ['countryCode']: country.cca2, ['callingCode']: country.callingCode[0] })
+                        props.setDetail({ ...props.detail, ['countryCode']: country.cca2, ['callingCode']: '+'.concat(country.callingCode[0])})
                     }
                     }
 

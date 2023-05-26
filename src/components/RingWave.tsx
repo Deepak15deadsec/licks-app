@@ -20,6 +20,7 @@ const RingWave = () => {
                     [...Array(3).keys()].map((index: number) => {
                         return (
                             <MotiView
+                            key={index}
                                 from={{ opacity: 0.7, scale: 1 }}
                                 animate={{ opacity: 0, scale: 4 }}
                                 transition={{
