@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SharedElement } from 'react-native-shared-element';
-import { FONTS } from '../../../../constants';
+import { FONTS, images } from '../../../../constants';
 import { trendingJson } from '../../data/trendingJson';
 import { useNavigation } from '@react-navigation/native';
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
+import LottieView from 'lottie-react-native'
 
 //@ts-ignore
 import { SERVER_BASE_URL } from '@env'
@@ -25,12 +26,13 @@ const Item = ({ title, description }: any) => (
 const Promotion = () => {
     const user = useStoreState((store) => store.user)
     const navigation = useNavigation()
-
+    const [isLoading, setLoading] = useState(false);
     const [data, setData] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         const fetchMails = async () => {
-
+            setLoading(true);
             try {
                 const { data } = await axios({
                     method: "GET",
@@ -46,6 +48,8 @@ const Promotion = () => {
             } catch (error) {
                 console.log(error)
 
+            }  finally{
+                setLoading(false);
             }
         }
 
@@ -54,6 +58,33 @@ const Promotion = () => {
         }
 
     }, [user.token])
+
+
+    const handleRefresh = async () => {
+      
+        try {
+            setRefreshing(true);
+
+            const { data } = await axios({
+                url: `${SERVER_BASE_URL}/avni-inbox?userId=${user.id}&receipt=false`,
+                method: 'GET',
+                headers: {
+                    "Content-Type": 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+
+            });
+            //console.log("deepak", data)
+            setData(data)
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setRefreshing(false)
+           
+        }
+
+
+    };
 
     const renderItem = ({ item: data }: any) => {
         const dateStringg = data?.from;
@@ -133,8 +164,17 @@ const Promotion = () => {
     }
     return (
         <View style={styles.container}>
+             {isLoading ? (
+                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                        {/* <ActivityIndicator size={100} color="red" /> */}
+                        <LottieView source={images.loader} autoPlay loop />
+
+                    </View>
+
+                ) : (
             <FlatList
                 contentContainerStyle={{ paddingLeft: 0 }}
+                showsVerticalScrollIndicator={false}
                 data={data}
                 renderItem={renderItem}
                 nestedScrollEnabled={true}
@@ -148,6 +188,7 @@ const Promotion = () => {
                     );
                 }}
             />
+                )}
         </View>
     );
 };

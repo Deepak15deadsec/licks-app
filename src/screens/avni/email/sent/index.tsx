@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SharedElement } from 'react-native-shared-element';
-import { FONTS } from '../../../../constants';
+import { FONTS, images } from '../../../../constants';
 import { trendingJson } from '../../data/trendingJson';
 import { useNavigation } from '@react-navigation/native';
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
+import LottieView from 'lottie-react-native'
 
 //@ts-ignore
 import { SERVER_BASE_URL } from '@env'
@@ -26,12 +27,13 @@ const Item = ({ title, description }: any) => (
 const Sent = () => {
     const user = useStoreState((store) => store.user)
     const navigation = useNavigation()
-
+    const [isLoading, setLoading] = useState(false);
     const [data, setData] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
         const fetchMails = async () => {
-
+            setLoading(true);
             try {
                 const { data } = await axios({
                     method: "GET",
@@ -43,10 +45,12 @@ const Sent = () => {
 
                 setData(data)
 
-                console.log("sent", data)
+                //console.log("sent", data)
             } catch (error) {
                 console.log(error)
 
+            }  finally{
+                setLoading(false);
             }
         }
 
@@ -55,8 +59,37 @@ const Sent = () => {
         }
 
     }, [user.token])
+
+    const handleRefresh = async () => {
+      
+        try {
+            setRefreshing(true);
+
+            const { data } = await axios({
+                url: `${SERVER_BASE_URL}/avni-sent?userId=${user.id}`,
+                method: 'GET',
+                headers: {
+                    "Content-Type": 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+
+            });
+            //console.log("deepak", data)
+            setData(data)
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setRefreshing(false)
+           
+        }
+
+
+    };
+
     const renderItem = ({ item: data }: any) => {
-        const dateStringg = data?.from;
+        const toEmails = JSON.parse(data?.to);
+
+        const dateStringg = data?.to;
 
         const nameInitial = dateStringg
             ? dateStringg.split('@')[1].charAt(0).toUpperCase()
@@ -69,7 +102,7 @@ const Sent = () => {
         });
         return (
             <TouchableOpacity
-                onPress={() => navigation.navigate('Maildetail' as never, { s3id: data?.s3PathId } as never)}
+                onPress={() => navigation.navigate('Sentdetail' as never, { s3id: data?.s3PathId } as never)}
                 style={{
                     flexDirection: 'column',
                 }}>
@@ -111,7 +144,10 @@ const Sent = () => {
                                     {data?.subject} </Text>
 
                                 <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
-                                    {data?.to}</Text>
+                                    {toEmails.map((email: any, index: any) => (
+                                        <Text style={{ marginBottom: 5 }} key={index}>{email + '\n'}</Text>
+                                    ))}
+                                </Text>
                             </View>
 
 
@@ -134,12 +170,24 @@ const Sent = () => {
 
     return (
         <View style={styles.container}>
+             {isLoading ? (
+                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                        {/* <ActivityIndicator size={100} color="red" /> */}
+                        <LottieView source={images.loader} autoPlay loop />
+
+                    </View>
+
+                ) : (
             <FlatList
                 contentContainerStyle={{ paddingLeft: 0 }}
+                showsVerticalScrollIndicator={false}
                 data={data}
                 renderItem={renderItem}
                 nestedScrollEnabled={true}
                 keyExtractor={(item: any) => `${item.id}`}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+                }
                 ItemSeparatorComponent={() => {
                     return (
                         <View
@@ -149,6 +197,7 @@ const Sent = () => {
                     );
                 }}
             />
+                )}
         </View>
     );
 };

@@ -1,10 +1,12 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import Svg, {
     Path,
     Circle
 } from 'react-native-svg'
 import { COLORS, FONTS, SIZES, icons, TYPES, images } from '../../constants'
+
+
 
 const Orbit = () => {
     let wr = (SIZES.width / 391)
@@ -21,8 +23,8 @@ const Orbit = () => {
             paddingBottom: hr * 20,
             gap: 4,
             alignContent: 'center',
-            marginTop: 10,
-            marginBottom: 50,
+            marginTop: hr*15,
+            marginBottom: Platform.OS === 'android' ? hr*50 :hr*70,
         }}>
 
             <View
@@ -32,24 +34,26 @@ const Orbit = () => {
             >
                 <Text style={{
                     ...FONTS.orbit,
-                    color: "gray"
-                }}>Simplifying{'\n'}Credit</Text>
+                    color: "#cccccc"
+                }}>Simplifying{'\n'}Rewards</Text>
 
                 <View
                     style={{
                         flexDirection: 'row',
-                        gap: 2
+                        gap: 5
                     }}>
                     <View
                         style={{
                             flexDirection: 'row'
+
                         }}
                     >
-                        <Image style={{ height: 15, width: 15 }} source={images.sparkle} resizeMode='contain' />
+                        <Image style={{ height: hr*10, width: wr*10, alignSelf:'center' }} source={images.sparkle} resizeMode='contain' />
                         <Text style={{
                             ...FONTS.label,
-                            color: "gray"
-                        }}>Personalised</Text>
+                            color: "#cccccc",
+                            marginLeft:2
+                        }}>Offers</Text>
                     </View>
 
                     <View
@@ -57,11 +61,12 @@ const Orbit = () => {
                             flexDirection: 'row'
                         }}
                     >
-                        <Image style={{ height: 15, width: 15 }} source={images.sparkle} resizeMode='contain' />
+                        <Image style={{ height: hr*10, width: wr*10, alignSelf:'center' }} source={images.sparkle} resizeMode='contain' />
                         <Text style={{
                             ...FONTS.label,
-                            color: "gray"
-                        }}>Secure</Text>
+                            color: "#cccccc",
+                            marginLeft:2
+                        }}>Tokens</Text>
                     </View>
 
                     <View
@@ -69,11 +74,12 @@ const Orbit = () => {
                             flexDirection: 'row'
                         }}
                     >
-                        <Image style={{ height: 15, width: 15 }} source={images.sparkle} resizeMode='contain' />
+                        <Image style={{ height: hr*10, width: wr*10, alignSelf:'center' }} source={images.sparkle} resizeMode='contain' />
                         <Text style={{
                             ...FONTS.label,
-                            color: "gray"
-                        }}>Rewarding</Text>
+                            color: "#cccccc",
+                            marginLeft:2
+                        }}>Digital Collectables</Text>
                     </View>
 
                 </View>
@@ -87,16 +93,15 @@ const Orbit = () => {
                 style={{
                     borderRadius: 50,
                     padding: 8,
-                    borderWidth: 1,
-                    borderColor: '#DBDBDB',
                     position: 'absolute',
                     flexDirection: 'row',
-                    top: 17,
-                    right: 7,
-                    marginTop: -6,
-                    marginRight: -20
+                    top: hr*0,
+                    right: wr*-50,
+                    marginTop: hr*-6,
+                    marginRight: wr*-20
+                    
                 }}>
-                <Image style={{ height: 85, width: 85 }} source={images.orbit} resizeMode='contain' />
+                <Image style={{ height: hr*160, width: wr*160 }} source={images.orbit} resizeMode='contain' />
             </View>
 
 

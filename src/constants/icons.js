@@ -42,6 +42,10 @@ const reply = require("../assets/icons/reply.png")
 const dots = require("../assets/icons/dots.png")
 const googleicon = require("../assets/icons/google.png")
 const coin = require("../assets/icons/coinnikel.png")
+const question = require("../assets/icons/question-mark.png")
+const power = require("../assets/icons/power-off.png")
+const copyb = require("../assets/icons/copyb.png")
+const copyg = require("../assets/icons/copyg.png")
 
 export default {
     back,
@@ -87,5 +91,9 @@ export default {
     reply,
     googleicon,
     dots,
-    coin
+    coin,
+    question,
+    power,
+    copyb,
+    copyg
 }

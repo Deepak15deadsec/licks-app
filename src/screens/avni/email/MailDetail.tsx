@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions, ActivityIndicator, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions, ActivityIndicator, ScrollView, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { MialNavigation } from '../../../navigation/MailNavigation'
 import { SIZES, FONTS } from '../../../constants'
@@ -16,10 +16,12 @@ import axios from 'axios';
 import WebView from 'react-native-webview'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
+
 const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: string } } }) => {
 
-    let wr = (SIZES.width / 391)
-    let hr = (SIZES.height / 812)
+ 
     const trending: any = trendingJson.find((x) => x.id === id)
     const { width } = useWindowDimensions();
     const navigation = useNavigation()
@@ -53,6 +55,12 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
 
     }, [user.token])
 
+    const dateStringg = data?.from;
+
+    const nameInitial = dateStringg
+        ? dateStringg.split('@')[1].charAt(0).toUpperCase()
+        : '';
+
     return (
 
         <View style={styles.container}>
@@ -60,10 +68,10 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
             <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={{
-                    paddingTop: 30,
-                    paddingBottom: 30,
-                    paddingLeft: 25,
-                    paddingRight: 25
+                    paddingTop: Platform.OS === 'android' ? hr*30 : hr*50,
+                    paddingBottom: hr*30,
+                    paddingLeft: wr*25,
+                    paddingRight: wr*25
                 }}
             >
                 <Svg width="20" height="16" viewBox="0 0 20 16" fill="none">
@@ -71,16 +79,13 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                 </Svg>
             </TouchableOpacity>
 
-
-
-
             <View
                 style={{
                     position: 'absolute',
                     bottom: 0,
                     alignSelf: 'center',
                     width: SIZES.width * 0.92,
-                    height: hr * (SIZES.height - 70),
+                    height: Platform.OS === 'android' ? (SIZES.height - 70) :(SIZES.height - 90),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#ffffff80',
@@ -94,7 +99,7 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                     position: 'absolute',
                     bottom: 0,
                     width: SIZES.width,
-                    height: hr * (SIZES.height - 82),
+                    height: Platform.OS === 'android' ? (SIZES.height - 82) : (SIZES.height - 102),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#FFFFFF',
@@ -110,18 +115,29 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
-                    
+
                     justifyContent: 'space-between'
                 }}>
                     <View
                         style={{
                             flexDirection: 'row',
-                            flex:1,
+                            flex: 1,
                             justifyContent: 'space-between',
                             gap: 5,
                         }}
                     >
-                        {/* <Image
+                        <View
+                            style={{
+                                flexDirection: 'row',
+                                flex: 1,
+
+                                gap: 5,
+                            }}
+                        >
+                            <View style={styles.circle}>
+                                <Text style={styles.initial}>{nameInitial}</Text>
+                            </View>
+                            {/* <Image
                             source={trending.icon}
                             style={{
                                 width: 63,
@@ -130,13 +146,15 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                             resizeMode='contain'
                         /> */}
 
-                        <View
-                            style={{ gap: 0 }}>
-                            <Text style={{ ...FONTS.heading, lineHeight: 20, color: 'black' }}>
-                                {data?.subject} </Text>
-                            <Text style={{ ...FONTS.paragraph, lineHeight: 20, color: 'black' }}>
-                                {data?.from} </Text>
+                            <View
+                                style={{ gap: 0, alignSelf:'center' }}>
+                                <Text style={{ ...FONTS.heading, lineHeight: 20, color: 'black' }}>
+                                    {data?.subject} </Text>
+                                <Text style={{ ...FONTS.paragraph, lineHeight: 20, color: 'black' }}>
+                                    {data?.from} </Text>
+                            </View>
                         </View>
+
                         <View>
                             <Dropdown sendData={data} />
                         </View>
@@ -152,7 +170,7 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                             flex: 1,
                             height: "100%",
                             width: "100%"
-                            
+
                         }
                     }
                 >
@@ -167,7 +185,7 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                             </View>
                         )}
                         scalesPageToFit={true}
-                        
+
                     />
                     {/* </ScrollView> */}
                 </SafeAreaView>
@@ -190,8 +208,8 @@ const styles = StyleSheet.create({
     },
     webview: {
         flex: 1,
-        width:"120%",
-       
+        width: "120%",
+
     },
     loadingContainer: {
         flex: 1,
@@ -200,5 +218,18 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         flexGrow: 1,
+    },
+    circle: {
+        width: wr*50,
+        height: hr*50,
+        borderRadius: 25,
+        backgroundColor: '#5C595F',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: hr*5
+    },
+    initial: {
+        fontSize: 20,
+        color: 'white'
     },
 })

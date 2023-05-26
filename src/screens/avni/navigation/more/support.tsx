@@ -15,6 +15,7 @@ const Support = () => {
 
   let wr = (SIZES.width / 391)
   let hr = (SIZES.height / 812)
+
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={10}
@@ -28,7 +29,7 @@ const Support = () => {
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={{
-              paddingTop: 30,
+              paddingTop: Platform.OS === 'android' ? hr*30 : hr*50,
               paddingBottom: 30,
               paddingLeft: 25,
               paddingRight: 25
@@ -46,7 +47,7 @@ const Support = () => {
 
               alignSelf: 'center',
               width: SIZES.width * 0.92,
-              height: (SIZES.height - 70),
+              height: Platform.OS === 'android' ? (SIZES.height - 70) :(SIZES.height - 90),
               borderTopLeftRadius: 30,
               borderTopRightRadius: 30,
               backgroundColor: '#ffffff80',
@@ -60,7 +61,7 @@ const Support = () => {
               bottom: 0,
 
               width: SIZES.width,
-              height: (SIZES.height - 82),
+              height: Platform.OS === 'android' ? (SIZES.height - 82) : (SIZES.height - 102),
               borderTopLeftRadius: 30,
               borderTopRightRadius: 30,
               backgroundColor: '#FFFFFF',
@@ -92,7 +93,6 @@ const Support = () => {
                 />
                 <MessageInput
                   label="Message"
-
                   placeholder='Please Enter the message'
                   multiline={true}
                   numberOfLines={4}

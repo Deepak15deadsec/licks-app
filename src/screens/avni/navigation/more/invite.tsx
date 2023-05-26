@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, Linking, Platform} from 'react-native'
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 import Svg, {
     Path,
@@ -9,14 +9,45 @@ import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hoo
 import { useNavigation } from '@react-navigation/native';
 import { AvniTextInput } from '../../../../components/inputs';
 import MessageInput from '../../../../components/inputs/MessageInput';
+import Share from 'react-native-share';
+import { Clipboard } from '@react-native-clipboard/clipboard/dist/Clipboard';
 
+
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
+
+
+
+const copyToClipboard = (text: string) => {
+    Clipboard.setString(text);
+  };
 
 const Invite = () => {
     const navigation = useNavigation()
     const user = useStoreState((store) => store.user)
 
-    let wr = (SIZES.width / 391)
-    let hr = (SIZES.height / 812)
+    const handleCopy = () => {
+        const textToCopy = 'www.avni.club/XUS';
+        copyToClipboard(textToCopy);
+      };
+
+
+    const handleShare = () => {
+        const message = 'Check out this awesome app!';
+        const url = `whatsapp://send?text=${encodeURIComponent(message)}`;
+
+        Share.open({ url })
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    };
+
+
+
+ 
     return (
         <View style={styles.container}>
 
@@ -24,10 +55,10 @@ const Invite = () => {
             <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={{
-                    paddingTop: 30,
-                    paddingBottom: 30,
-                    paddingLeft: 25,
-                    paddingRight: 25
+                    paddingTop: Platform.OS === 'android' ? hr*30 : hr*50,
+                    paddingBottom: hr*30,
+                    paddingLeft: wr*25,
+                    paddingRight: wr*25
                 }}
             >
                 <Svg width="20" height="16" viewBox="0 0 20 16" fill="none">
@@ -39,10 +70,10 @@ const Invite = () => {
                 style={{
                     position: 'absolute',
                     bottom: 0,
-                 
+
                     alignSelf: 'center',
                     width: SIZES.width * 0.92,
-                    height:  (SIZES.height - 70),
+                    height: Platform.OS === 'android' ? (SIZES.height - 70) :(SIZES.height - 90),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#ffffff80',
@@ -54,16 +85,16 @@ const Invite = () => {
                 style={{
                     position: 'absolute',
                     bottom: 0,
-             
+
                     width: SIZES.width,
-                    height:  (SIZES.height - 82),
+                    height: Platform.OS === 'android' ? (SIZES.height - 82) : (SIZES.height - 102),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#FFFFFF',
-                    paddingLeft: 24,
-                    paddingRight: 24,
-                    paddingTop: 20,
-                    paddingBottom: 50
+                    paddingLeft: wr * 24,
+                    paddingRight: wr * 24,
+                    paddingTop: hr * 20,
+                    paddingBottom: hr * 50
                 }}
             >
 
@@ -82,165 +113,257 @@ const Invite = () => {
                         borderWidth: 1,
                         borderStyle: 'dotted',
                         borderRadius: 4,
-                        borderColor: '#30D792',
+                        borderColor: '#cccccc',
                         padding: 12,
-                        marginTop: 5,
+                        marginTop: hr * 5,
+
                     }}>
-                    <Text style={{ ...FONTS.size14b, color: '#000000' }}>
-                        why invite?</Text>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            gap: 5
+                        }}
+                    >
+                        <View style={{
+                            ...FONTS.size14b, width: wr*40,
+                            borderWidth: 1,
+                            borderRadius: 100,
+                            alignItems: 'center',
+                            padding: 8,
+                            height: hr * 40,
+                            borderColor: '#cccccc',
+
+                        }}>
+                            <Text>1</Text>
+                        </View>
+                        <View
+                            style={{ alignSelf: 'center' }}
+                        >
+                            <Text style={{ ...FONTS.size14b, color: '#000000' }}>
+                                Invite Your Friends</Text>
+                        </View>
+
+                    </View>
+
 
                     <View
-
                         style={{
-                            marginTop: 10,
+                            borderWidth: 0.5,
+                            backgroundColor: '#f0fcfa',
+
+                            borderRadius: 10,
+                           
+                           
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             alignItems: 'center',
+                            marginTop: hr * 30,
+                            paddingLeft:wr*10,
+                            paddingRight:wr*10,
+                            paddingTop: hr*10,
+                            paddingBottom: hr*10,
+                        }}
+                    >
+                        <Text style={{ ...FONTS.category, color: '#000000' }}>
+                            www.avni.club/XUS
+                        </Text>
 
-                        }}>
-
-
-                        <View style={{
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            gap: 5
-                        }}>
-
-                            <Text style={{ ...FONTS.size12s, color: '#5C595F' }}>
-                                When you invite you earn {'\n'} 25 ART</Text>
-
-
-                        </View>
-
-                        <View>
-                            <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: 3 }}>
-                                Your friend receives{'\n'}50 ART</Text>
-                        </View>
-
-                    </View>
-                </View>
-
-
-                <View>
-
-
-
-                    <View style={{ marginTop: 30, gap: 20, marginBottom: 10 }}>
-
-                        <View
-                            style={{
-                                borderWidth: 1,
-                                borderStyle: 'dotted',
-                                borderRadius: 4,
-                                borderColor: '#30D792',
-                                padding: 12,
-                            }}>
-                            <Text style={{ ...FONTS.category, color: '#000000' }}>
-                                Email</Text>
-
-                            <View
-
+                        <TouchableOpacity
+                        onPress={handleCopy}
+                        >
+                            <Image
+                                source={icons.copyb}
                                 style={{
-                                    marginTop: 5,
-                                    flexDirection: 'row',
-
-                                    alignItems: 'center',
-
-                                }}>
-
-
-
-                                <View>
-                                    <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: 3 }}>
-                                    {user.email}</Text>
-                                </View>
-
-                            </View>
-                        </View>
+                                    width: wr*18,
+                                    height: hr*18,
+                                }}
+                                resizeMode="contain"
+                            />
+                        </TouchableOpacity>
 
 
+                        {/* <TouchableOpacity
+                            style={{
+                                backgroundColor: true ? '#30D792' : "#DBDBDB",
+                                borderRadius: 10,
+                                justifyContent: 'center',
+                                height: hr*28,
+                                width: wr*80,
+                                alignItems: 'center',
 
 
+                            }}
 
+                        //@ts-ignore
+
+                        >
+                            <Text style={{
+                                ...FONTS.category,
+                                color: '#fff'
+                            }}>Copy Code</Text>
+                        </TouchableOpacity> */}
                     </View>
-                </View>
-
-                <TouchableOpacity
-                    style={{
-                        backgroundColor: true ? '#30D792' : "#DBDBDB",
-                        borderRadius: 10,
-                        justifyContent: 'center',
-                        height: 52,
-                        alignItems: 'center',
-                        marginTop: 10
-                    }}
-
-                //@ts-ignore
-
-                >
-                    <Text style={{
-                        ...FONTS.paragraph,
-                        color: '#fff'
-                    }}>Send</Text>
-                </TouchableOpacity>
-
-                <View style={{ marginTop: 10, gap: 20, marginBottom: 10, overflow: 'hidden' }}>
-
-                    <MessageInput
-
-                        label="Or Share"
-                        value="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the.
-               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the..."
-                        placeholder='Please Enter Complaint'
-                        multiline={true}
-                        numberOfLines={4}
-                    />
-
-                </View>
-
-                <View
-                    style={{
-                        borderWidth: 1,
-                        backgroundColor: '#E8FFF5',
-                        borderStyle: 'dotted',
-                        borderRadius: 4,
-                        borderColor: '#30D792',
-                        padding: 5,
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                    }}
-                >
-                    <Text style={{ ...FONTS.category, color: '#000000' }}>
-                        www.avni.com/XUS
-                    </Text>
-
 
                     <TouchableOpacity
+                        onPress={handleShare}
                         style={{
                             backgroundColor: true ? '#30D792' : "#DBDBDB",
-                            borderRadius: 10,
-                            justifyContent: 'center',
-                            height: 28,
-                            width: 80,
+                            borderRadius: 20,
+                            justifyContent: 'space-between',
+                            flexDirection: 'row',
+                            height: hr * 52,
                             alignItems: 'center',
-
-
+                            marginTop: hr * 30,
+                            paddingLeft: wr * 20,
+                            paddingRight: wr * 20
                         }}
 
                     //@ts-ignore
 
                     >
                         <Text style={{
-                            ...FONTS.category,
+                            ...FONTS.paragraph,
                             color: '#fff'
-                        }}>Copy Code</Text>
+                        }}>INVITE YOUR FRIEND</Text>
+                        <Image
+                            source={icons.whatsapp}
+                            style={{
+                                width: wr*28,
+                                height: hr*28,
+                            }}
+                            resizeMode="contain"
+                        />
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ position: 'absolute', flexDirection: 'row', gap: 10, alignSelf: 'center', bottom: 20 }}>
+                <View
+                    style={{
+                        borderLeftWidth: 1,
+                        borderLeftColor: '#cccccc',
+                        height: hr * 80,
+                        marginLeft: wr * 30.5, // To make the line appear seamless
+                        // To make the line appear seamless
+                    }}
+                ></View>
 
-                    <TouchableOpacity
+                <View
+                    style={{
+                        borderWidth: 1,
+                        borderStyle: 'dotted',
+                        borderRadius: 4,
+                        borderColor: '#cccccc',
+                        padding: 12,
+
+                        height: hr * 180
+                    }}
+                >
+
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            gap: 5
+                        }}
+                    >
+                        <View style={{
+                            ...FONTS.size14b, width: wr*40,
+                            borderWidth: 1,
+                            borderRadius: 100,
+                            alignItems: 'center',
+                            padding: 8,
+                            height: hr * 40,
+                            borderColor: '#cccccc',
+
+                        }}>
+                            <Text>2</Text>
+                        </View>
+                        <View
+                            style={{ alignSelf: 'center' }}
+                        >
+                            <Text style={{ ...FONTS.size14b, color: '#000000' }}>
+                                You get 50 ART</Text>
+                        </View>
+
+                    </View>
+
+                    <View
+                        style={{
+                            borderLeftWidth: 1,
+                            borderLeftColor: '#cccccc',
+                            height: hr * 18,
+                            marginLeft: wr * 20.5, // To make the line appear seamless
+                            // To make the line appear seamless
+                        }}
+                    ></View>
+
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            gap: 5
+                        }}
+                    >
+                        <View style={{
+                            ...FONTS.size14b, width: wr*40,
+                            borderWidth: 1,
+                            borderRadius: 100,
+                            alignItems: 'center',
+                            padding: 8,
+                            height: hr * 40,
+                            borderColor: '#cccccc',
+
+                        }}>
+                            <Text></Text>
+                        </View>
+                        <View
+                            style={{ alignSelf: 'center' }}
+                        >
+                            <Text style={{ ...FONTS.size14b, color: '#000000' }}>
+                                Download and register on Avni App</Text>
+                        </View>
+
+                    </View>
+                    <View
+                        style={{
+                            borderLeftWidth: 1,
+                            borderLeftColor: '#cccccc',
+                            height: hr * 18,
+                            marginLeft: wr * 20.5, // To make the line appear seamless
+                            // To make the line appear seamless
+                        }}
+                    ></View>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            gap: 5
+                        }}
+                    >
+                        <View style={{
+                            ...FONTS.size14b, width: wr*40,
+                            borderWidth: 1,
+                            borderRadius: 100,
+                            alignItems: 'center',
+                            padding: 8,
+                            height: hr * 40,
+                            borderColor: '#cccccc',
+
+                        }}>
+                            <Text></Text>
+                        </View>
+                        <View
+                            style={{ alignSelf: 'center' }}
+                        >
+                            <Text style={{ ...FONTS.size14b, color: '#000000' }}>
+                                On completion both earn 50 ART </Text>
+                        </View>
+
+                    </View>
+
+                </View>
+
+
+                <View style={{ position: 'absolute', flexDirection: 'row', gap: 10, alignSelf: 'center', bottom: hr*80 }}>
+
+                    {/* <TouchableOpacity
+                        onPress={handleShare}
                         style={{
                             backgroundColor: '#ffffff',
                             width: 60,
@@ -264,7 +387,7 @@ const Invite = () => {
                             resizeMode="contain"
                         />
 
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
 
                     <TouchableOpacity
@@ -274,8 +397,8 @@ const Invite = () => {
                             borderWidth: 1,
                             borderRadius: 100,
                             borderColor: '#30D792',
-                            width: 60,
-                            height: 60,
+                            width: wr*60,
+                            height: hr*60,
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}
@@ -286,8 +409,8 @@ const Invite = () => {
                         <Image
                             source={icons.facebook}
                             style={{
-                                width: 33,
-                                height: 22,
+                                width: wr*33,
+                                height: hr*22,
                             }}
                             resizeMode="contain"
                         />
@@ -296,11 +419,12 @@ const Invite = () => {
                     <TouchableOpacity
                         style={{
                             backgroundColor: '#ffffff',
-                            width: 60,
+                            width: wr*60,
                             borderWidth: 1,
                             borderRadius: 100,
+                            borderColor: '#30D792',
                             padding: 8,
-                            height: 60,
+                            height: hr*60,
                             justifyContent: 'center',
                             alignItems: 'center',
 
@@ -310,8 +434,8 @@ const Invite = () => {
                         <Image
                             source={icons.twitter}
                             style={{
-                                width: 33,
-                                height: 22,
+                                width: wr*33,
+                                height: hr*22,
                             }}
                             resizeMode="contain"
                         />
@@ -321,22 +445,23 @@ const Invite = () => {
                     <TouchableOpacity
                         style={{
                             backgroundColor: '#ffffff',
-                            width: 60,
+                            width: wr*60,
                             borderWidth: 1,
                             borderRadius: 100,
+                            borderColor: '#30D792',
                             padding: 8,
-                            height: 60,
+                            height: hr*60,
                             justifyContent: 'center',
                             alignItems: 'center',
-                            marginRight: 40
+                            
                         }}
 
                     >
                         <Image
                             source={icons.insta}
                             style={{
-                                width: 33,
-                                height: 22,
+                                width: wr*33,
+                                height: hr*22,
                             }}
                             resizeMode="contain"
                         />

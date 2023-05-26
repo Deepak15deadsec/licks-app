@@ -49,9 +49,12 @@ const Mailid = ({ route }: any) => {
   };
   console.log("error", error)
 
+
+  const lowerCaseText = email.toLowerCase();
+
   const verify = async () => {
 
-    navigation.navigate("Signup" as never, { user: { ...user, email: email.concat('@avniclub.com') } } as never);
+    navigation.navigate("Signup" as never, { user: { ...user, email: lowerCaseText.concat('@avniclub.com') } } as never);
   }
 
   switch (screen) {

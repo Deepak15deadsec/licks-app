@@ -5,8 +5,14 @@ import Svg, {
     Circle
 } from 'react-native-svg'
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
+import { useNavigation } from '@react-navigation/native';
+
+
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
 
 const Card = () => {
+    const navigation = useNavigation()
     let wr = (SIZES.width / 391)
     let hr = (SIZES.height / 812)
     return (
@@ -21,7 +27,7 @@ const Card = () => {
             paddingBottom: hr * 20,
             gap: 4,
             alignContent: 'center',
-            marginTop: 10
+            marginTop: hr*10
         }}>
 
 
@@ -33,6 +39,7 @@ const Card = () => {
 
 
             <TouchableOpacity
+              onPress={() => navigation.navigate('Profile' as never)}
                 style={{
                     borderRadius: 15,
                     padding: 8,
@@ -40,8 +47,8 @@ const Card = () => {
                     borderColor: '#DBDBDB',
                     position: 'absolute', 
                     flexDirection: 'row', 
-                    top: 17,
-                    right: 7,
+                    top: hr*17,
+                    right: wr*7,
                      backgroundColor: '#333333'
                 }}>
                 <Text style={{ ...FONTS.label, color: '#ffffff' }}> Update</Text>

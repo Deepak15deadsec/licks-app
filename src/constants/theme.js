@@ -79,7 +79,7 @@ export const SIZES = {
 export const FONTS = {
     largeTitle: { fontFamily: "Inter-Regular", fontSize: SIZES.largeTitle, lineHeight: 55 },
     h1: { fontFamily: "Inter-Black", fontSize: SIZES.h1, lineHeight: 36 },
-    orbit: { fontFamily: "Inter-Bold", fontSize: SIZES.h12, lineHeight: 30 },
+    orbit: { fontFamily: "Inter-Bold", fontSize: SIZES.h12, lineHeight: 40 },
     h2: { fontFamily: "Inter-Bold", fontSize: SIZES.h2, lineHeight: 30 },
     h3: { fontFamily: "Inter-Bold", fontSize: SIZES.h3, lineHeight: 22 },
     h4: { fontFamily: "Inter-Bold", fontSize: SIZES.h4, lineHeight: 22 },

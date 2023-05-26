@@ -43,7 +43,7 @@ const Category = () => {
 
                 setData(data)
 
-                console.log("cat", data)
+                //console.log("cat", data)
             } catch (error) {
                 console.log(error)
 

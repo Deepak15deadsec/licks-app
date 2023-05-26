@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Switch } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { icons, SIZES, FONTS } from '../../../constants'
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +7,7 @@ import axios from 'axios'
 import { enc, AES } from 'react-native-crypto-js';
 //@ts-ignore
 import { SERVER_BASE_URL, CRYPTO_SECRET_KEY } from '@env';
+import Language from '../../../components/language';
 
 
 const Phone = ({ route }: any) => {
@@ -27,8 +28,14 @@ const Phone = ({ route }: any) => {
     phone: false
   })
 
+  const [checked, setChecked] = useState(false);
+
+  const handleCheck = () => {
+    setChecked(!checked);
+  };
+
   useEffect(() => {
-    setDetail({ ...detail, callingCode: user.callingCode, countryCode: user.countryCode })
+    setDetail({ ...detail, callingCode: '+91' })
   }, [user])
 
 
@@ -84,10 +91,11 @@ const Phone = ({ route }: any) => {
               bottom: 0,
               alignSelf: 'center',
               width: SIZES.width * 0.92,
-              height: hr * 620,
+              height: Platform.OS === 'android' ? (SIZES.height - 158) : (SIZES.height - 192),
               borderTopLeftRadius: 30,
               borderTopRightRadius: 30,
               backgroundColor: '#ffffff80',
+              
             }}
           />
 
@@ -97,19 +105,31 @@ const Phone = ({ route }: any) => {
               position: 'absolute',
               bottom: 0,
               width: SIZES.width,
-              height: hr * 610,
+              height: Platform.OS === 'android' ? (SIZES.height - 170) : (SIZES.height - 204),
               borderTopLeftRadius: 30,
               borderTopRightRadius: 30,
               backgroundColor: '#FFFFFF',
-              paddingLeft: 24,
-              paddingRight: 24,
-              paddingTop: 36
+              paddingLeft: wr * 24,
+              paddingRight: wr * 24,
+              paddingTop: hr * 36
             }}
           >
 
-            <View>
-              <Text style={{ ...FONTS.heading, color: 'black' }}>Membership Application</Text>
-              <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>tell us your mobile number</Text>
+            <View >
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between'
+                }}>
+                <View>
+                  <Text style={{ ...FONTS.heading, color: 'black' }}>Membership Application</Text>
+                  <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>tell us your mobile number</Text>
+                </View>
+
+                <Language />
+
+              </View>
+
               <PhoneInput
                 setDetail={setDetail}
                 detail={detail}
@@ -117,7 +137,22 @@ const Phone = ({ route }: any) => {
               />
             </View>
 
-            <View style={{ position: 'absolute', flexDirection: 'row', alignSelf: 'center', bottom: 40 }}>
+            <View style={{ position: 'absolute',  alignSelf: 'center', bottom: hr*140 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+                <Switch
+                  value={checked}
+                  onValueChange={handleCheck}
+                />
+                <Text style={{ marginLeft: 2 }}>
+                  I agree to avni.club T&C and pivacy policy
+                </Text>
+              </View>
+             
+            </View>
+
+
+
+            <View style={{ position: 'absolute', flexDirection: 'row', alignSelf: 'center', bottom: hr*40 }}>
               {/* back */}
               <TouchableOpacity
                 style={{
@@ -146,7 +181,7 @@ const Phone = ({ route }: any) => {
               {/* next */}
               <TouchableOpacity
                 style={{
-                  backgroundColor: detail.phone.length === 10 ? '#30D792' : "#DBDBDB",
+                  backgroundColor: detail.phone.length === 10 && checked ? '#30D792' : "#DBDBDB",
                   padding: 8,
                   borderRadius: 100,
                   width: 60,
@@ -154,7 +189,7 @@ const Phone = ({ route }: any) => {
                   justifyContent: 'center',
                   alignItems: 'center'
                 }}
-                disabled={detail.phone.length < 10}
+                disabled={detail.phone.length < 10 || !checked}
                 //@ts-ignore
                 onPress={requestForOtp}
               >

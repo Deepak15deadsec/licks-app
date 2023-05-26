@@ -32,10 +32,12 @@ const App = () => {
 
   const [show, setShow] = useState(false);
   const date = useStoreState(store => store.query)
-  
+
   const setQuery = useStoreActions((store) => store.setQuery)
 
   const showPicker = useCallback((value: boolean | ((prevState: boolean) => boolean)) => setShow(value), []);
+
+  const MINIMUM_DATE = moment('2023-05-01').toDate(); // Set the minimum date to May 2023
 
   const onValueChange = useCallback(
     (event: any, newDate: any) => {
@@ -77,6 +79,7 @@ const App = () => {
         <MonthPicker
           onChange={onValueChange}
           value={date}
+          minimumDate={MINIMUM_DATE}
           maximumDate={new Date()}
           locale="en"
           mode="full"

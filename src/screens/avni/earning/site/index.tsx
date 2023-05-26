@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SharedElement } from 'react-native-shared-element';
-import { FONTS } from '../../../../constants';
+import { FONTS, icons, SIZES } from '../../../../constants';
 import { trendingJson } from '../../data/trendingJson';
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
 
@@ -9,12 +9,8 @@ import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hoo
 import { SERVER_BASE_URL } from '@env'
 import axios from 'axios';
 import moment from 'moment';
+import Orbit from '../../../../components/orbit/Orbit';
 
-const DATA = [
-    { id: '1', title: 'Starbucks', description: 'June 22' },
-    { id: '2', title: 'Title 2', description: 'Description 2' },
-    { id: '3', title: 'Title 3', description: 'Description 3' },
-];
 
 const Item = ({ title, description }: any) => (
     <View style={styles.item}>
@@ -23,14 +19,18 @@ const Item = ({ title, description }: any) => (
     </View>
 );
 
-const Site = () => {
 
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
+
+const Site = () => {
+    const [isLoading, setLoading] = useState(false);
     const { user, query }: { user: any, query: Date } = useStoreState((store) => store)
     const [data, setData] = useState([]);
 
     useEffect(() => {
         const fetchSites = async () => {
-
+            setLoading(true);
             try {
                 const { data } = await axios({
                     method: "GET",
@@ -42,10 +42,12 @@ const Site = () => {
 
                 setData(data)
 
-                console.log("sites", data)
+                //console.log("sites", data)
             } catch (error) {
                 console.log(error)
 
+            } finally {
+                setLoading(false);
             }
         }
 
@@ -53,9 +55,16 @@ const Site = () => {
             user.token && fetchSites()
         }
 
-    }, [ query])
+    }, [query])
 
-    const renderItem = ({ item: data }: any) => {
+    const renderEmpty = () => (
+        <View style={styles.emptyText}>
+            <Text>Uh oh! You have none</Text>
+            {/* <Button onPress={() => requestAPI()} title='Refresh' /> */}
+        </View>
+    )
+
+    const renderItem = ({ item: data, index }: any) => {
 
         const dateStringg = data?.name;
         const nameInitial = dateStringg ? dateStringg.charAt(0).toUpperCase() : '';
@@ -69,7 +78,7 @@ const Site = () => {
 
         return (
             <TouchableOpacity
-
+                key={index}
                 style={{
                     flexDirection: 'column',
                 }}>
@@ -90,13 +99,15 @@ const Site = () => {
                         <View style={{
                             flexDirection: 'row',
                             alignItems: 'center',
-                            gap: 5
+                            gap: 10
                         }}>
                             <Image
-                                source={data?.icon}
+                                source={{
+                                    uri: data?.icon,
+                                }}
                                 style={{
-                                    width: 23,
-                                    height: 23
+                                    width: wr * 23,
+                                    height: hr * 23
                                 }}
                                 resizeMode='contain'
                             />
@@ -104,8 +115,8 @@ const Site = () => {
                             {/* <View style={styles.circle}>
                                 <Text style={styles.initial}>{nameInitial}</Text>
                             </View> */}
-                            <View style={{gap:5}}>
-                                <Text style={{ ...FONTS.category, color: '#000000' }}>
+                            <View style={{ gap: 5 }}>
+                                <Text style={{ ...FONTS.h4, color: '#000000' }}>
                                     {data?.name}</Text>
                                 <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
                                     {formattedDate}</Text>
@@ -117,9 +128,10 @@ const Site = () => {
 
                     </View>
 
-                    <View>
-                        <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: 3 }}>
-                            {data?.totalRewardedAmount}</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+                        <Image style={{ height: 16, width: 16 }} source={icons.coin} resizeMode='contain' />
+                        <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: wr * 3 }}>
+                            {data?.totalrewardedamount}</Text>
                     </View>
 
                 </View>
@@ -128,11 +140,19 @@ const Site = () => {
     }
 
     return (
-        <View style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
+
+{isLoading ? (
+                    <View>
+               
+                  </View>
+                   
+                ) : (
             <FlatList
                 contentContainerStyle={{ paddingLeft: 0 }}
                 data={data}
                 renderItem={renderItem}
+                ListEmptyComponent={renderEmpty}
                 nestedScrollEnabled={true}
                 keyExtractor={(item: any) => `${item.id}`}
                 ItemSeparatorComponent={() => {
@@ -144,7 +164,13 @@ const Site = () => {
                     );
                 }}
             />
-        </View>
+                )}
+
+            <View style={{ marginTop: hr * 20 }}>
+                <Orbit />
+            </View>
+
+        </ScrollView>
     );
 };
 
@@ -152,7 +178,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        paddingTop: 6,
+        paddingTop: hr * 6,
     },
     item: {
         padding: 10,
@@ -167,6 +193,11 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: '#888',
     },
+    emptyText: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
 });
 
 export default Site;

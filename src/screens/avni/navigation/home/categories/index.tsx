@@ -3,10 +3,11 @@ import React from 'react'
 import { TouchableOpacity, Image } from 'react-native'
 import { FONTS, icons } from '../../../../../constants'
 import { categoriesJson } from './categoriesData'
+import { useNavigation } from '@react-navigation/native';
 
 const Categories = () => {
 
-
+    const navigation = useNavigation()
 
     return (
         <View style={{
@@ -16,6 +17,7 @@ const Categories = () => {
             <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: 'center' }}>
                 <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>Categories</Text>
                 <TouchableOpacity
+                     onPress={() => navigation.navigate('Allcategories' as never)}
                     style={{
                         borderRadius: 9,
                         padding: 8,

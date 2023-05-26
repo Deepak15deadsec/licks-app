@@ -1,8 +1,12 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
-import { FONTS } from '../../constants';
+import { FONTS, SIZES } from '../../constants';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from 'moment';
 
+
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
 
 const DatePicker = (props: any) => {
     const [show, setShow] = useState(false);
@@ -14,33 +18,33 @@ const DatePicker = (props: any) => {
                 borderRadius: 10,
                 borderWidth: 1,
                 borderColor: '#30D792',
-                height: 63,
-                paddingLeft: 15,
-                paddingRight: 15,
-                paddingTop: 10,
-                paddingBottom: 10
+                height: hr * 63,
+                paddingLeft: wr * 15,
+                paddingRight: wr * 15,
+                paddingTop: hr * 10,
+                paddingBottom: hr * 10
 
             }}>
 
             <Text style={{
                 ...FONTS.label,
                 color: 'black',
-                marginLeft: 5,
+                marginLeft: wr * 5,
                 position: 'absolute',
-                left: 15,
-                top: 10
+                left: wr * 15,
+                top: hr * 10
             }}>
                 {props.label}
             </Text>
 
             <View
                 style={{
-                    marginTop: 22,
-                    marginLeft: 4
+                    marginTop: hr * 22,
+                    marginLeft: wr * 4
                 }}
             >
                 {props.value ?
-                    <Text style={{ ...FONTS.paragraph, color: '#4E656F' }}>{props.value.toISOString().split('T')[0]}</Text>
+                    <Text style={{ ...FONTS.paragraph, color: '#4E656F' }}>{moment(props.value).format('DD-MM-YYYY')}</Text>
                     : <Text style={{ ...FONTS.paragraph, color: '#00000080' }}>{props.placeholder}</Text>
                 }
 

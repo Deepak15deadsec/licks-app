@@ -108,8 +108,8 @@ const Verify = ({ route }: any) => {
                 <Image
                   source={icons.avni_logo}
                   style={{
-                    width: wr * 77,
-                    height: hr * 105
+                    width: wr * 80,
+                    height: hr * 115
                   }}
                 />
               </View>

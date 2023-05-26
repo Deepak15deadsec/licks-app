@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native'
 import React from 'react'
 import { MialNavigation } from '../../../../navigation/MailNavigation'
 import { SIZES, FONTS } from '../../../../constants'
@@ -19,10 +19,10 @@ const Mail = () => {
             <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={{
-                    paddingTop: 30,
-                    paddingBottom: 30,
-                    paddingLeft: 25,
-                    paddingRight: 25
+                    paddingTop: Platform.OS === 'android' ? hr*30 : hr*50,
+                    paddingBottom: hr*30,
+                    paddingLeft: wr*25,
+                    paddingRight: wr*25
                 }}
             >
                 <Svg width="20" height="16" viewBox="0 0 20 16" fill="none">
@@ -40,7 +40,7 @@ const Mail = () => {
 
                     alignSelf: 'center',
                     width: SIZES.width * 0.92,
-                    height: (SIZES.height - 70),
+                    height: Platform.OS === 'android' ? (SIZES.height - 70) :(SIZES.height - 90),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#ffffff80',
@@ -55,7 +55,7 @@ const Mail = () => {
                     bottom: 0,
 
                     width: SIZES.width,
-                    height:  (SIZES.height - 82),
+                    height: Platform.OS === 'android' ? (SIZES.height - 82) : (SIZES.height - 102),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#FFFFFF',

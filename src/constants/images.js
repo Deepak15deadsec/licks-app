@@ -7,6 +7,8 @@ const gstar = require("../assets/images/gstar.png");
 const estar = require("../assets/images/estar.png");
 const orbit = require("../assets/images/orbit.png");
 const sparkle = require("../assets/images/sparkler.png");
+const usa = require("../assets/images/us.png");
+const loader = require("../assets/images/loading.json");
 
 // Dummy
 const usFlag = require("../assets/images/us-flag.jpg");
@@ -25,6 +27,8 @@ export default {
     gstar,
     orbit,
     sparkle,
+    usa,
+    loader,
 
     // Dummy
     usFlag,

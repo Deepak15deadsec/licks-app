@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import Svg, { Path, Text as SvgText, TSpan } from 'react-native-svg';
+import Orbit from '../orbit/Orbit';
 
 type DataItem = {
   category: string;
   totalRewardedAmount: number;
-  
+
 };
 
 type Props = {
@@ -14,13 +15,15 @@ type Props = {
   holeSize?: number;
 };
 
-const PieChart = ({ data, size = 320, holeSize = 0.7 }: Props) => {
+const PieChart = ({ data, size = 310, holeSize = 0.7 }: Props) => {
   const total = data.reduce((sum, { totalRewardedAmount }) => sum + totalRewardedAmount, 0);
-  const outerRadius = size / 2;
+  const outerRadius = size / 3;
   const innerRadius = outerRadius * holeSize;
   const cx = outerRadius;
   const cy = outerRadius;
   const isFullCircle = data.length === 1; // Check if there's only one data item
+
+
 
   let startAngle = -Math.PI / 2;
 
@@ -38,7 +41,7 @@ const PieChart = ({ data, size = 320, holeSize = 0.7 }: Props) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={{ width: size, height: size, marginTop: 20 }}>
-      <Svg width={size} height={size}>
+      <Svg width={size} height={size} style={{ marginLeft: 60 }}>
         {data.map(({ category, totalRewardedAmount }, index) => {
           const color = colors[index];
           const endAngle = isFullCircle ? startAngle + Math.PI * 2 : startAngle + (totalRewardedAmount / total) * Math.PI * 2;
@@ -76,24 +79,36 @@ const PieChart = ({ data, size = 320, holeSize = 0.7 }: Props) => {
             fontWeight="bold"
             fill="#000000"
           >
-            <TSpan x={cx} dy="-1em">Total Spendings</TSpan>
+            <TSpan x={cx} dy="-0.5em">Total Rewarded</TSpan>
             <TSpan x={cx} dy="1.5em">{total}</TSpan>
-            <TSpan x={cx} dy="2em">Total Savings</TSpan>
+            {/* <TSpan x={cx} dy="2em">Total Savings</TSpan>
             <TSpan x={cx} dy="1.5em">
               {data.find(({ category }) => category === 'Savings')?.totalRewardedAmount}
-            </TSpan>
+            </TSpan> */}
           </SvgText>
         )}
       </Svg>
 
-      <View style={{ marginBottom: 10 }}>
-        {data.map(({ category }, index) => (
-          <View key={`label${index}`} style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <View style={{ width: 10, height: 10, backgroundColor: colors[index], marginRight: 5 }} />
-            <Text>{category}</Text>
+      <View style={{ marginBottom: 10, marginTop: -50 }}>
+        {data.map(({ category, totalRewardedAmount }, index) =>{ 
+          const percentage = (totalRewardedAmount / total) * 100;
+          return (
+          <View key={`label${index}`} style={{ flexDirection: 'row', alignItems: 'center', justifyContent:'space-between' ,marginLeft: 20 }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{ width: 10, height: 10, backgroundColor: colors[index], marginRight: 5 }} />
+              <Text>{category}</Text>
+              
+            </View>
+            <View>
+                {/* <Text>{totalRewardedAmount}</Text> */}
+                <Text>{percentage.toFixed(2)} %</Text>
+              </View>
+
           </View>
-        ))}
+        )})}
       </View>
+
+      <Orbit />
     </ScrollView>
   );
 };

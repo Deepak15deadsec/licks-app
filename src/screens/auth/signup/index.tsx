@@ -54,7 +54,7 @@ const Signup = ({ route }: any) => {
         "smsAccess": input?.sms_access,
         "locationAccess": input?.location_access,
         "gender": input?.gender,
-        "age": input?.dob
+        "dob": input?.dob
       })
       var requestOptions = {
         method: 'POST',

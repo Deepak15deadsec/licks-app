@@ -80,7 +80,7 @@ const ReplyScreen = ({ route: { params: { sentData } } }: any) => {
             <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={{
-                    paddingTop: hr * 30,
+                    paddingTop: Platform.OS === 'android' ? hr*30 : hr*50,
                     paddingBottom: hr * 30,
                     paddingLeft: wr * 25,
                     paddingRight: wr * 25
@@ -98,7 +98,7 @@ const ReplyScreen = ({ route: { params: { sentData } } }: any) => {
                     //top: 58,
                     alignSelf: 'center',
                     width: SIZES.width * 0.92,
-                    height: (SIZES.height - 70),
+                    height: Platform.OS === 'android' ? (SIZES.height - 70) :(SIZES.height - 90),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#ffffff80',
@@ -112,7 +112,7 @@ const ReplyScreen = ({ route: { params: { sentData } } }: any) => {
                     bottom: 0,
                     //top: 70,
                     width: SIZES.width,
-                    height: (SIZES.height - 82),
+                    height: Platform.OS === 'android' ? (SIZES.height - 82) : (SIZES.height - 102),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#FFFFFF',

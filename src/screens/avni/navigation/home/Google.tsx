@@ -7,12 +7,18 @@ import Svg, {
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 import { getUrl } from '../../../../hooks/googleUrl'
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
+import { useNavigation } from '@react-navigation/native';
+
+
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
 
 const Google = () => {
     let wr = (SIZES.width / 391)
     let hr = (SIZES.height / 812)
 
     const user = useStoreState((store) => store.user)
+    const navigation = useNavigation()
    
 console.log("easy",user)
     const handleClick = async () => {
@@ -32,7 +38,7 @@ console.log("easy",user)
             paddingBottom: hr * 20,
             gap: 4,
             alignContent: 'center',
-            marginTop: 10
+            marginTop: hr*10
         }}>
 
 
@@ -51,13 +57,13 @@ console.log("easy",user)
                     borderColor: '#DBDBDB',
                     position: 'absolute', 
                     flexDirection: 'row', 
-                    top: 17,
-                    right: 7,
+                    top: hr*17,
+                    right: wr*7,
                      backgroundColor: '#fff'
                 }}
-                onPress={handleClick}
+                onPress={() => navigation.navigate('Google' as never)}
                 >
-                 <Image style={{ height: 22, width: 22 }} source={icons.googleicon} resizeMode='contain' />
+                 <Image style={{ height: hr*22, width: wr*22 }} source={icons.googleicon} resizeMode='contain' />
             </TouchableOpacity>
 
 

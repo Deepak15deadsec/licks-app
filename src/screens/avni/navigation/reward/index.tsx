@@ -1,6 +1,5 @@
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image, Alert } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Image, Alert, Platform, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { MialNavigation } from '../../../../navigation/MailNavigation'
 import { SIZES, FONTS, images, icons } from '../../../../constants'
 import { FlatList } from 'react-native-gesture-handler'
 import { CommonFlatlist } from '../../../../components/flatlist';
@@ -8,38 +7,144 @@ import Svg, { Path } from 'react-native-svg'
 import { searchEnum } from '../search/search.enum'
 import { useNavigation } from '@react-navigation/native'
 import { rewardJson } from '../../data/rewardJson'
-import { trendingJson } from '../../data/trendingJson'
+import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
+import QRCode from 'react-native-qrcode-svg';
+import { Clipboard } from '@react-native-clipboard/clipboard/dist/Clipboard';
+import LottieView from 'lottie-react-native'
+
+//@ts-ignore
+import { SERVER_BASE_URL } from '@env'
+import axios from 'axios';
+import moment from 'moment'
+
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
 
 const Reward = () => {
     const navigation = useNavigation()
-
-    let wr = (SIZES.width / 391)
-    let hr = (SIZES.height / 812)
-
+    const user = useStoreState((store) => store.user)
+    const [isCopied, setIsCopied] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
+    const [isLastPage, setIsLastPage] = useState(false);
     const [data, setData] = useState<any[]>([])
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState<number>(1)
     const [isLoading, setLoading] = useState(false);
 
 
+    const [showContent, setShowContent] = useState(Array(data.length).fill(false));
 
 
+
+    const copyToClipboard = (text: string) => {
+        Clipboard.setString(text);
+    };
+
+    const fetchData = async (token: any) => {
+        setLoading(true);
+        let responseData;
+        try {
+
+            const { data } = await axios({
+                url: `${SERVER_BASE_URL}/milestone?userId=${user.id}&page=${page}&pageSize=10`,
+                method: 'GET',
+                headers: {
+                    "Content-Type": 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+                cancelToken: token
+            });
+           // console.log("mildsl",data)
+            if (data.length === 0) {
+                setIsLastPage(true);
+            }
+            responseData = data;
+
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setData([...data, ...responseData])
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        setData(rewardJson)
-    }, [rewardJson])
+        const source = axios.CancelToken.source();
+        fetchData(source.token);
+        return () => {
+            source.cancel('Request canceled');
+        };
+    }, []);
 
-    const fetchMoreData = () => {
-        setPage(page + 1)
-    }
 
-    const renderItem = ({ item: reward }: any) => {
+    //Fetch more data when page changes
+    useEffect(() => {
+        if (!isLastPage) { // Check if it's not the last page
+            const source = axios.CancelToken.source();
+            fetchData(source.token);
+            return () => {
+                source.cancel('Request canceled');
+            };
+        }
+    }, [page]);
+
+    const handleRefresh = async () => {
+        let responseData;
+        try {
+            setRefreshing(true);
+
+            const { data } = await axios({
+                url: `${SERVER_BASE_URL}/milestone?userId=${user.id}&page=${page}&pageSize=10`,
+                method: 'GET',
+                headers: {
+                    "Content-Type": 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+
+            });
+           // console.log("deepak", data)
+            responseData = data;
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setRefreshing(false)
+            setData([...data, ...responseData])
+        }
+
+
+    };
+
+    const renderItem = ({ item: data, index }: any) => {
+
+        // const randomThreeDigitNumber = Math.floor(Math.random() * 900) + 100;
+
+        const handleCopy = () => {
+            const textToCopy = data?.voucherCode;
+            copyToClipboard(textToCopy);
+            setIsCopied(true);
+        };
+
+        const handleTextClick = (index: any) => {
+            const updatedShowContent = [...showContent];
+            updatedShowContent[index] = !updatedShowContent[index];
+            setShowContent(updatedShowContent);
+        };
+
+        const inputDate = data?.validUpto;
+        // const formattedDate = moment(inputDate).format('DD/MM/YYYY');
+
+        const dateString = data.updatedAt;
+        const formattedDate = new Date(dateString).toLocaleDateString('en-US', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+        });
 
         return (
             <View>
                 <View
 
                     style={{
-                        backgroundColor: '#ffffff',
+                        backgroundColor: data && data?.orderAcheived === data?.maxOrderRequired ? '#f0fcfa' : '#ffffff',
                         borderTopRightRadius: 20,
                         borderTopLeftRadius: 20,
                         height: 70,
@@ -54,7 +159,7 @@ const Reward = () => {
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                           
+
                         }}>
 
                         <View style={{
@@ -75,7 +180,9 @@ const Reward = () => {
                                 //   onPress={() => navigation.navigate('Detail' as never, { id: reward.advertiser_id } as never)}
                                 >
                                     <Image
-                                        source={reward.icon}
+                                        source={{
+                                            uri: data?.brandImage,
+                                        }}
                                         style={{
                                             width: 58,
                                             height: 58,
@@ -94,13 +201,17 @@ const Reward = () => {
                                 }}>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                         <Text style={{ ...FONTS.size14b, color: '#5C595F', lineHeight: 16, letterSpacing: -0.03 }}>
-                                            {reward.name}</Text>
-                                        <Text style={{ ...FONTS.size14b, color: '#30D792', lineHeight: 16, letterSpacing: -0.03 }}>
-                                            + {reward.reward} ART</Text>
+                                            {data?.brandName}</Text>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+                                            <Text style={{ ...FONTS.size14b, color: '#30D792', lineHeight: 16, letterSpacing: -0.03 }}>
+                                                + {data?.rewardrdArt} </Text>
+                                            <Image style={{ height: 16, width: 16 }} source={icons.coin} resizeMode='contain' />
+                                        </View> */}
+
                                     </View>
 
                                     <Text style={{ ...FONTS.size14m, color: '#5C595F', letterSpacing: -0.03 }}>
-                                        {reward.discount} </Text>
+                                        {data?.offerTitle} </Text>
                                 </View>
 
                             </View>
@@ -116,7 +227,7 @@ const Reward = () => {
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    backgroundColor: "#ffffff",
+                    backgroundColor: data && data?.orderAcheived === data?.maxOrderRequired ? '#f0fcfa' : '#ffffff',
                     alignItems: 'center',
                     paddingHorizontal: 25,
                     height: 40,
@@ -151,17 +262,17 @@ const Reward = () => {
 
                 <View
                     style={{
-                        backgroundColor: '#ffffff',
-                        borderBottomLeftRadius: 20,
-                        borderBottomRightRadius: 20,
-                        height: reward && reward.level === reward.maxLevel ? 115 : 80,
+                        backgroundColor: data && data?.orderAcheived === data?.maxOrderRequired ? '#f0fcfa' : '#ffffff',
+                        borderBottomLeftRadius: showContent[index] ? 0 : 20,
+                        borderBottomRightRadius: showContent[index] ? 0 : 20,
+                        height: data && data?.orderAcheived === data?.maxOrderRequired ? 135 : 90,
                         paddingHorizontal: 20,
-                        paddingVertical: reward && reward.level === reward.maxLevel ? 0 : 5,
+                        paddingVertical: data && data?.orderAcheived === data?.maxOrderRequired ? 0 : 5,
                         justifyContent: 'flex-start',
                         gap: 9
                     }}>
 
-                    {reward && reward.level === reward.maxLevel ? (
+                    {data && data?.orderAcheived === data?.maxOrderRequired ? (
                         <View style={{
                             flexDirection: 'row',
                             gap: 17,
@@ -169,40 +280,88 @@ const Reward = () => {
                             width: '100%'
                         }}>
 
-                            <Image
-                                source={images.qr}
-                                style={{
-                                    width: 65,
-                                    height: 65
-                                }} />
+                            <QRCode value={`${data?.voucherCode}`} size={52} />
 
-                            <Text style={{ ...FONTS.h2, color: '#5C595F', letterSpacing: -0.03}}>{reward.qrCode}</Text>
+                            <Text style={{ ...FONTS.h2, color: '#5C595F', letterSpacing: -0.03 }}>{data?.voucherCode}</Text>
+
+                            <TouchableOpacity
+                                onPress={handleCopy}
+                            >
+                                <Image
+                                    source={isCopied ? icons.copyg : icons.copyb}
+                                    style={{
+                                        width: wr * 18,
+                                        height: hr * 18,
+                                    }}
+                                    resizeMode="contain"
+                                />
+                            </TouchableOpacity>
 
                         </View>
                     ) :
                         (
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-start', width: '100%', gap: 5 }}>
-                                {Array.from({ length: reward.maxLevel }, (_, i) => i + 1).map((x) => {
-                                    const fill = x <= reward.level ? images.gstar : images.estar;
+                                {Array.from({ length: data?.maxOrderRequired }, (_, i) => i + 1).map((x) => {
+                                    const fill = x <= data?.orderAcheived ? images.gstar : images.estar;
                                     return (
                                         <Image
-                                        key={x}
-                                        source={fill}
-                                        style={{
-                                            width: 25,
-                                            height: 25,
-                                        }}
-                                        resizeMode='contain'
-                                    />
+                                            key={x}
+                                            source={fill}
+                                            style={{
+                                                width: 25,
+                                                height: 25,
+                                            }}
+                                            resizeMode='contain'
+                                        />
                                     )
                                 })}
                             </View>
                         )
                     }
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: data && data?.orderAcheived === data?.maxOrderRequired ? 20 : 0 }}>
+                        <Text style={{ ...FONTS.size14m, color: '#5C595F', letterSpacing: -0.03 }}>Valid upto  {formattedDate}</Text>
+                        <View style={{ gap: 2 }}>
+                            <Text style={{ ...FONTS.size14m, color: '#cccccc', lineHeight: 20, marginTop: -5 }}>
+                                Earn </Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: -2, marginTop: -4 }}>
+                                <Text style={{ ...FONTS.size20s, color: '#30D792', lineHeight: 20, marginTop: 5 }}>
+                                    +{data?.rewardrdArt} </Text>
+                                <Image style={{ height: 22, width: 22 }} source={icons.coin} resizeMode='contain' />
+                            </View>
+                        </View>
 
-                    <Text style={{ ...FONTS.size14m, color: '#5C595F', letterSpacing: -0.03 }}>Valid upto  {reward.expiry}</Text>
-                    <Text style={{ ...FONTS.size14m, color: '#5C595F', letterSpacing: -0.03, marginTop: -5 }}>Terms & conditions </Text>
+                    </View>
+
+                    <TouchableOpacity onPress={() => handleTextClick(index)}>
+                        <Text style={{ ...FONTS.size14m, color: '#5C595F', letterSpacing: -0.03, marginTop: -20, textDecorationLine: 'underline' }}>
+                            Terms & conditions
+                        </Text>
+                    </TouchableOpacity>
+
+
                 </View>
+
+                {showContent[index] && (<View
+                    style={{
+                        backgroundColor: data && data?.orderAcheived === data?.maxOrderRequired ? '#f0fcfa' : '#ffffff',
+                        borderBottomLeftRadius: 20,
+                        borderBottomRightRadius: 20,
+
+                        paddingHorizontal: 20,
+                        paddingVertical: 8,
+                        justifyContent: 'flex-start',
+                        gap: 9,
+                        marginTop: -2
+                    }}
+                >
+                    {data.termsAndConditions.map((term: any, index: any) => (
+                        <Text key={index}>{index + 1}  {term}</Text>
+
+                    ))}
+
+                </View>
+                )}
+
             </View>
 
 
@@ -215,15 +374,15 @@ const Reward = () => {
         padding: 8
     }} />;
 
-    const renderFooter = () => (
-        <View style={styles.footerText}>
-            {isLoading && <ActivityIndicator />}
-        </View>
-    )
+    // const renderFooter = () => (
+    //     <View style={styles.footerText}>
+    //         {isLoading && <ActivityIndicator />}
+    //     </View>
+    // )
 
     const renderEmpty = () => (
         <View style={styles.emptyText}>
-            <Text>No Data at the moment</Text>
+            <Text>Oops!! No Rewards yet </Text>
             {/* <Button onPress={() => requestAPI()} title='Refresh' /> */}
         </View>
     )
@@ -232,10 +391,10 @@ const Reward = () => {
     return (
         <View style={styles.container}>
 
-            <View style={{ flexDirection: "row", justifyContent: 'flex-end', gap: 20, alignItems: 'center', padding: 20 }}>
+            <View style={{ flexDirection: "row", justifyContent: 'flex-end', gap: 20, alignItems: 'center', paddingHorizontal: wr * 20, paddingVertical: Platform.OS === 'android' ? hr * 20 : hr * 50 }}>
 
 
-                
+
                 <View style={{ flexDirection: 'row', gap: 16, justifyContent: 'space-between', alignItems: 'center' }}>
                     <Svg width="18" height="20" viewBox="0 0 18 20" fill="none">
                         <Path
@@ -249,8 +408,8 @@ const Reward = () => {
                         <Image
                             source={icons.avatar}
                             style={{
-                                width: wr*38,
-                                height: hr*38
+                                width: wr * 38,
+                                height: hr * 38
                             }}
                             resizeMode='contain'
                         />
@@ -266,7 +425,7 @@ const Reward = () => {
 
                     alignSelf: 'center',
                     width: SIZES.width * 0.92,
-                    height: (SIZES.height - 83),
+                    height: Platform.OS === 'android' ? (SIZES.height - 83) : (SIZES.height - 110),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#ffffff80',
@@ -281,7 +440,7 @@ const Reward = () => {
                     bottom: 0,
 
                     width: SIZES.width,
-                    height: (SIZES.height - 95),
+                    height: Platform.OS === 'android' ? (SIZES.height - 95) : (SIZES.height - 123),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#eeeeee',
@@ -300,20 +459,54 @@ const Reward = () => {
                 }}>
 
                     <Text style={{ ...FONTS.heading, color: 'black', marginBottom: 8 }}>Milestone Rewards</Text>
+                    <TouchableOpacity
+                        style={{
+                            borderRadius: 15,
+                            padding: 8,
+                            borderWidth: 1,
+                            borderColor: '#DBDBDB',
+                            position: 'absolute',
+                            flexDirection: 'row',
+                            zIndex: 50,
+                            right: 7,
+                            shadowColor: '##30D792',
+                            shadowOffset: { width: 10, height: 1 },
+                            shadowOpacity: 0.4,
+                            shadowRadius: 10,
+                            elevation: 5,
+                            backgroundColor: '#f0fcfa'
+                        }}
+
+                    >
+                        <Image style={{ height: 12, width: 12 }} source={icons.question} resizeMode='contain' />
+                    </TouchableOpacity>
 
                 </View>
 
+                {isLoading ? (
+                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                        {/* <ActivityIndicator size={100} color="red" /> */}
+                        <LottieView source={images.loader} autoPlay loop />
 
-                <CommonFlatlist
-                    data={data}
+                    </View>
 
-                    renderItem={renderItem}
-                    ItemSeparatorComponent={renderSeparator}
-                    ListFooterComponent={renderFooter}
-                    ListEmptyComponent={renderEmpty}
-                    onEndReachedThreshold={0.2}
-                    onEndReached={fetchMoreData}
-                />
+                ) : (
+                    <CommonFlatlist
+                        data={data}
+                        renderItem={renderItem}
+                        ItemSeparatorComponent={renderSeparator}
+                        // ListFooterComponent={renderFooter}
+                        ListEmptyComponent={renderEmpty}
+                        onEndReached={() => setPage((prevPage) => prevPage + 1)}
+                        onEndReachedThreshold={0.1}
+                        keyExtractor={(item: any) => `${item.id}`}
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+                        }
+                    />
+
+                )}
+
             </View>
 
 

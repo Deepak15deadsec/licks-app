@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Platform } from 'react-native'
 import React from 'react'
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 import Svg, {
@@ -26,11 +26,26 @@ const Home = () => {
 
   const theme = useColorScheme();
 
+  const isProfileComplete = () => {
+    // Check if all the required fields in the user object are filled
+    if (
+      user.firstName &&
+      user.lastName &&
+      user.email &&
+      user.phone &&
+      user.gender &&
+      user.age
+    ) {
+      return true; // Profile is complete
+    }
+    return false; // Profile is not complete
+  };
+
   return (
     <View style={styles.container}>
 
 
-      <View style={{ flexDirection: "row", justifyContent: 'space-between', gap: 20, alignItems: 'center', paddingHorizontal: wr * 20, paddingVertical: hr * 20 }}>
+      <View style={{ flexDirection: "row", justifyContent: 'space-between', gap: 20, alignItems: 'center', paddingHorizontal: wr * 20, paddingVertical: Platform.OS === 'android' ? hr * 20 : hr*50 }}>
 
         <Text style={{ ...FONTS.heading, color: 'white' }}>Welcome Back, {user.firstName}</Text>
 
@@ -64,7 +79,7 @@ const Home = () => {
           bottom: 0,
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height: (SIZES.height - 83),
+          height: Platform.OS === 'android' ? (SIZES.height - 83) : (SIZES.height - 110),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -77,7 +92,7 @@ const Home = () => {
           position: 'absolute',
           bottom: 0,
           width: SIZES.width,
-          height: (SIZES.height - 95),
+          height: Platform.OS === 'android' ? (SIZES.height - 95) : (SIZES.height - 123),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',
@@ -90,12 +105,13 @@ const Home = () => {
 
         <ScrollView
           showsVerticalScrollIndicator={false}>
+     
           <CoinCard />
           <Text style={{
             marginTop: 15,
             ...FONTS.paragraph, color: '#5C595F'
           }}>Action required </Text>
-          <Card />
+     {!isProfileComplete() && <Card />}
           <Google />
           <Categories />
           <Trending />

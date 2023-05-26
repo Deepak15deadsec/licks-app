@@ -83,7 +83,7 @@ const Intro = () => {
     const scrollX = useRef(new Animated.Value(0)).current;
     const [currentIndex, setCurrentIndex] = useState(0);
     const flatListRef = useRef<any>(null);
-    let redirectionScreen = "Language"
+    let redirectionScreen = "Phone"
 
     const Indicator = ({ scrollX }: any) => {
         const navigation = useNavigation();

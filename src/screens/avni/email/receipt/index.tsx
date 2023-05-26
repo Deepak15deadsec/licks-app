@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SharedElement } from 'react-native-shared-element';
-import { FONTS } from '../../../../constants';
+import { FONTS, images } from '../../../../constants';
 import { trendingJson } from '../../data/trendingJson';
 import { useNavigation } from '@react-navigation/native';
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
+import LottieView from 'lottie-react-native'
 
 //@ts-ignore
 import { SERVER_BASE_URL } from '@env'
@@ -22,12 +23,13 @@ const Item = ({ title, description }: any) => (
 const Receipt = () => {
     const user = useStoreState((store) => store.user)
     const navigation = useNavigation()
-
+    const [refreshing, setRefreshing] = useState(false);
     const [data, setData] = useState([]);
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchMails = async () => {
-
+            setLoading(true);
             try {
                 const { data } = await axios({
                     method: "GET",
@@ -43,6 +45,8 @@ const Receipt = () => {
             } catch (error) {
                 console.log(error)
 
+            } finally{
+                setLoading(false);
             }
         }
 
@@ -52,49 +56,76 @@ const Receipt = () => {
 
     }, [user.token])
 
-    
+    const handleRefresh = async () => {
+      
+        try {
+            setRefreshing(true);
 
-    const renderItem = ({ item: data }: any) => {
+            const { data } = await axios({
+                url: `${SERVER_BASE_URL}/avni-inbox?userId=${user.id}&receipt=true`,
+                method: 'GET',
+                headers: {
+                    "Content-Type": 'application/json',
+                    'Authorization': `Bearer ${user.token}`
+                },
+
+            });
+            //console.log("deepak", data)
+            setData(data)
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setRefreshing(false)
+           
+        }
+
+
+    };
+
+
+
+    const renderItem = ({ item: data, index }: any) => {
         const dateStringg = data?.from;
-        
+
         const nameInitial = dateStringg
-        ? dateStringg.split('@')[1].charAt(0).toUpperCase()
-        : '';
+            ? dateStringg.split('@')[1].charAt(0).toUpperCase()
+            : '';
 
-    const dateString = data.updatedAt;
-    const formattedDate = new Date(dateString).toLocaleDateString('en-US', {
-        day: 'numeric',
-        month: 'short'
-    });
-    return (
-        <TouchableOpacity
-            onPress={() => navigation.navigate('Maildetail' as never, { s3id: data?.s3PathId } as never)}
-            style={{
-                flexDirection: 'column',
-            }}>
-            {/* @ts-ignore */}
-
-
-            <View
+        const dateString = data.updatedAt;
+        const formattedDate = new Date(dateString).toLocaleDateString('en-US', {
+            day: 'numeric',
+            month: 'short'
+        });
+        return (
+            <TouchableOpacity
+                key={index}
+                onPress={() => navigation.navigate('Maildetail' as never, { s3id: data?.s3PathId } as never)}
                 style={{
-                    marginTop: 10,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
+                    flexDirection: 'column',
                 }}>
-                <View style={{
-                    gap: 3
-                }}>
+                {/* @ts-ignore */}
 
-                    <View style={{
+
+                <View
+                    style={{
+                        marginTop: 10,
                         flexDirection: 'row',
+                        justifyContent: 'space-between',
                         alignItems: 'center',
-                        gap: 5
                     }}>
-                        <View style={styles.circle}>
-                            <Text style={styles.initial}>{nameInitial}</Text>
-                        </View>
-                        {/* <Image
+                    <View style={{
+                        gap: 3
+                    }}>
+
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            gap: 5
+                        }}>
+                            <View style={styles.circle}>
+                                <Text style={styles.initial}>{nameInitial}</Text>
+                            </View>
+                            {/* <Image
                                 source={trending.icon}
                                 style={{
                                     width: 23,
@@ -103,53 +134,68 @@ const Receipt = () => {
                                 resizeMode='contain'
                             /> */}
 
-                        <View
+                            <View
 
-                        >
-                            <Text style={{ ...FONTS.h4, color: '#000000' }}>
-                                {data?.subject} </Text>
+                            >
+                                <Text style={{ ...FONTS.h4, color: '#000000' }}>
+                                    {data?.subject} </Text>
 
-                            <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
-                                {data?.from}</Text>
+                                <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
+                                    {data?.from}</Text>
+                            </View>
+
+
+
                         </View>
 
 
 
                     </View>
 
-
+                    <View>
+                        <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: 3 }}>
+                            {formattedDate}</Text>
+                    </View>
 
                 </View>
+            </TouchableOpacity>
+        )
+    }
 
-                <View>
-                    <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: 3 }}>
-                        {formattedDate}</Text>
-                </View>
+    return (
+        <View style={styles.container}>
+            {isLoading ? (
+                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                        {/* <ActivityIndicator size={100} color="red" /> */}
+                        <LottieView source={images.loader} autoPlay loop />
 
-            </View>
-        </TouchableOpacity>
-    )
-}
+                    </View>
 
-return (
-    <View style={styles.container}>
-        <FlatList
-            contentContainerStyle={{ paddingLeft: 0 }}
-            data={data}
-            renderItem={renderItem}
-            nestedScrollEnabled={true}
-            keyExtractor={(item: any) => `${item.id}`}
-            ItemSeparatorComponent={() => {
-                return (
-                    <View
-                        style={{
-                            padding: 10
-                        }} />
-                );
-            }}
-        />
-    </View>
-);
+                ) : (
+            <FlatList
+                contentContainerStyle={{ paddingLeft: 0 }}
+                showsVerticalScrollIndicator={false}
+                data={data}
+                renderItem={renderItem}
+                nestedScrollEnabled={true}
+                keyExtractor={(item: any) => `${item.id}`}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+                }
+                ItemSeparatorComponent={() => {
+                    return (
+                        <View
+                            style={{
+                                padding: 10
+                            }} />
+                    );
+                }}
+            />
+
+                )}
+        </View>
+                
+    );
 };
 
 const styles = StyleSheet.create({

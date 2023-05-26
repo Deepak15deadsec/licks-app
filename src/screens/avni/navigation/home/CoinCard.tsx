@@ -1,12 +1,14 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import Svg, {
     Path,
     Circle
 } from 'react-native-svg'
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
+import { useNavigation } from '@react-navigation/native';
 
 const CoinCard = () => {
+    const navigation = useNavigation()
     let wr = (SIZES.width / 391)
     let hr = (SIZES.height / 812)
     return (
@@ -21,32 +23,60 @@ const CoinCard = () => {
             paddingBottom: hr * 20,
             gap: 4,
             alignContent: 'center',
-            marginTop: 15
+            marginTop: 15,
+
         }}>
 
 
             <Text style={{
                 ...FONTS.label,
                 color: COLORS.white
-            }}>Earning...</Text>
+            }}>Earnings</Text>
 
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-            <Image style={{ height: 25, width: 25 }} source={icons.coin} resizeMode='contain' />
+                <Image style={{ height: 25, width: 25 }} source={icons.coin} resizeMode='contain' />
                 <Text style={{ ...FONTS.coin, color: 'white' }}>2,130</Text>
-                <Text style={{
+                {/* <Text style={{
                     ...FONTS.label,
                     color: COLORS.white
-                }}>ART</Text>
+                }}>ART</Text> */}
+                <TouchableOpacity
+                 onPress={() => navigation.navigate('Token' as never)}
+                    style={{
+                        borderRadius: 15,
+                        padding: 8,
+                        borderWidth: 1,
+                        borderColor: '#DBDBDB',
+
+                        flexDirection: 'row',
+                        zIndex: 50,
+
+                        shadowColor: '##30D792',
+                        shadowOffset: { width: 10, height: 1 },
+                        shadowOpacity: 0.4,
+                        shadowRadius: 10,
+                        elevation: 5,
+                        backgroundColor: '#f0fcfa'
+                    }}
+
+                >
+                    <Image style={{ height: 12, width: 12 }} source={icons.question} resizeMode='contain' />
+                </TouchableOpacity>
             </View>
 
 
             <View style={{ position: 'absolute', flexDirection: 'row', right: 0 }}>
+                <Svg width="133" height="64" viewBox="0 0 133 64" fill="none" >
+                    <Circle cx="98.5" cy="20.5" r="43.5" fill="white" fillOpacity="0.14" />
+                    <Circle cx="43.5" cy="20.5" r="43.5" fill="white" fillOpacity="0.14" />
+                </Svg>
+
                 {/* <Svg  width="87" height="64" viewBox="0 0 87 64" fill="none">
               <Circle  cx="43.5" cy="20.5" r="43.5" fill="white" fillOpacity="0.14"/>
               </Svg> */}
-                <Svg width="78" height="64" viewBox="0 0 78 64" fill="none">
+                {/* <Svg width="78" height="64" viewBox="0 0 78 64" fill="none">
                     <Circle cx="43.5" cy="20.5" r="43.5" fill="white" fillOpacity="0.14" />
-                </Svg>
+                </Svg> */}
             </View>
         </View>
 

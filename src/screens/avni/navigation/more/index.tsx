@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Platform } from 'react-native'
 import React from 'react'
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 import Svg, {
@@ -22,7 +22,7 @@ const More = () => {
 
       
 
-      <View style={{ flexDirection: "row", justifyContent: 'flex-end', gap: 20, alignItems: 'center', padding: 20 }}>
+      <View style={{ flexDirection: "row", justifyContent: 'flex-end', gap: 20, alignItems: 'center', paddingHorizontal: wr * 20, paddingVertical: Platform.OS === 'android' ? hr * 20 : hr*50  }}>
         <View style={{ flexDirection: 'row', gap: 16, justifyContent: 'space-between', alignItems: 'center' }}>
           <Svg width="18" height="20" viewBox="0 0 18 20" fill="none">
             <Path
@@ -52,7 +52,7 @@ const More = () => {
 
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height:  (SIZES.height - 83),
+          height: Platform.OS === 'android' ? (SIZES.height - 83) : (SIZES.height - 110),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -67,7 +67,7 @@ const More = () => {
           bottom: 0,
 
           width: SIZES.width,
-          height: (SIZES.height - 95),
+          height: Platform.OS === 'android' ? (SIZES.height - 95) : (SIZES.height - 123),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',
