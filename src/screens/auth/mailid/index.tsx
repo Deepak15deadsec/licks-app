@@ -14,6 +14,9 @@ const Mailid = ({ route }: any) => {
   const navigation = useNavigation()
   const [screen, setScreen] = useState<number>(1)
   const [error, setError] = useState({ email: false });
+  const [errorr, setErrorr] = useState('');
+  let addUser = useStoreActions((store) => store.addUser)
+  const setIsMailAttached = useStoreActions((store) => store.setIsMailAttached)
   const user = route?.params?.user
 
   let wr = (SIZES.width / 391)
@@ -35,11 +38,11 @@ const Mailid = ({ route }: any) => {
         },
 
       })
-     
-      if (data.status == 200 && data.is_exist ) {
+
+      if (data.status == 200 && data.is_exist) {
         setError({ ...error, ["email"]: true });
       }
-      else{
+      else {
         setError({ ...error, ["email"]: false });
       }
     } catch (e) {
@@ -52,10 +55,67 @@ const Mailid = ({ route }: any) => {
 
   const lowerCaseText = email.toLowerCase();
 
-  const verify = async () => {
+  const handleSubmit = async () => {
+    const regex = /^[a-zA-Z0-9.]+$/; // Regex pattern to allow letters, numbers, and dot
 
-    navigation.navigate("Signup" as never, { user: { ...user, email: lowerCaseText.concat('@avniclub.com') } } as never);
-  }
+    if (!regex.test(lowerCaseText)) {
+      setErrorr('Special characters are not allowed except for dot (.)');
+    } else {
+      
+
+        try {
+          setScreen(2)
+          var myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+    
+          let raw = JSON.stringify({
+            "phone": user.phone,
+            "email": lowerCaseText.concat('@avniclub.com'),
+            "firstName": "Guest",
+            "lastName": "",
+            "smsAccess": false,
+            "locationAccess": false,
+            "gender": "None",
+            "dob": null
+          })
+
+          var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          };
+    
+          let response = await fetch(`${SERVER_BASE_URL}/oauth/signup`, requestOptions)
+          let data = await response.json()
+    
+          //console.log("signup", data)
+          if (data && data.status === 200 && data.accessToken) {
+            addUser({
+              id: data.id,
+              token: data.accessToken,
+              firstName: data.firstName,
+              lastName: data.lastName,
+              email: data.email,
+              phone: !!data.phone ? data.phone : "",
+              gender: data.gender !== null ? data.gender : null,
+              dob: data.dob !== null ? data.dob : null,
+              referralCode: data.referralCode
+            })
+            setIsMailAttached(data.isMailAttached)
+          }
+        } catch (error) {
+          console.log("errorsssss", error)
+        }
+    
+      }
+
+        //navigation.navigate("Signup" as never, { user: { ...user, email: lowerCaseText.concat('@avniclub.com') } } as never);
+  
+    
+  };
+
+
 
   switch (screen) {
     case 1:
@@ -118,14 +178,19 @@ const Mailid = ({ route }: any) => {
                       onChangeText={handleInputChange}
                       onSubmitEditing={handleInputSubmit}
                     />
-                    <Text style={{ marginLeft: 5 }}>@avniclub.com</Text>
+                    <Text style={{ marginLeft: wr * 5, color:"gray" }}>@avniclub.com</Text>
                   </View>
                   {error.email && <Text style={{
                     color: '#F65C65',
                     ...FONTS.size16b,
                     letterSpacing: -1.03,
-                    marginTop: 12
+                    marginTop: hr * 18
                   }}>Username already taken, try another</Text>}
+                  {errorr && <Text style={{
+                    color: '#F65C65',
+                  
+                    marginTop: hr * 18
+                  }}>{errorr}</Text>}
 
                 </View>
 
@@ -166,8 +231,8 @@ const Mailid = ({ route }: any) => {
                       justifyContent: 'center',
                       alignItems: 'center'
                     }}
-                    disabled={ error.email}
-                    onPress={verify}
+                    disabled={error.email}
+                    onPress={handleSubmit}
                   >
                     <Image
                       source={icons.next}

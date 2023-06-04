@@ -46,6 +46,8 @@ const question = require("../assets/icons/question-mark.png")
 const power = require("../assets/icons/power-off.png")
 const copyb = require("../assets/icons/copyb.png")
 const copyg = require("../assets/icons/copyg.png")
+const mail = require("../assets/icons/mail.png")
+const connect = require("../assets/icons/email.png")
 
 export default {
     back,
@@ -95,5 +97,7 @@ export default {
     question,
     power,
     copyb,
-    copyg
+    copyg,
+    mail,
+    connect
 }

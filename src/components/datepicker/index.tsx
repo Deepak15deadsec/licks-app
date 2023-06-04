@@ -10,6 +10,7 @@ let hr = (SIZES.height / 812)
 
 const DatePicker = (props: any) => {
     const [show, setShow] = useState(false);
+    console.log("props",props)
 
     return (
         <TouchableOpacity
@@ -44,8 +45,9 @@ const DatePicker = (props: any) => {
                 }}
             >
                 {props.value ?
-                    <Text style={{ ...FONTS.paragraph, color: '#4E656F' }}>{moment(props.value).format('DD-MM-YYYY')}</Text>
+                    <Text style={{ ...FONTS.paragraph, color: '#4E656F' }}>{props.value != null ? moment(props.value).format('DD-MM-YYYY') : null}</Text>
                     : <Text style={{ ...FONTS.paragraph, color: '#00000080' }}>{props.placeholder}</Text>
+                    
                 }
 
             </View>

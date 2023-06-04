@@ -40,10 +40,10 @@ const FowardScreen = ({ route: { params: { sentData } } }: any) => {
 
             var raw = JSON.stringify({
                 "userId": user?.id,
-                "to": input?.to,
+                "to": [input?.to],
                 "subject": sentData?.subject,
                 "message": input?.message,
-                "s3PathId": sentData?.s3_path_id,
+                "inboxId": sentData?.id,
                 "type": SentType.FORWARD
             });
             //console.log("raw", raw)

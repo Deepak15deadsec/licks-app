@@ -19,13 +19,13 @@ const Google = () => {
 
     const user = useStoreState((store) => store.user)
     const navigation = useNavigation()
-   
-console.log("easy",user)
+
+    //console.log("easy", user)
     const handleClick = async () => {
         const url = getUrl(user?.phone);
         await Linking.openURL(url);
-      };
-      
+    };
+
     return (
 
         <View style={{
@@ -38,7 +38,7 @@ console.log("easy",user)
             paddingBottom: hr * 20,
             gap: 4,
             alignContent: 'center',
-            marginTop: hr*10
+            marginTop: hr * 10
         }}>
 
 
@@ -55,15 +55,15 @@ console.log("easy",user)
                     padding: 8,
                     borderWidth: 1,
                     borderColor: '#DBDBDB',
-                    position: 'absolute', 
-                    flexDirection: 'row', 
-                    top: hr*17,
-                    right: wr*7,
-                     backgroundColor: '#fff'
+                    position: 'absolute',
+                    flexDirection: 'row',
+                    top: hr * 17,
+                    right: wr * 7,
+                    backgroundColor: '#fff'
                 }}
                 onPress={() => navigation.navigate('Google' as never)}
-                >
-                 <Image style={{ height: hr*22, width: wr*22 }} source={icons.googleicon} resizeMode='contain' />
+            >
+                <Image style={{ height: hr * 22, width: wr * 22 }} source={icons.googleicon} resizeMode='contain' />
             </TouchableOpacity>
 
 

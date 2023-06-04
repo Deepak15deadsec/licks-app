@@ -27,7 +27,7 @@ const Invite = () => {
     const user = useStoreState((store) => store.user)
 
     const handleCopy = () => {
-        const textToCopy = 'www.avni.club/XUS';
+        const textToCopy = user.referralCode;
         copyToClipboard(textToCopy);
       };
 
@@ -165,7 +165,7 @@ const Invite = () => {
                         }}
                     >
                         <Text style={{ ...FONTS.category, color: '#000000' }}>
-                            www.avni.club/XUS
+                           {user.referralCode}
                         </Text>
 
                         <TouchableOpacity

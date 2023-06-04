@@ -3,6 +3,8 @@ import React from 'react'
 import { icons, SIZES, FONTS } from '../../constants'
 
 
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
 
 
 const MessageInput = (props: any) => {
@@ -12,18 +14,18 @@ const MessageInput = (props: any) => {
             borderRadius: 10,
             borderWidth: 1,
             borderColor: '#30D792',
-            height: 263,
-            paddingLeft: 15,
-            paddingRight: 15,
+            height: hr*263,
+            paddingLeft: wr*15,
+            paddingRight: wr*15,
             paddingTop: 0,
-            paddingBottom: 10,
+            paddingBottom: hr*10,
           
 
         }}>
             <Text style={{
                 ...FONTS.label,
                 color: 'black',
-                marginTop:8,
+                marginTop:hr*8,
                 
               
             }}>
@@ -34,7 +36,7 @@ const MessageInput = (props: any) => {
                 placeholderTextColor="#00000080"
                 style={{
                     padding:5,
-                    marginTop: 5,
+                    marginTop: hr*5,
                     ...FONTS.paragraph,
                     color: '#4E656F',
                    

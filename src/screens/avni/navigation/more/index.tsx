@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Platform } from 'react-native'
 import React from 'react'
-import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
+import { COLORS, FONTS, SIZES, icons, TYPES, images } from '../../../../constants'
 import Svg, {
   Path,
   Circle
@@ -75,7 +75,7 @@ const More = () => {
 
         }}
       >
-        <TouchableOpacity
+        <View
 
           style={{
             flexDirection: 'row',
@@ -101,9 +101,21 @@ const More = () => {
 
 
 
-        </TouchableOpacity>
+        </View>
 
         <Options />
+
+        <View style={{paddingRight:wr*90, paddingLeft:wr*50, flexDirection:'row', alignItems:'center', gap:2, marginTop:hr*40}}>
+        <Image
+              source={images.cyber}
+              style={{
+                width: wr*35,
+                height: hr*35
+              }}
+              resizeMode='contain'
+            />
+          <Text style={{ color: "#cccccc"}}>your data is 100% secure with us. we don't share any of your information with any third party</Text>
+        </View>
 
       </View>
 

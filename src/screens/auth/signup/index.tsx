@@ -4,7 +4,7 @@ import { icons, SIZES, FONTS } from '../../../constants'
 import { useNavigation } from '@react-navigation/native';
 import { AvniTextInput } from '../../../components/inputs';
 import Picker from '../../../components/pickers';
-import gendersTypes from './gender-types.json'
+import gendersTypes from './../../avni/data/gender-types.json'
 import DatePicker from '../../../components/datepicker';
 import Checkbox from '../../../components/checkbox';
 import axios from 'axios'
@@ -22,10 +22,10 @@ const Signup = ({ route }: any) => {
 
 
   const [input, setInput] = useState({
-    first_name: "",
+    first_name: "Guest",
     last_name: "",
-    gender: "MALE",
-    dob: "",
+    gender: null,
+    dob: null,
     location_access: false,
     sms_access: false
   })
@@ -34,6 +34,7 @@ const Signup = ({ route }: any) => {
   let hr = (SIZES.height / 812)
 
   let addUser = useStoreActions((store) => store.addUser)
+  const setIsMailAttached = useStoreActions((store) => store.setIsMailAttached)
 
   const onchangeHandler = useCallback((value: any, name: string) => {
     setInput((prevState) => ({ ...prevState, [name]: value }));
@@ -66,7 +67,7 @@ const Signup = ({ route }: any) => {
       let response = await fetch(`${SERVER_BASE_URL}/oauth/signup`, requestOptions)
       let data = await response.json()
 
-      console.log("signup", data)
+      //console.log("signup", data)
       if (data && data.status === 200 && data.accessToken) {
         addUser({
           id: data.id,
@@ -75,15 +76,19 @@ const Signup = ({ route }: any) => {
           lastName: data.lastName,
           email: data.email,
           phone: !!data.phone ? data.phone : "",
-          gender: !!data.gender ? data.gender : "",
-          age: !!data.age ? data.age : ""
+          gender: data.gender !== null ? data.gender : null,
+          dob: data.dob !== null ? data.dob : null,
+          referralCode: data.referralCode
         })
+        setIsMailAttached(data.isMailAttached)
       }
     } catch (error) {
       console.log("errorsssss", error)
     }
 
   }
+
+  console.log("dob", input.dob)
 
   switch (screen) {
     case 1:
@@ -184,9 +189,7 @@ const Signup = ({ route }: any) => {
                     height: 52,
                     alignItems: 'center'
                   }}
-                  disabled={
-                    input.first_name === "" && input.last_name === "" && input.gender === "" && input.dob === ""
-                  }
+                 
                   //@ts-ignore
                   onPress={signup}
                 >

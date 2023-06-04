@@ -4,7 +4,6 @@ import { Phone, Verify, Language, Signup } from './src/screens/auth';
 import { Intro } from './src/screens/intro'
 import { Detail } from './src/screens/avni';
 import { BottomNavigation } from './src/navigation';
-import { useStoreState } from 'easy-peasy';
 import SplashScreen from 'react-native-splash-screen';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import 'react-native-reanimated'
@@ -22,6 +21,14 @@ import Token from './src/screens/avni/navigation/more/faqtoken';
 import Googlepage from './src/components/googlefq';
 import SentDetail from './src/screens/avni/email/SentDetail';
 import AllCategories from './src/screens/avni/navigation/home/categories/AllCategories';
+import { Linking } from 'react-native';
+import axios from 'axios';
+import { useStoreActions, useStoreState } from './src/store/easy-peasy/hooks';
+
+//@ts-ignore
+import { SERVER_BASE_URL } from '@env'
+import maillist from './src/screens/avni/navigation/more/maillist';
+import Invitebox from './src/screens/auth/invitebox';
 
 
 const theme = {
@@ -34,15 +41,67 @@ const theme = {
 
 const Stack = createSharedElementStackNavigator();
 
+export const LinkingConfig: any = {
+  prefixes: ["https://www.app.avni.club"],
+  config: {
+    screens: {
+      Avni: {
+
+        screens: {
+          Home: 'home',
+
+        },
+      },
+
+    },
+  },
+}
+
 const App = () => {
-  const authenticate = useStoreState((state: any) => state.authenticate);
+  const user = useStoreState((store) => store.user)
+  const authenticate = useStoreState((store) => store.authenticate)
+  const setIsMailAttached = useStoreActions((store) => store.setIsMailAttached)
+  const setArtCoin = useStoreActions((store) => store.setArtCoin)
+
+  useEffect(() => {
+    const subscription = Linking.addEventListener('url', handleOpenURL);
+    return () => {
+      subscription.remove()
+    };
+
+  });
+
+
+  const fetchme = async () => {
+
+    const { data } = await axios({
+      method: "GET",
+      url: `${SERVER_BASE_URL}//oauth/me`,
+      headers: {
+        "Authorization": `Bearer ${user.token}`
+      }
+    })
+   
+    setIsMailAttached(true)
+    setArtCoin(data.artCount)
+  }
+
+
+  const handleOpenURL = async (event: any) => {
+    const { url } = event;
+    // Parse the URL to extract the access token and refresh token
+    await fetchme()
+
+    console.log('Refresh Token:', url);
+  };
 
   useEffect(() => {
     SplashScreen.hide();
   }, [])
 
   return (
-    <NavigationContainer >
+    <NavigationContainer linking={LinkingConfig}>
+
       <Stack.Navigator
         screenOptions={{
           headerShown: false
@@ -51,7 +110,7 @@ const App = () => {
       >
         {authenticate ? (
           <>
-            <Stack.Screen name="avni" component={BottomNavigation} />
+            <Stack.Screen name="Avni" component={BottomNavigation} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="Support" component={Support} />
             <Stack.Screen name="Invite" component={Invite} />
@@ -63,7 +122,9 @@ const App = () => {
             <Stack.Screen name="Reply" component={ReplyScreen} />
             <Stack.Screen name="Forward" component={FowardScreen} />
             <Stack.Screen name="Google" component={Googlepage} />
+            <Stack.Screen name="Maillist" component={maillist} />
             <Stack.Screen name="Allcategories" component={AllCategories} />
+            <Stack.Screen name="Invitebox" component={Invitebox} />
             <Stack.Screen
               name="Detail"
               component={Detail}
@@ -82,16 +143,18 @@ const App = () => {
           <>
             <Stack.Screen name="Intro" component={Intro} />
             <Stack.Screen name="Language" component={Language} />
-            <Stack.Screen name="Phone" component={Phone} />
+            <Stack.Screen name="Phone"  component={Phone} />
             <Stack.Screen name="Verify" component={Verify} />
             <Stack.Screen name="Mailid" component={Mailid} />
             <Stack.Screen name="Signup" component={Signup} />
-           
+
           </>
         )}
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
+
+
 
 export default App;

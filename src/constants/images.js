@@ -15,6 +15,10 @@ const usFlag = require("../assets/images/us-flag.jpg");
 const qr = require("../assets/images/qr.png")
 const missfits = require("../assets/images/missfit.png")
 const bluebottle = require("../assets/images/blue.jpeg")
+const intro1 = require("../assets/images/intro1.png")
+const intro2 = require("../assets/images/intro2.png")
+const intro3 = require("../assets/images/intro3.png")
+const cyber = require("../assets/images/cyber.png")
 
 export default {
     wallieLogo,
@@ -29,9 +33,13 @@ export default {
     sparkle,
     usa,
     loader,
+    cyber,
 
     // Dummy
     usFlag,
     missfits,
-    bluebottle
+    bluebottle,
+    intro1,
+    intro2,
+    intro3
 }
