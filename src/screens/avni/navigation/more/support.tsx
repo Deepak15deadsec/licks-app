@@ -30,9 +30,9 @@ const Support = () => {
             onPress={() => navigation.goBack()}
             style={{
               paddingTop: Platform.OS === 'android' ? hr*30 : hr*50,
-              paddingBottom: 30,
-              paddingLeft: 25,
-              paddingRight: 25
+              paddingBottom: hr*30,
+              paddingLeft: wr*25,
+              paddingRight: wr*25
             }}
           >
             <Svg width="20" height="16" viewBox="0 0 20 16" fill="none">
@@ -65,10 +65,10 @@ const Support = () => {
               borderTopLeftRadius: 30,
               borderTopRightRadius: 30,
               backgroundColor: '#FFFFFF',
-              paddingLeft: 24,
-              paddingRight: 24,
-              paddingTop: 20,
-              paddingBottom: 50
+              paddingLeft: wr*24,
+              paddingRight: wr*24,
+              paddingTop: hr*20,
+              paddingBottom: hr*50
             }}
           >
 
@@ -83,14 +83,13 @@ const Support = () => {
 
             <View>
 
-
-
-              <View style={{ marginTop: 30, gap: 20, marginBottom: 10 }}>
+              <View style={{ marginTop: hr*30, gap: 20, marginBottom: hr*10 }}>
                 <AvniTextInput
                   label="Support Category"
-
                   placeholder='Select'
                 />
+
+
                 <MessageInput
                   label="Message"
                   placeholder='Please Enter the message'
@@ -106,9 +105,9 @@ const Support = () => {
                 backgroundColor: true ? '#30D792' : "#DBDBDB",
                 borderRadius: 10,
                 justifyContent: 'center',
-                height: 52,
+                height: hr*52,
                 alignItems: 'center',
-                marginTop: 10
+                marginTop: hr*10
               }}
 
             //@ts-ignore

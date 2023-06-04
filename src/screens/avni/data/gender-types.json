@@ -1,0 +1,19 @@
+[
+    {
+        "label": "Select Your Gender",
+        "value": "None"
+    },
+    {
+        "label": "Male",
+        "value": "Male"
+    },
+    {
+        "label": "Female",
+        "value": "Female"
+    },
+    {
+        "label": "Other",
+        "value": "Other"
+    }
+   
+]

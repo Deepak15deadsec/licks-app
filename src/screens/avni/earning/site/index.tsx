@@ -59,7 +59,7 @@ const Site = () => {
 
     const renderEmpty = () => (
         <View style={styles.emptyText}>
-            <Text>Uh oh! You have none</Text>
+            <Text>No earnings for this month</Text>
             {/* <Button onPress={() => requestAPI()} title='Refresh' /> */}
         </View>
     )
@@ -118,8 +118,8 @@ const Site = () => {
                             <View style={{ gap: 5 }}>
                                 <Text style={{ ...FONTS.h4, color: '#000000' }}>
                                     {data?.name}</Text>
-                                <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
-                                    {formattedDate}</Text>
+                                {/* <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
+                                    {formattedDate}</Text> */}
                             </View>
 
                         </View>

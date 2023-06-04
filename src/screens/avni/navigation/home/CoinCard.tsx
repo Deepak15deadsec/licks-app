@@ -1,16 +1,52 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Svg, {
     Path,
     Circle
 } from 'react-native-svg'
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 import { useNavigation } from '@react-navigation/native';
+import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
+
+//@ts-ignore
+import { SERVER_BASE_URL } from '@env'
+import axios from 'axios';
 
 const CoinCard = () => {
+    const user = useStoreState((store) => store.user)
+    const artCoin = useStoreState((store) => store.artCoin)
+    const setArtCoin = useStoreActions((store) => store.setArtCoin)
     const navigation = useNavigation()
     let wr = (SIZES.width / 391)
     let hr = (SIZES.height / 812)
+
+    useEffect(() => {
+        const fetchCoin = async () => {
+            
+            try {
+                const { data } = await axios({
+                    method: "GET",
+                    url: `${SERVER_BASE_URL}//oauth/me`,
+                    headers: {
+                        "Authorization": `Bearer ${user.token}`
+                    }
+                })
+
+                setArtCoin(data.artCount)
+
+                //console.log("coin", data)
+            } catch (error) {
+                console.log(error)
+
+            }  
+        }
+
+        if (user.token) {
+            user.token && fetchCoin()
+        }
+
+    }, [user.token])
+
     return (
 
         <View style={{
@@ -35,7 +71,7 @@ const CoinCard = () => {
 
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
                 <Image style={{ height: 25, width: 25 }} source={icons.coin} resizeMode='contain' />
-                <Text style={{ ...FONTS.coin, color: 'white' }}>2,130</Text>
+                <Text style={{ ...FONTS.coin, color: 'white' }}>{artCoin}</Text>
                 {/* <Text style={{
                     ...FONTS.label,
                     color: COLORS.white

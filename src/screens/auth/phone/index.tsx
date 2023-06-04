@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Switch } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Switch, Linking, BackHandler } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { icons, SIZES, FONTS } from '../../../constants'
 import { useNavigation } from '@react-navigation/native';
@@ -14,6 +14,14 @@ const Phone = ({ route }: any) => {
   const navigation = useNavigation()
   const user = route?.params?.user
 
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      BackHandler.exitApp(); // Close the app when swipe back
+      return true; // Return true to prevent default back button behavior
+    });
+
+    return () => backHandler.remove(); // Clean up the event listener when component unmounts
+  }, []);
 
   let wr = (SIZES.width / 391)
   let hr = (SIZES.height / 812)
@@ -32,6 +40,9 @@ const Phone = ({ route }: any) => {
 
   const handleCheck = () => {
     setChecked(!checked);
+  };
+  const handlePrivacyPolicyPress = () => {
+    Linking.openURL('https://avni.club/terms-and-conditions');
   };
 
   useEffect(() => {
@@ -91,11 +102,11 @@ const Phone = ({ route }: any) => {
               bottom: 0,
               alignSelf: 'center',
               width: SIZES.width * 0.92,
-              height: Platform.OS === 'android' ? (SIZES.height - 158) : (SIZES.height - 192),
+              height: Platform.OS === 'android' ? (SIZES.height - 168) : (SIZES.height - 192),
               borderTopLeftRadius: 30,
               borderTopRightRadius: 30,
               backgroundColor: '#ffffff80',
-              
+
             }}
           />
 
@@ -105,7 +116,7 @@ const Phone = ({ route }: any) => {
               position: 'absolute',
               bottom: 0,
               width: SIZES.width,
-              height: Platform.OS === 'android' ? (SIZES.height - 170) : (SIZES.height - 204),
+              height: Platform.OS === 'android' ? (SIZES.height - 180) : (SIZES.height - 204),
               borderTopLeftRadius: 30,
               borderTopRightRadius: 30,
               backgroundColor: '#FFFFFF',
@@ -126,7 +137,7 @@ const Phone = ({ route }: any) => {
                   <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>tell us your mobile number</Text>
                 </View>
 
-                <Language />
+                {/* <Language /> */}
 
               </View>
 
@@ -137,24 +148,27 @@ const Phone = ({ route }: any) => {
               />
             </View>
 
-            <View style={{ position: 'absolute',  alignSelf: 'center', bottom: hr*140 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{ position: 'absolute', alignSelf: 'center', bottom: hr * 140 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Switch
                   value={checked}
                   onValueChange={handleCheck}
                 />
-                <Text style={{ marginLeft: 2 }}>
-                  I agree to avni.club T&C and pivacy policy
+                <Text style={{ marginLeft: 5, color:"gray"  }}>
+                  I agree to avni.club {' '}
+                  <Text style={{ textDecorationLine: 'underline', color:"gray" }} onPress={handlePrivacyPolicyPress}>
+                    T&C and privacy policy
+                  </Text>
                 </Text>
               </View>
-             
+
             </View>
 
 
 
-            <View style={{ position: 'absolute', flexDirection: 'row', alignSelf: 'center', bottom: hr*40 }}>
+            <View style={{ position: 'absolute', flexDirection: 'row', alignSelf: 'center', bottom: hr * 40 }}>
               {/* back */}
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={{
                   backgroundColor: '#DBDBDB',
                   width: 60,
@@ -176,7 +190,7 @@ const Phone = ({ route }: any) => {
                   resizeMode="contain"
                 />
 
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               {/* next */}
               <TouchableOpacity

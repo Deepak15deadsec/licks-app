@@ -4,9 +4,10 @@ export type User = {
   firstName: string;
   lastName: string;
   phone: string;
-  gender: string,
+  gender: string | null,
   email:string,
-  age: string
+  dob: string | null,
+  referralCode: string,
 };
 
 

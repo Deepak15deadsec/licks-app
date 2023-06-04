@@ -35,7 +35,7 @@ const AvniTextInput = (props: any) => {
                 {...props}
                 placeholderTextColor="#00000080"
                 style={{
-                    marginTop: 10,
+                    marginTop: hr*10,
                     ...FONTS.paragraph,
                     color: '#4E656F',
                     height: hr*45

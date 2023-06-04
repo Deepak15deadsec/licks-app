@@ -26,18 +26,18 @@ const SentDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
     const { width } = useWindowDimensions();
     const navigation = useNavigation()
     const route = useRoute();
-    const { s3id }: any = route.params;
+    const { inboxId }: any = route.params;
     const user = useStoreState((store) => store.user)
     const [data, setData]: any = useState()
 
 
     useEffect(() => {
 
-        const fetchDetails = async () => {
+        const fetchSent = async () => {
             try {
                 const { data } = await axios({
                     method: "GET",
-                    url: `${SERVER_BASE_URL}/avni-sent/${s3id}`,
+                    url: `${SERVER_BASE_URL}/avni-sent/${id}`,
                     headers: {
                         "Authorization": `Bearer ${user.token}`
                     },
@@ -45,21 +45,21 @@ const SentDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
 
                 })
                 setData(data)
-                //console.log("details", data)
+                console.log("details", data)
             } catch (error) {
                 console.log(error)
             }
         }
-        if (user.token) { fetchDetails() }
+        if (user.token) { fetchSent() }
 
 
     }, [user.token])
 
-    const dateStringg = data?.to;
+    // const dateStringg = data?.from;
 
-    const nameInitial = dateStringg
-        ? dateStringg.split('@')[1].charAt(0).toUpperCase()
-        : '';
+    // const nameInitial = dateStringg
+    //     ? dateStringg.split('@')[1].charAt(0).toUpperCase()
+    //     : '';
 
     return (
 
@@ -134,9 +134,9 @@ const SentDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                                 gap: 5,
                             }}
                         >
-                            <View style={styles.circle}>
+                            {/* <View style={styles.circle}>
                                 <Text style={styles.initial}>{nameInitial}</Text>
-                            </View>
+                            </View> */}
                             {/* <Image
                             source={trending.icon}
                             style={{
@@ -145,6 +145,17 @@ const SentDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                             }}
                             resizeMode='contain'
                         /> */}
+                            <Image
+                                source={{
+                                    uri: `https://www.google.com/s2/favicons?sz=256&domain=avni.club`,
+                                }}
+
+                                style={{
+                                    width: wr * 63,
+                                    height: hr * 63
+                                }}
+                                resizeMode='contain'
+                            />
 
                             <View
                                 style={{ gap: 0, alignSelf:'center' }}>

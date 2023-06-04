@@ -51,7 +51,7 @@ const Month = () => {
                 })
 
                 setData(data)
-                //console.log("month", data)
+                //console.log("monthdate", data)
             } catch (error) {
                 console.log(error)
             }
@@ -112,14 +112,31 @@ const Month = () => {
                             alignItems: 'center',
                             gap: 5
                         }}>
-                            <Image
-                                source={data?.icon}
+                            {data?.name !== null && <Image
+                                source={{
+                                    uri: `https://www.google.com/s2/favicons?sz=256&domain=${data?.name}`,
+                                }}
+
                                 style={{
                                     width: wr * 23,
                                     height: hr * 23
                                 }}
                                 resizeMode='contain'
                             />
+                            }
+
+                            {data?.name === null && <Image
+                                source={{
+                                    uri: `https://www.google.com/s2/favicons?sz=256&domain=avni.club`,
+                                }}
+
+                                style={{
+                                    width: wr * 23,
+                                    height: hr * 23
+                                }}
+                                resizeMode='contain'
+                            />
+                            }
 
                             {/* <View style={styles.circle}>
                                 <Text style={styles.initial}>{nameInitial}</Text>
@@ -138,7 +155,7 @@ const Month = () => {
                     </View>
 
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-                        <Image style={{ height: 16, width: 16 }} source={icons.coin} resizeMode='contain' />
+                        <Image style={{ height: hr * 16, width: wr * 16 }} source={icons.coin} resizeMode='contain' />
                         <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: wr * 3 }}>
                             {data?.rewardedAmount}</Text>
                     </View>
@@ -150,7 +167,7 @@ const Month = () => {
 
     const renderEmpty = () => (
         <View style={styles.emptyText}>
-            <Text> Sorry, No earnings this month</Text>
+            <Text> No earnings for this month</Text>
             {/* <Button onPress={() => requestAPI()} title='Refresh' /> */}
         </View>
     )
@@ -225,7 +242,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#5C595F',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 5
+        marginBottom: hr * 5
     },
     initial: {
         fontSize: 20,

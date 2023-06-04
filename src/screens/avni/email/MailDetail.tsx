@@ -21,7 +21,6 @@ let hr = (SIZES.height / 812)
 
 const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: string } } }) => {
 
- 
     const trending: any = trendingJson.find((x) => x.id === id)
     const { width } = useWindowDimensions();
     const navigation = useNavigation()
@@ -57,8 +56,12 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
 
     const dateStringg = data?.from;
 
-    const nameInitial = dateStringg
-        ? dateStringg.split('@')[1].charAt(0).toUpperCase()
+    // const nameInitial = dateStringg
+    //     ? dateStringg.split('@')[1].charAt(0).toUpperCase()
+    //     : '';
+
+    const domain = dateStringg
+        ? dateStringg.split("@")[1]
         : '';
 
     return (
@@ -68,10 +71,10 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
             <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={{
-                    paddingTop: Platform.OS === 'android' ? hr*30 : hr*50,
-                    paddingBottom: hr*30,
-                    paddingLeft: wr*25,
-                    paddingRight: wr*25
+                    paddingTop: Platform.OS === 'android' ? hr * 30 : hr * 50,
+                    paddingBottom: hr * 30,
+                    paddingLeft: wr * 25,
+                    paddingRight: wr * 25
                 }}
             >
                 <Svg width="20" height="16" viewBox="0 0 20 16" fill="none">
@@ -85,7 +88,7 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                     bottom: 0,
                     alignSelf: 'center',
                     width: SIZES.width * 0.92,
-                    height: Platform.OS === 'android' ? (SIZES.height - 70) :(SIZES.height - 90),
+                    height: Platform.OS === 'android' ? (SIZES.height - 70) : (SIZES.height - 90),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#ffffff80',
@@ -131,14 +134,14 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                                 flexDirection: 'row',
                                 flex: 1,
 
-                                gap: 5,
+                                gap: 2,
                             }}
                         >
-                            <View style={styles.circle}>
+                            {/* <View style={styles.circle}>
                                 <Text style={styles.initial}>{nameInitial}</Text>
-                            </View>
+                            </View> */}
                             {/* <Image
-                            source={trending.icon}
+                            source={data?.icon}
                             style={{
                                 width: 63,
                                 height: 63
@@ -146,8 +149,20 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                             resizeMode='contain'
                         /> */}
 
+                            <Image
+                                source={{
+                                    uri: `https://www.google.com/s2/favicons?sz=256&domain=${domain}`,
+                                }}
+
+                                style={{
+                                    width: wr * 63,
+                                    height: hr * 63
+                                }}
+                                resizeMode='contain'
+                            />
+
                             <View
-                                style={{ gap: 0, alignSelf:'center' }}>
+                                style={{ gap: 0, alignSelf: 'center' }}>
                                 <Text style={{ ...FONTS.heading, lineHeight: 20, color: 'black' }}>
                                     {data?.subject} </Text>
                                 <Text style={{ ...FONTS.paragraph, lineHeight: 20, color: 'black' }}>
@@ -175,18 +190,24 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                     }
                 >
                     {/* <ScrollView showsVerticalScrollIndicator={true}  contentContainerStyle={styles.scrollContainer}> */}
-                    <WebView
-                        style={styles.webview}
-                        source={{ html: data?.html }}
-                        startInLoadingState={true}
-                        renderLoading={() => (
-                            <View style={styles.loadingContainer}>
-                                <ActivityIndicator size="large" color="black" />
-                            </View>
-                        )}
-                        scalesPageToFit={true}
+                    {data?.html === false ? (
+                        <Text>{data?.text}</Text>
 
-                    />
+                    ) : (
+
+                        <WebView
+                            style={styles.webview}
+                            source={{ html: data?.html }}
+                            startInLoadingState={true}
+                            renderLoading={() => (
+                                <View style={styles.loadingContainer}>
+                                    <ActivityIndicator size="large" color="black" />
+                                </View>
+                            )}
+                            scalesPageToFit={true}
+
+                        />
+                    )}
                     {/* </ScrollView> */}
                 </SafeAreaView>
 
@@ -220,13 +241,13 @@ const styles = StyleSheet.create({
         flexGrow: 1,
     },
     circle: {
-        width: wr*50,
-        height: hr*50,
+        width: wr * 50,
+        height: hr * 50,
         borderRadius: 25,
         backgroundColor: '#5C595F',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: hr*5
+        marginBottom: hr * 5
     },
     initial: {
         fontSize: 20,

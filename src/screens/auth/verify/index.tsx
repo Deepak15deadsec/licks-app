@@ -26,6 +26,7 @@ const Verify = ({ route }: any) => {
   let hr = (SIZES.height / 812)
 
   const addUser = useStoreActions((store) => store.addUser)
+  const setIsMailAttached = useStoreActions((store) => store.setIsMailAttached)
 
   const resend = () => {
 
@@ -67,10 +68,12 @@ const Verify = ({ route }: any) => {
             lastName: data.lastName,
             email: data.email,
             phone: !!data.phone ? data.phone : "",
-            gender: !!data.gender ? data.gender : "",
-            age: !!data.age ? data.age : ""
+            gender: data.gender !== null ? data.gender : null,
+            dob: data.dob !== null ? data.dob : null,
+            referralCode: data.referralCode
 
           })
+          setIsMailAttached(data.isMailAttached)
 
           navigation.navigate("Avni" as never, { user } as never);
         }
@@ -108,8 +111,8 @@ const Verify = ({ route }: any) => {
                 <Image
                   source={icons.avni_logo}
                   style={{
-                    width: wr * 80,
-                    height: hr * 115
+                    width: wr * 77,
+                    height: hr * 105
                   }}
                 />
               </View>

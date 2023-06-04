@@ -25,7 +25,6 @@ const Reward = () => {
     const user = useStoreState((store) => store.user)
     const [isCopied, setIsCopied] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-    const [isLastPage, setIsLastPage] = useState(false);
     const [data, setData] = useState<any[]>([])
     const [page, setPage] = useState<number>(1)
     const [isLoading, setLoading] = useState(false);
@@ -41,7 +40,7 @@ const Reward = () => {
 
     const fetchData = async (token: any) => {
         setLoading(true);
-        let responseData;
+        let responseData: [];
         try {
 
             const { data } = await axios({
@@ -53,39 +52,56 @@ const Reward = () => {
                 },
                 cancelToken: token
             });
-           // console.log("mildsl",data)
-            if (data.length === 0) {
-                setIsLastPage(true);
-            }
+            // console.log("mildsl",data)
+
             responseData = data;
 
         } catch (error) {
             console.log(error)
         } finally {
-            setData([...data, ...responseData])
+            setData((prevData) => [...prevData, ...responseData]);
             setLoading(false);
         }
     };
 
-    useEffect(() => {
-        const source = axios.CancelToken.source();
-        fetchData(source.token);
-        return () => {
-            source.cancel('Request canceled');
-        };
-    }, []);
+    const handleLoadMore = async () => {
+        if (!isLoading) {
+            let responseData: [];
+            try {
+                setLoading(true);
 
+                const { data } = await axios({
+                    url: `${SERVER_BASE_URL}/milestone?userId=${user.id}&page=${page}&pageSize=10`,
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": 'application/json',
+                        'Authorization': `Bearer ${user.token}`
+                    },
 
-    //Fetch more data when page changes
-    useEffect(() => {
-        if (!isLastPage) { // Check if it's not the last page
-            const source = axios.CancelToken.source();
-            fetchData(source.token);
-            return () => {
-                source.cancel('Request canceled');
-            };
+                });
+                // console.log("deepak", data)
+                responseData = data;
+            } catch (error) {
+                console.log(error)
+            } finally {
+
+                setData((prevData) => [...prevData, ...responseData]); // Append the new data to the existing data
+                setPage(page + 1); // Increment the page number
+                setLoading(false)
+            }
         }
-    }, [page]);
+
+    }
+
+    // useEffect(() => {
+    //     const source = axios.CancelToken.source();
+    //     fetchData(source.token);
+    //     return () => {
+    //         source.cancel('Request canceled');
+    //     };
+    // }, []);
+
+
 
     const handleRefresh = async () => {
         let responseData;
@@ -101,7 +117,7 @@ const Reward = () => {
                 },
 
             });
-           // console.log("deepak", data)
+            // console.log("deepak", data)
             responseData = data;
         } catch (error) {
             console.log(error)
@@ -142,7 +158,7 @@ const Reward = () => {
         return (
             <View>
                 <View
-
+                    key={index}
                     style={{
                         backgroundColor: data && data?.orderAcheived === data?.maxOrderRequired ? '#f0fcfa' : '#ffffff',
                         borderTopRightRadius: 20,
@@ -374,11 +390,11 @@ const Reward = () => {
         padding: 8
     }} />;
 
-    // const renderFooter = () => (
-    //     <View style={styles.footerText}>
-    //         {isLoading && <ActivityIndicator />}
-    //     </View>
-    // )
+    const renderFooter = () => (
+        <View style={styles.footerText}>
+            {isLoading && <ActivityIndicator />}
+        </View>
+    )
 
     const renderEmpty = () => (
         <View style={styles.emptyText}>
@@ -482,30 +498,29 @@ const Reward = () => {
                     </TouchableOpacity>
 
                 </View>
-
-                {isLoading ? (
-                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-                        {/* <ActivityIndicator size={100} color="red" /> */}
+                {/* 
+                <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                      
                         <LottieView source={images.loader} autoPlay loop />
 
-                    </View>
+                    </View> */}
 
-                ) : (
-                    <CommonFlatlist
-                        data={data}
-                        renderItem={renderItem}
-                        ItemSeparatorComponent={renderSeparator}
-                        // ListFooterComponent={renderFooter}
-                        ListEmptyComponent={renderEmpty}
-                        onEndReached={() => setPage((prevPage) => prevPage + 1)}
-                        onEndReachedThreshold={0.1}
-                        keyExtractor={(item: any) => `${item.id}`}
-                        refreshControl={
-                            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-                        }
-                    />
 
-                )}
+                <CommonFlatlist
+                    data={data}
+                    renderItem={renderItem}
+                    ItemSeparatorComponent={renderSeparator}
+                    ListFooterComponent={renderFooter}
+                    //ListEmptyComponent={renderEmpty}
+                    onEndReached={handleLoadMore}
+                    onEndReachedThreshold={0.5}
+                    keyExtractor={(item: any) => `${item.id}`}
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+                    }
+                />
+
+
 
             </View>
 

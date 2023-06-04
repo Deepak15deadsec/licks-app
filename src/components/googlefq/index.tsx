@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, Platform, Linking } from 'react-native'
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../constants'
 import Svg, {
@@ -10,15 +10,13 @@ import { SafeAreaView } from 'react-native';
 import WebView from 'react-native-webview';
 import { getUrl } from '../../hooks/googleUrl'
 import { useStoreActions, useStoreState } from '../../store/easy-peasy/hooks';
+import Proceed from './Proceed';
+
 
 const Googlepage = () => {
     const navigation = useNavigation()
     const user = useStoreState((store) => store.user)
-
-    const handleClick = async () => {
-        const url = getUrl(user?.phone);
-        await Linking.openURL(url);
-    };
+    const [step, setStep] = useState(1)
 
     let wr = (SIZES.width / 391)
     let hr = (SIZES.height / 812)
@@ -86,7 +84,7 @@ const Googlepage = () => {
                 <View style={styles.containerr}>
                     <View style={{ height: 400, width: "100%" }}>
                         <WebView
-                            source={{ uri: 'https://avni.club/faq/tokens' }}
+                            source={{ uri: 'https://avni.club/faq/forward-instruction' }}
                             style={styles.webview}
                             overScrollMode='never'
                             contentContainerStyle={styles.contentContainer}
@@ -94,7 +92,10 @@ const Googlepage = () => {
                     </View>
 
 
-                    <TouchableOpacity
+
+                    <Proceed step={step} setStep={setStep} />
+
+                    {/* <TouchableOpacity
                         style={{
                             borderRadius: 15,
                             padding: 8,
@@ -110,9 +111,9 @@ const Googlepage = () => {
                         <Text style={{
                             ...FONTS.h4,
                             color: COLORS.darker
-                        }}>connect your Google account</Text>
+                        }}>Next</Text>
                         <Image style={{ height: 22, width: 22 }} source={icons.googleicon} resizeMode='contain' />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
 
 
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     },
     containerr: {
         flex: 1,
-      
+
         gap: 100
     },
     webview: {

@@ -6,6 +6,10 @@ import Svg, {
 } from 'react-native-svg'
 import { Keyboard } from 'react-native'
 
+
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
+
 const SearchInput = (props: any) => {
     return (
         <View style={{
@@ -14,8 +18,8 @@ const SearchInput = (props: any) => {
             borderColor: '#DBDBDB',
             flexDirection: 'row',
             alignItems: 'center',
-            paddingLeft: 20,
-            paddingRight: 20,
+            paddingLeft: wr*20,
+            paddingRight: wr*20,
             gap: 10
 
         }}>

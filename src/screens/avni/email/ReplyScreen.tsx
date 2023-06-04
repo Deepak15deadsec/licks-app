@@ -39,10 +39,10 @@ const ReplyScreen = ({ route: { params: { sentData } } }: any) => {
 
             var raw = JSON.stringify({
                 "userId": user?.id,
-                "to": sentData?.from,
+                "to": [sentData?.from],
                 "subject": sentData?.subject,
                 "message": input?.message,
-                "s3PathId": sentData?.s3_path_id,
+                "inboxId": sentData?.id,
                 "type": SentType.REPLY
             });
             console.log("raw", raw)

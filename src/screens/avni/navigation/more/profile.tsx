@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, Platform } from 'react-native'
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 import Svg, {
@@ -9,12 +9,34 @@ import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hoo
 import { useNavigation } from '@react-navigation/native';
 import { AvniTextInput } from '../../../../components/inputs';
 import DatePicker from '../../../../components/datepicker';
+import Picker from '../../../../components/pickers';
+import gendersTypes from '../../data/gender-types.json'
+//@ts-ignore
+import { SERVER_BASE_URL } from '@env'
+import axios from 'axios';
+import { useEffect } from 'react';
 
 
 const Profile = () => {
   const removeUser = useStoreActions((store) => store.removeUser)
   const user = useStoreState((store) => store.user)
   const navigation = useNavigation()
+  const addUser = useStoreActions((store) => store.addUser)
+  const [input, setInput] = useState(
+    {
+      firstName: user?.firstName,
+      lastName: user?.lastName,
+      gender: user?.gender,
+      dob: user.dob !== null ? new Date(user?.dob) : null ,
+    }
+  );
+
+  // Gender options
+  console.log("gor",user)
+
+  const onchangeHandler = useCallback((value: any, name: string) => {
+    setInput((prevState) => ({ ...prevState, [name]: value }));
+  }, []);
 
   let wr = (SIZES.width / 391)
   let hr = (SIZES.height / 812)
@@ -27,13 +49,57 @@ const Profile = () => {
       !user.email ||
       !user.phone ||
       !user.gender ||
-      !user.age
+      !user.dob
     ) {
       return false; // Fields are not filled
     }
     return true; // All fields are filled
   };
-  
+
+
+  const updateUser = async () => {
+    let responseData;
+    try {
+
+      const payload = {
+        firstName: input.firstName,
+        lastName: input.lastName,
+        gender: input.gender,
+        dob: input.dob
+      }
+
+      const { data } = await axios({
+        method: "PUT",
+        url: `${SERVER_BASE_URL}/users/${user.id}`,
+        headers: {
+          "Authorization": `Bearer ${user.token}`
+        },
+
+        data: payload
+
+      })
+
+      responseData = data
+
+    } catch (error) {
+      console.log(error);
+      // Handle the error
+    }
+    finally {
+      if (!!responseData) {
+        addUser({
+          ...user,
+          firstName: responseData?.firstName,
+          lastName: responseData?.lastName,
+          gender: responseData?.gender,
+          dob: responseData?.dob
+        })
+      }
+    }
+  };
+
+
+
   return (
     <View style={styles.container}>
 
@@ -41,7 +107,7 @@ const Profile = () => {
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={{
-          paddingTop: Platform.OS === 'android' ? hr*30 : hr*50,
+          paddingTop: Platform.OS === 'android' ? hr * 30 : hr * 50,
           paddingBottom: hr * 30,
           paddingLeft: wr * 25,
           paddingRight: wr * 25
@@ -59,7 +125,7 @@ const Profile = () => {
           //top: 58,
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height: Platform.OS === 'android' ? (SIZES.height - 70) :(SIZES.height - 90),
+          height: Platform.OS === 'android' ? (SIZES.height - 70) : (SIZES.height - 90),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -115,13 +181,15 @@ const Profile = () => {
           <View style={{ marginTop: hr * 30, gap: 14, marginBottom: hr * 10 }}>
             <AvniTextInput
               label="First Name"
-              value={user?.firstName}
-              placeholder='Enter Fisrt Name'
+              value={input?.firstName}
+              placeholder="Enter First Name"
+              onChangeText={(value: any) => onchangeHandler(value, "firstName")}
             />
             <AvniTextInput
               label="Last Name"
-              value={user?.lastName}
-              placeholder='Enter Last Name'
+              value={input?.lastName}
+              placeholder="Enter Last Name"
+              onChangeText={(value: any) => onchangeHandler(value, "lastName")}
             />
 
             {/* <AvniTextInput
@@ -130,23 +198,36 @@ const Profile = () => {
               placeholder=''
             /> */}
 
-            <AvniTextInput
+            {/* <AvniTextInput
               label="Gender"
-              value={user?.gender}
+              value={editedUser?.gender}
               placeholder=''
+              onChangeText={(text: any) =>
+                setEditedUser((prevUser) => ({ ...prevUser, gender: text }))
+              }
+            /> */}
+
+            <Picker
+              label="Gender"
+              placeholder='Select Gender'
+              selectedValue={input.gender}
+              onValueChange={(value: any) => onchangeHandler(value, "gender")}
+              gendersTypes={gendersTypes}
             />
 
             <DatePicker
               label="Date of Birth"
               placeholder='Enter Date of Birth'
-          value={user?.age}
-          
+              value={input?.dob}
+              onchangeHandler={onchangeHandler}
+
             />
 
           </View>
         </View>
 
         <TouchableOpacity
+          onPress={updateUser}
           style={{
             backgroundColor: true ? '#30D792' : "#DBDBDB",
             borderRadius: 10,
@@ -155,7 +236,7 @@ const Profile = () => {
             alignItems: 'center',
             marginTop: hr * 10
           }}
-          //disabled={!validateFields()}
+        //disabled={!validateFields()}
         //@ts-ignore
 
         >

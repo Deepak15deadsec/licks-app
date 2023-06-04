@@ -61,7 +61,7 @@ const Category = () => {
 
     return (
         <View style={styles.container}>
-            <PieChart data={food}/>
+            <PieChart data={data}/>
         </View>
     );
 };

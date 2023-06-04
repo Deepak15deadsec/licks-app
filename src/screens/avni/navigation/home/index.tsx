@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Platform } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 import Svg, {
   Path,
@@ -16,10 +16,17 @@ import Card from './Card';
 import Google from './Google';
 import Orbit from '../../../../components/orbit/Orbit';
 
+//@ts-ignore
+import { SERVER_BASE_URL } from '@env'
+import axios from 'axios';
+import InviteCard from './InviteCard';
+
 const Home = () => {
 
   const user = useStoreState((store) => store.user)
+  const isMailAttached = useStoreState((store) => store.isMailAttached)
   const navigation = useNavigation()
+  const [data, setData] = useState([]);
 
   let wr = (SIZES.width / 391)
   let hr = (SIZES.height / 812)
@@ -34,18 +41,45 @@ const Home = () => {
       user.email &&
       user.phone &&
       user.gender &&
-      user.age
+      user.dob
     ) {
       return true; // Profile is complete
     }
     return false; // Profile is not complete
   };
 
+  useEffect(() => {
+    const fetchMailid = async () => {
+
+      try {
+        const { data } = await axios({
+          method: "GET",
+          url: `${SERVER_BASE_URL}/forward-mail?userId=${user.id}`,
+          headers: {
+            "Authorization": `Bearer ${user.token}`
+          }
+        })
+
+        setData(data)
+        //console.log("Mail data length:", data.length);
+       
+      } catch (error) {
+        console.log(error)
+
+      }
+    }
+
+
+    fetchMailid()
+
+
+  }, [])
+
   return (
     <View style={styles.container}>
 
 
-      <View style={{ flexDirection: "row", justifyContent: 'space-between', gap: 20, alignItems: 'center', paddingHorizontal: wr * 20, paddingVertical: Platform.OS === 'android' ? hr * 20 : hr*50 }}>
+      <View style={{ flexDirection: "row", justifyContent: 'space-between', gap: 20, alignItems: 'center', paddingHorizontal: wr * 20, paddingVertical: Platform.OS === 'android' ? hr * 20 : hr * 50 }}>
 
         <Text style={{ ...FONTS.heading, color: 'white' }}>Welcome Back, {user.firstName}</Text>
 
@@ -103,16 +137,20 @@ const Home = () => {
         }}
       >
 
+
         <ScrollView
           showsVerticalScrollIndicator={false}>
-     
+
           <CoinCard />
-          <Text style={{
-            marginTop: 15,
-            ...FONTS.paragraph, color: '#5C595F'
-          }}>Action required </Text>
-     {!isProfileComplete() && <Card />}
-          <Google />
+          {(!isProfileComplete() || isMailAttached === false) && (
+            <Text style={{
+              marginTop: 15,
+              ...FONTS.paragraph, color: '#5C595F'
+            }}>Action required</Text>
+          )}
+          {!isProfileComplete() && <Card />}
+          {isMailAttached === false && <Google />}
+          <InviteCard />
           <Categories />
           <Trending />
           <Expiring />

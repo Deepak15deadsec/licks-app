@@ -1,7 +1,8 @@
 //@ts-ignore
 import { GOOGLE_CLIENT_ID, GOOGLE_OAUTH_REDIRECT_URL } from '@env'
 export const getUrl = (phone: string) => {
-  console.log("phone", phone)
+  console.log("phone",GOOGLE_CLIENT_ID)
+  console.log("red",GOOGLE_OAUTH_REDIRECT_URL)
     const rootUrl = `https://accounts.google.com/o/oauth2/v2/auth`;
     const options = {
       redirect_uri: GOOGLE_OAUTH_REDIRECT_URL || '',
@@ -11,11 +12,10 @@ export const getUrl = (phone: string) => {
       prompt: "consent",
       state: JSON.stringify({ "referrer": "", "phone": phone, "type":"addEmail"}),
       scope: [
-        "https://www.googleapis.com/auth/userinfo.profile",
-        "https://www.googleapis.com/auth/userinfo.email",
-        "https://www.googleapis.com/auth/gmail.settings.basic",
-        "https://www.googleapis.com/auth/gmail.labels"
-  
+        'https://www.googleapis.com/auth/userinfo.profile',
+        'https://www.googleapis.com/auth/userinfo.email',
+        'https://www.googleapis.com/auth/gmail.settings.basic',
+        'https://www.googleapis.com/auth/gmail.labels',
       ].join(" "),
     };
     let qs = new URLSearchParams(options);
