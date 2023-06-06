@@ -29,8 +29,8 @@ const More = () => {
   let wr = SIZES.width / 391;
   let hr = SIZES.height / 812;
 
-  const navigation = useNavigation();
-
+  const navigation = useNavigation()
+  const user = useStoreState((store) => store.user)
   return (
     <View style={styles.container}>
       <View
@@ -62,7 +62,11 @@ const More = () => {
           <TouchableOpacity
             onPress={() => navigation.navigate('Profile' as never)}>
             <Image
-              source={icons.avatar}
+                source={ user?.gender === 'Male'
+                ? images.man
+                : user?.gender === 'Female'
+                ? images.woman
+                : icons.avatar}
               style={{
                 width: wr * 38,
                 height: hr * 38,

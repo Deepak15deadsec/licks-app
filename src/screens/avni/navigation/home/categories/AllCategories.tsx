@@ -6,6 +6,7 @@ import Svg, {
   Circle
 } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native';
+import { categoriesJson } from './categoriesData';
 
 
 
@@ -78,6 +79,51 @@ const AllCategories = () => {
 
               <Text style={{ ...FONTS.heading, color: 'black' }}>Categories</Text>
 
+            </View>
+
+            <View style={{
+                marginTop: 20,
+                flexDirection: 'column',
+                flex: 1,
+                
+                flexWrap: 'wrap',
+                rowGap: 12
+            }}>
+                {categoriesJson?.map((category, index) => {
+                    return (
+                        <View key={index} style={{
+                            width: '47%',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            gap:8,
+                            //backgroundColor:'red'
+                        }}>
+                            <View
+                             style={{
+                                backgroundColor:  "#f0fcfa",
+                                borderRadius: 20,
+                                justifyContent: 'center',  
+                                alignItems: 'center',
+                                padding: 10,
+                                borderWidth: 0.5
+                            }}
+                            >
+                                <Image
+                                source={category.icon}
+                                style={{
+                                    width: 28,
+                                    height: 28
+                                }}
+                                resizeMode='contain'
+                            />
+                             </View>
+                            
+                            <Text style={{ ...FONTS.category, color: '#5C595F' }}>{category.name}</Text>
+                        </View>
+
+
+                    )
+                })}
             </View>
 
           </View>

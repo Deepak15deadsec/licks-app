@@ -15,6 +15,7 @@ import { SERVER_BASE_URL } from '@env'
 import axios from 'axios';
 import WebView from 'react-native-webview'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import TextWithLinks from '../../../components/textwithlinks'
 
 let wr = (SIZES.width / 391)
 let hr = (SIZES.height / 812)
@@ -134,7 +135,7 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                                 flexDirection: 'row',
                                 flex: 1,
 
-                                gap: 2,
+                                gap: 8,
                             }}
                         >
                             {/* <View style={styles.circle}>
@@ -155,17 +156,17 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                                 }}
 
                                 style={{
-                                    width: wr * 63,
-                                    height: hr * 63
+                                    width: wr * 36,
+                                    height: hr * 36
                                 }}
                                 resizeMode='contain'
                             />
 
                             <View
-                                style={{ gap: 0, alignSelf: 'center' }}>
+                                style={{ gap: 15, alignSelf: 'center' }}>
                                 <Text style={{ ...FONTS.heading, lineHeight: 20, color: 'black' }}>
                                     {data?.subject} </Text>
-                                <Text style={{ ...FONTS.paragraph, lineHeight: 20, color: 'black' }}>
+                                <Text style={{ ...FONTS.paragraph, lineHeight: 20, color: 'gray' }}>
                                     {data?.from} </Text>
                             </View>
                         </View>
@@ -184,14 +185,14 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                         {
                             flex: 1,
                             height: "100%",
-                            width: "100%"
-
+                            width: "100%",
+                            marginTop: 5
                         }
                     }
                 >
-                    {/* <ScrollView showsVerticalScrollIndicator={true}  contentContainerStyle={styles.scrollContainer}> */}
+                    <ScrollView showsVerticalScrollIndicator={false}  contentContainerStyle={styles.scrollContainer}>
                     {data?.html === false ? (
-                        <Text>{data?.text}</Text>
+                      <TextWithLinks text={data?.text} />
 
                     ) : (
 
@@ -208,7 +209,7 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
 
                         />
                     )}
-                    {/* </ScrollView> */}
+                    </ScrollView>
                 </SafeAreaView>
 
 

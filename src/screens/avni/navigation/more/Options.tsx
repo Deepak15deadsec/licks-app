@@ -100,7 +100,7 @@ const Options = () => {
             <Text style={{
               ...FONTS.size16m,
               color: '#333'
-            }}>email addresses</Text>
+            }}>linked email</Text>
 
           </View>
 

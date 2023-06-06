@@ -1,16 +1,11 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ScrollView,
-  TouchableOpacity,
-  Platform,
-} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {COLORS, FONTS, SIZES, icons, TYPES} from '../../../../constants';
-import Svg, {Path, Circle} from 'react-native-svg';
-import {useColorScheme} from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Platform } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { COLORS, FONTS, SIZES, icons, TYPES, images } from '../../../../constants'
+import Svg, {
+  Path,
+  Circle
+} from 'react-native-svg'
+import { useColorScheme } from 'react-native';
 import CoinCard from './CoinCard';
 import Categories from './categories';
 import Trending from './trending';
@@ -28,6 +23,7 @@ import Orbit from '../../../../components/orbit/Orbit';
 import {SERVER_BASE_URL} from '@env';
 import axios from 'axios';
 import InviteCard from './InviteCard';
+import Dummytrending from './dummy';
 
 const Home = () => {
   const user = useStoreState(store => store.user);
@@ -111,7 +107,11 @@ const Home = () => {
           <TouchableOpacity
             onPress={() => navigation.navigate('Profile' as never)}>
             <Image
-              source={icons.avatar}
+             source={ user?.gender === 'Male'
+             ? images.man
+             : user?.gender === 'Female'
+             ? images.woman
+             : icons.avatar}
               style={{
                 width: wr * 38,
                 height: hr * 38,
@@ -167,8 +167,9 @@ const Home = () => {
           {isMailAttached === false && <Google />}
           {isInviteAccepted === false && <InviteCard />}
           <Categories />
-          <Trending />
-          <Expiring />
+          <Dummytrending  />
+          {/* <Trending />
+          <Expiring /> */}
           <Orbit />
         </ScrollView>
       </View>

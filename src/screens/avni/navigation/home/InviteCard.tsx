@@ -1,8 +1,11 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
-import Svg, {Path, Circle} from 'react-native-svg';
-import {COLORS, FONTS, SIZES, icons, TYPES} from '../../../../constants';
-import {useNavigation} from '@react-navigation/native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React from 'react'
+import Svg, {
+    Path,
+    Circle
+} from 'react-native-svg'
+import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
+import { useNavigation } from '@react-navigation/native';
 
 let wr = SIZES.width / 391;
 let hr = SIZES.height / 812;
@@ -33,25 +36,45 @@ const InviteCard = () => {
         Invitee Code
       </Text>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Invitebox' as never)}
-        style={{
-          borderRadius: 15,
-          padding: 8,
-          borderWidth: 1,
-          borderColor: '#DBDBDB',
-          position: 'absolute',
-          flexDirection: 'row',
-          top: hr * 17,
-          right: wr * 7,
-          backgroundColor: '#333333',
-        }}>
-        <Text style={{...FONTS.label, color: '#ffffff'}}> Enter</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+            <View style={{gap:5}}>
+                <Text style={{
+                    ...FONTS.label,
+                    color: COLORS.darker
+                }}>have a referal?</Text>
 
-export default InviteCard;
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: -2, marginTop: -4 }}>
+                    <Text style={{ ...FONTS.size20s, color: '#333333', lineHeight: 20, marginTop: 5 }}>
+                        +30 </Text>
+                    <Image style={{ height: 22, width: 22 }} source={icons.coin} resizeMode='contain' />
+                </View>
 
-const styles = StyleSheet.create({});
+            </View>
+
+
+
+
+            <TouchableOpacity
+                onPress={() => navigation.navigate('Invitebox' as never)}
+                style={{
+                    borderRadius: 15,
+                    padding: 8,
+                    borderWidth: 1,
+                    borderColor: '#DBDBDB',
+                    position: 'absolute',
+                    flexDirection: 'row',
+                    top: hr * 25,
+                    right: wr * 10,
+                    backgroundColor: '#333333'
+                }}>
+                <Text style={{ ...FONTS.label, color: '#ffffff' }}> Enter</Text>
+            </TouchableOpacity>
+
+
+        </View>
+
+    )
+}
+
+export default InviteCard
+
+const styles = StyleSheet.create({})
