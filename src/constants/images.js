@@ -19,6 +19,8 @@ const intro1 = require("../assets/images/intro1.png")
 const intro2 = require("../assets/images/intro2.png")
 const intro3 = require("../assets/images/intro3.png")
 const cyber = require("../assets/images/cyber.png")
+const man = require("../assets/images/man.png")
+const woman = require("../assets/images/woman.png")
 
 export default {
     wallieLogo,
@@ -34,6 +36,8 @@ export default {
     usa,
     loader,
     cyber,
+    man,
+    woman,
 
     // Dummy
     usFlag,

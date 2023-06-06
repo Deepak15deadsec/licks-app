@@ -82,12 +82,16 @@ const Googlepage = () => {
 
 
                 <View style={styles.containerr}>
-                    <View style={{ height: 400, width: "100%" }}>
+                    <View style={{ height: 480, width: "100%" }}>
+
                         <WebView
                             source={{ uri: 'https://avni.club/faq/forward-instruction' }}
                             style={styles.webview}
-                            overScrollMode='never'
+                            scalesPageToFit={false}
+                            useWebKit={false}
+                            overScrollMode='always'
                             contentContainerStyle={styles.contentContainer}
+                            
                         />
                     </View>
 

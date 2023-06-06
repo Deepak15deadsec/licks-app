@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import Svg, {
     Path,
@@ -20,36 +20,46 @@ const InviteCard = () => {
         <View style={{
             backgroundColor: "#E7EEED",
             borderRadius: 10,
-            height: hr * 65,
-            paddingLeft: wr * 8,
-            paddingRight: wr * 8,
+            height: hr * 85,
+            paddingLeft: wr * 15,
+            paddingRight: wr * 15,
             paddingTop: hr * 25,
             paddingBottom: hr * 20,
             gap: 4,
             alignContent: 'center',
-            marginTop: hr*10
+          
+            marginTop: hr * 10
         }}>
 
+            <View style={{gap:5}}>
+                <Text style={{
+                    ...FONTS.label,
+                    color: COLORS.darker
+                }}>have a referal?</Text>
 
-            <Text style={{
-                ...FONTS.label,
-                color: COLORS.darker
-            }}>Invitee Code</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: -2, marginTop: -4 }}>
+                    <Text style={{ ...FONTS.size20s, color: '#333333', lineHeight: 20, marginTop: 5 }}>
+                        +30 </Text>
+                    <Image style={{ height: 22, width: 22 }} source={icons.coin} resizeMode='contain' />
+                </View>
+
+            </View>
+
 
 
 
             <TouchableOpacity
-              onPress={() => navigation.navigate('Invitebox' as never)}
+                onPress={() => navigation.navigate('Invitebox' as never)}
                 style={{
                     borderRadius: 15,
                     padding: 8,
                     borderWidth: 1,
                     borderColor: '#DBDBDB',
-                    position: 'absolute', 
-                    flexDirection: 'row', 
-                    top: hr*17,
-                    right: wr*7,
-                     backgroundColor: '#333333'
+                    position: 'absolute',
+                    flexDirection: 'row',
+                    top: hr * 25,
+                    right: wr * 10,
+                    backgroundColor: '#333333'
                 }}>
                 <Text style={{ ...FONTS.label, color: '#ffffff' }}> Enter</Text>
             </TouchableOpacity>

@@ -390,11 +390,11 @@ const Reward = () => {
         padding: 8
     }} />;
 
-    const renderFooter = () => (
-        <View style={styles.footerText}>
-            {isLoading && <ActivityIndicator />}
-        </View>
-    )
+    // const renderFooter = () => (
+    //     <View style={styles.footerText}>
+    //         {isLoading && <ActivityIndicator />}
+    //     </View>
+    // )
 
     const renderEmpty = () => (
         <View style={styles.emptyText}>
@@ -422,7 +422,11 @@ const Reward = () => {
                         onPress={() => navigation.navigate('Profile' as never)}
                     >
                         <Image
-                            source={icons.avatar}
+                              source={ user?.gender === 'Male'
+                              ? images.man
+                              : user?.gender === 'Female'
+                              ? images.woman
+                              : icons.avatar}
                             style={{
                                 width: wr * 38,
                                 height: hr * 38
@@ -476,6 +480,7 @@ const Reward = () => {
 
                     <Text style={{ ...FONTS.heading, color: 'black', marginBottom: 8 }}>Milestone Rewards</Text>
                     <TouchableOpacity
+                     onPress={() => navigation.navigate('Rewardhtml' as never)}
                         style={{
                             borderRadius: 15,
                             padding: 8,
@@ -510,7 +515,7 @@ const Reward = () => {
                     data={data}
                     renderItem={renderItem}
                     ItemSeparatorComponent={renderSeparator}
-                    ListFooterComponent={renderFooter}
+                    //ListFooterComponent={renderFooter}
                     //ListEmptyComponent={renderEmpty}
                     onEndReached={handleLoadMore}
                     onEndReachedThreshold={0.5}

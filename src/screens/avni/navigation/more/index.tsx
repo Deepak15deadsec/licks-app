@@ -15,7 +15,7 @@ const More = () => {
   let hr = (SIZES.height / 812)
 
   const navigation = useNavigation()
-
+  const user = useStoreState((store) => store.user)
   return (
     <View style={styles.container}>
 
@@ -34,7 +34,11 @@ const More = () => {
             onPress={() => navigation.navigate('Profile' as never)}
           >
             <Image
-              source={icons.avatar}
+                source={ user?.gender === 'Male'
+                ? images.man
+                : user?.gender === 'Female'
+                ? images.woman
+                : icons.avatar}
               style={{
                 width: wr*38,
                 height: hr*38

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, Platform } from 'react-native'
-import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
+import { COLORS, FONTS, SIZES, icons, TYPES, images } from '../../../../constants'
 import Svg, {
   Path,
   Circle
@@ -98,7 +98,7 @@ const Profile = () => {
     }
   };
 
-
+console.log("usergeb",user?.gender)
 
   return (
     <View style={styles.container}>
@@ -160,12 +160,17 @@ const Profile = () => {
         </View>
 
         <View>
-          <View style={{ alignSelf: 'center', marginTop: hr * 10, }}>
+          <View style={{ alignSelf: 'center', marginTop: hr * 10, borderWidth:2, borderRadius:50 }}>
             <Image
-              source={icons.avatar}
+              source={ user?.gender === 'Male'
+              ? images.man
+              : user?.gender === 'Female'
+              ? images.woman
+              : icons.avatar}
               style={{
                 width: wr * 88,
-                height: hr * 88
+                height: hr * 88,
+                
               }}
               resizeMode='contain'
             />

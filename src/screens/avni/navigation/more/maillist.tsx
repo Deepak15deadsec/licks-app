@@ -277,7 +277,9 @@ const maillist = () => {
             borderRadius: 10,
             justifyContent: 'center',
             height: 52,
+            width: "40%",
             alignItems: 'center',
+            alignSelf:'center',
             marginTop: 10
           }}
 

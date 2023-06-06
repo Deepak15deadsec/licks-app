@@ -2,7 +2,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react'
 import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, ScrollView, Platform } from 'react-native'
-import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
+import { COLORS, FONTS, SIZES, icons, TYPES, images } from '../../../../constants'
 import CoinCard from '../home/CoinCard'
 import { EarningNavigation } from '../../../../navigation/TopNavigation';
 import Svg, {
@@ -22,7 +22,7 @@ const Art = () => {
 
   const [show, setShow] = useState(false);
   const date = useStoreState(store => store.query)
-
+  const user = useStoreState((store) => store.user)
   const setQuery = useStoreActions((store) => store.setQuery)
 
   const showPicker = useCallback((value: boolean | ((prevState: boolean) => boolean)) => setShow(value), []);
@@ -56,7 +56,11 @@ const Art = () => {
             onPress={() => navigation.navigate('Profile' as never)}
           >
             <Image
-              source={icons.avatar}
+                source={ user?.gender === 'Male'
+                ? images.man
+                : user?.gender === 'Female'
+                ? images.woman
+                : icons.avatar}
               style={{
                 width: wr * 38,
                 height: hr * 38

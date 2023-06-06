@@ -29,6 +29,7 @@ import { useStoreActions, useStoreState } from './src/store/easy-peasy/hooks';
 import { SERVER_BASE_URL } from '@env'
 import maillist from './src/screens/avni/navigation/more/maillist';
 import Invitebox from './src/screens/auth/invitebox';
+import Faqreward from './src/screens/avni/navigation/more/faqreward';
 
 
 const theme = {
@@ -116,6 +117,7 @@ const App = () => {
             <Stack.Screen name="Invite" component={Invite} />
             <Stack.Screen name="Terms" component={Terms} />
             <Stack.Screen name="Token" component={Token} />
+            <Stack.Screen name="Rewardhtml" component={Faqreward} />
             <Stack.Screen name="Mail" component={Mail} />
             <Stack.Screen name="Maildetail" component={MailDetail} />
             <Stack.Screen name="Sentdetail" component={SentDetail} />

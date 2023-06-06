@@ -32,20 +32,57 @@ const Invite = () => {
       };
 
 
-    const handleShare = () => {
+      const handleShare = () => {
         const message = 'Check out this awesome app!';
         const url = `whatsapp://send?text=${encodeURIComponent(message)}`;
+      
+        Linking.openURL(url)
+          .then(() => {
+            console.log('WhatsApp opened successfully');
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      };
 
-        Share.open({ url })
-            .then(result => {
-                console.log(result);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    };
+      const handleFacebook = () => {
+        const message = 'Check out this awesome app!';
+        const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(message)}`;
+      
+        Linking.openURL(url)
+          .then(() => {
+            console.log('Facebook opened successfully');
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      };
 
+      const handleTwitter = () => {
+        const message = 'Check out this awesome app!';
+        const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
+      
+        Linking.openURL(url)
+          .then(() => {
+            console.log('Twitter opened successfully');
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      };
 
+      const handleInsta = () => {
+        const message = 'Check out this awesome app!';
+        const url = `instagram://share?text=${encodeURIComponent(message)}`;
+      
+        Linking.openURL(url)
+          .then(() => {
+            console.log('Instagram opened successfully');
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      };
 
  
     return (
@@ -279,8 +316,12 @@ const Invite = () => {
                         <View
                             style={{ alignSelf: 'center' }}
                         >
-                            <Text style={{ ...FONTS.size14b, color: '#000000' }}>
-                                You get 50 ART</Text>
+                            
+                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: -2, marginTop: -4 }}>
+                                        <Text style={{ ...FONTS.size14b, color: '#000000' }}>
+                                        You get +50 </Text>
+                                        <Image style={{ height: 22, width: 22 }} source={icons.coin} resizeMode='contain' />
+                                    </View>
                         </View>
 
                     </View>
@@ -351,8 +392,12 @@ const Invite = () => {
                         <View
                             style={{ alignSelf: 'center' }}
                         >
-                            <Text style={{ ...FONTS.size14b, color: '#000000' }}>
-                                On completion both earn 50 ART </Text>
+                           
+                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: -2, marginTop: -4 }}>
+                                        <Text style={{ ...FONTS.size14b, color: '#000000' }}>
+                                        On completion both earn +50 </Text>
+                                        <Image style={{ height: 22, width: 22 }} source={icons.coin} resizeMode='contain' />
+                                    </View>
                         </View>
 
                     </View>
@@ -391,6 +436,7 @@ const Invite = () => {
 
 
                     <TouchableOpacity
+                    onPress={handleFacebook}
                         style={{
                             backgroundColor: '#ffffff',
                             padding: 8,
@@ -417,6 +463,7 @@ const Invite = () => {
                     </TouchableOpacity>
 
                     <TouchableOpacity
+                    onPress={handleTwitter}
                         style={{
                             backgroundColor: '#ffffff',
                             width: wr*60,
@@ -443,6 +490,7 @@ const Invite = () => {
                     </TouchableOpacity>
 
                     <TouchableOpacity
+                    onPress={handleInsta}
                         style={{
                             backgroundColor: '#ffffff',
                             width: wr*60,

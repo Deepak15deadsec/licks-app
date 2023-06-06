@@ -51,7 +51,7 @@ const Month = () => {
                 })
 
                 setData(data)
-                //console.log("monthdate", data)
+                console.log("monthdate", data)
             } catch (error) {
                 console.log(error)
             }

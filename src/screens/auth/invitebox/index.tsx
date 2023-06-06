@@ -106,7 +106,7 @@ const Invitebox = () => {
                             gap: 6,
                         }}>
 
-                            <Text style={{ ...FONTS.heading, color: 'black' }}>Enter Promo Code</Text>
+                            <Text style={{ ...FONTS.heading, color: 'black' }}>have a referal?</Text>
 
                         </View>
 
@@ -143,7 +143,7 @@ const Invitebox = () => {
                                     style={{ alignSelf: 'center' }}
                                 >
                                     <Text style={{ ...FONTS.size14b, color: '#000000' }}>
-                                        Your Friends code</Text>
+                                        Enter code</Text>
                                 </View>
 
                             </View>
@@ -160,7 +160,7 @@ const Invitebox = () => {
                             >
 
                                 <InviteInput
-                                    placeholder='Enter Here'
+
                                 />
 
                             </View>
@@ -185,7 +185,7 @@ const Invitebox = () => {
                                 <Text style={{
                                     ...FONTS.paragraph,
                                     color: '#fff'
-                                }}>Update</Text>
+                                }}>Apply</Text>
 
                             </TouchableOpacity>
                         </View>
@@ -233,8 +233,12 @@ const Invitebox = () => {
                                 <View
                                     style={{ alignSelf: 'center' }}
                                 >
-                                    <Text style={{ ...FONTS.size14b, color: '#000000' }}>
-                                        You get 50 ART</Text>
+
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: -2, marginTop: -4 }}>
+                                        <Text style={{ ...FONTS.size14b, color: '#000000' }}>
+                                            You earn +50 </Text>
+                                        <Image style={{ height: 22, width: 22 }} source={icons.coin} resizeMode='contain' />
+                                    </View>
                                 </View>
 
                             </View>
