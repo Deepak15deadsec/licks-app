@@ -7,7 +7,7 @@ const CommonFlatlist = (props: any) => {
         <FlatList
             {...props}
             contentContainerStyle={{ paddingBottom: 20 }}
-            keyboardShouldPersistTaps={'always'}
+            //keyboardShouldPersistTaps={'always'}
             showsVerticalScrollIndicator={false}
             keyExtractor={(item: any) => `${item.id}`}
         />

@@ -52,7 +52,6 @@ const Phone = ({ route }: any) => {
 
   const requestForOtp = async () => {
     let phone = detail.callingCode.concat(detail.phone)
-    console.log("phone", phone)
     var phoneCode = AES.encrypt(`${phone}`, CRYPTO_SECRET_KEY as string).toString();
     const { data } = await axios({
       url: `${SERVER_BASE_URL}/oauth/requestOtp`,
@@ -65,7 +64,6 @@ const Phone = ({ route }: any) => {
       })
     })
 
-    console.log("otp")
     if (data && data.Status === "Success") {
       //@ts-ignore
       navigation.navigate('Verify', {

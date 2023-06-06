@@ -7,29 +7,34 @@ import Svg, {
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 import { useNavigation } from '@react-navigation/native';
 
-
-let wr = (SIZES.width / 391)
-let hr = (SIZES.height / 812)
+let wr = SIZES.width / 391;
+let hr = SIZES.height / 812;
 
 const InviteCard = () => {
-    const navigation = useNavigation()
-    let wr = (SIZES.width / 391)
-    let hr = (SIZES.height / 812)
-    return (
-
-        <View style={{
-            backgroundColor: "#E7EEED",
-            borderRadius: 10,
-            height: hr * 85,
-            paddingLeft: wr * 15,
-            paddingRight: wr * 15,
-            paddingTop: hr * 25,
-            paddingBottom: hr * 20,
-            gap: 4,
-            alignContent: 'center',
-          
-            marginTop: hr * 10
+  const navigation = useNavigation();
+  let wr = SIZES.width / 391;
+  let hr = SIZES.height / 812;
+  return (
+    <View
+      style={{
+        backgroundColor: '#E7EEED',
+        borderRadius: 10,
+        height: hr * 65,
+        paddingLeft: wr * 8,
+        paddingRight: wr * 8,
+        paddingTop: hr * 25,
+        paddingBottom: hr * 20,
+        gap: 4,
+        alignContent: 'center',
+        marginTop: hr * 10,
+      }}>
+      <Text
+        style={{
+          ...FONTS.label,
+          color: COLORS.darker,
         }}>
+        Invitee Code
+      </Text>
 
             <View style={{gap:5}}>
                 <Text style={{

@@ -43,7 +43,7 @@ const theme = {
 const Stack = createSharedElementStackNavigator();
 
 export const LinkingConfig: any = {
-  prefixes: ["https://www.app.avni.club"],
+  prefixes: ["https://test.avniads.com"],
   config: {
     screens: {
       Avni: {
