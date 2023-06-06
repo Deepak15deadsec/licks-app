@@ -1,64 +1,77 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Platform, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import React, { useState } from 'react'
-import { icons, SIZES, FONTS } from '../../../constants'
-import { useNavigation } from '@react-navigation/native'
-import OTP from './OTP'
-import ResendOTP from './ResendOTP'
-import axios from 'axios'
-import { enc, AES } from 'react-native-crypto-js';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Platform,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
+import React, {useState} from 'react';
+import {icons, SIZES, FONTS} from '../../../constants';
+import {useNavigation} from '@react-navigation/native';
+import OTP from './OTP';
+import ResendOTP from './ResendOTP';
+import axios from 'axios';
+import {enc, AES} from 'react-native-crypto-js';
 
 //@ts-ignore
-import { SERVER_BASE_URL, CRYPTO_SECRET_KEY } from '@env'
-import { useStoreActions } from '../../../store/easy-peasy/hooks'
-import RingWave from '../../../components/RingWave'
-import Loading from '../../../components/Loading'
+import {SERVER_BASE_URL, CRYPTO_SECRET_KEY} from '@env';
+import {useStoreActions} from '../../../store/easy-peasy/hooks';
+import RingWave from '../../../components/RingWave';
+import Loading from '../../../components/Loading';
 
-const Verify = ({ route }: any) => {
-  const navigation = useNavigation()
-  const [screen, setScreen] = useState<number>(1)
+const Verify = ({route}: any) => {
+  const navigation = useNavigation();
+  const [screen, setScreen] = useState<number>(1);
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [error, setError] = useState({
-    otp: false
-  })
-  const user = route?.params?.user
+    otp: false,
+  });
+  const user = route?.params?.user;
 
-  let wr = (SIZES.width / 391)
-  let hr = (SIZES.height / 812)
+  let wr = SIZES.width / 391;
+  let hr = SIZES.height / 812;
 
-  const addUser = useStoreActions((store) => store.addUser)
-  const setIsMailAttached = useStoreActions((store) => store.setIsMailAttached)
+  const addUser = useStoreActions(store => store.addUser);
+  const setIsMailAttached = useStoreActions(store => store.setIsMailAttached);
+  const setIsInviteAccepted = useStoreActions((store) => store.setIsInviteAccepted)
 
-  const resend = () => {
-
-  }
+  const resend = () => {};
 
   const verify = async () => {
-
     try {
       //api call
       //setScreen(2)
 
-      var phoneCode = AES.encrypt(`${user.phone}`, CRYPTO_SECRET_KEY as string).toString();
-      var otpCode = AES.encrypt(`${otp.join('')}`, CRYPTO_SECRET_KEY as string).toString();
-      console.log("phone", user.phone, "otp", otp.join(""))
+      var phoneCode = AES.encrypt(
+        `${user.phone}`,
+        CRYPTO_SECRET_KEY as string,
+      ).toString();
+      var otpCode = AES.encrypt(
+        `${otp.join('')}`,
+        CRYPTO_SECRET_KEY as string,
+      ).toString();
 
-      const { data } = await axios({
+      const {data} = await axios({
         url: `${SERVER_BASE_URL}/oauth/verifyOtp`,
-        method: "post",
+        method: 'post',
         headers: {
-          "content-type": "application/json"
+          'content-type': 'application/json',
         },
         data: JSON.stringify({
-          "phoneCode": phoneCode,
-          "otpCode": otpCode
-        })
-      })
+          phoneCode: phoneCode,
+          otpCode: otpCode,
+        }),
+      });
 
       //console.log("user",data)
-      if (data && data.Status === "Error") {
-        setScreen(1)
+      if (data && data.Status === 'Error') {
+        setScreen(1);
 
-        setError({ ...error, ["otp"]: true })
+        setError({...error, ['otp']: true});
       } else {
         if (data && data.status === 200 && data.accessToken) {
           addUser({
@@ -67,23 +80,25 @@ const Verify = ({ route }: any) => {
             firstName: data.firstName,
             lastName: data.lastName,
             email: data.email,
-            phone: !!data.phone ? data.phone : "",
+            phone: !!data.phone ? data.phone : '',
             gender: data.gender !== null ? data.gender : null,
             dob: data.dob !== null ? data.dob : null,
-            referralCode: data.referralCode
-
-          })
-          setIsMailAttached(data.isMailAttached)
-
-          navigation.navigate("Avni" as never, { user } as never);
+            referralCode: data.referralCode,
+          });
+          setIsMailAttached(data.isMailAttached);
+          setIsInviteAccepted(data.isInviteAccepted);
+          navigation.navigate('Avni' as never, {user} as never);
         }
 
-        if (data && data.status === 404 && data.message === 'Credentials not found!') {
-          console.log("mail", data)
-          navigation.navigate("Mailid" as never, { user } as never);
+        if (
+          data &&
+          data.status === 404 &&
+          data.message === 'Credentials not found!'
+        ) {
+          console.log('mail', data);
+          navigation.navigate('Mailid' as never, {user} as never);
         }
       }
-
     } catch (error) {
       if (error instanceof TypeError) {
         console.error('A type error occurred:', error);
@@ -92,10 +107,9 @@ const Verify = ({ route }: any) => {
       } else {
         console.error('An unknown error occurred:', error);
       }
-      setScreen(1)
-
+      setScreen(1);
     }
-  }
+  };
 
   switch (screen) {
     case 1:
@@ -103,20 +117,23 @@ const Verify = ({ route }: any) => {
         <KeyboardAvoidingView
           keyboardVerticalOffset={10}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={{ flex: 1 }}>
-
+          style={{flex: 1}}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
-              <View style={{ flexDirection: "row", justifyContent: 'center', marginTop: hr * 47 }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  marginTop: hr * 47,
+                }}>
                 <Image
                   source={icons.avni_logo}
                   style={{
                     width: wr * 77,
-                    height: hr * 105
+                    height: hr * 105,
                   }}
                 />
               </View>
-
 
               <View
                 style={{
@@ -131,7 +148,6 @@ const Verify = ({ route }: any) => {
                 }}
               />
 
-
               <View
                 style={{
                   position: 'absolute',
@@ -143,23 +159,28 @@ const Verify = ({ route }: any) => {
                   backgroundColor: '#FFFFFF',
                   paddingLeft: 24,
                   paddingRight: 24,
-                  paddingTop: 36
-                }}
-              >
-
+                  paddingTop: 36,
+                }}>
                 <View>
-                  <Text style={{ ...FONTS.heading, color: 'black' }}>Membership Application</Text>
-                  <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}> enter the OTP sent to your {user.phone} </Text>
-                  <OTP
-                    otp={otp}
-                    setOtp={setOtp}
-                    error={error} />
+                  <Text style={{...FONTS.heading, color: 'black'}}>
+                    Membership Application
+                  </Text>
+                  <Text style={{...FONTS.paragraph, color: '#5C595F'}}>
+                    {' '}
+                    enter the OTP sent to your {user.phone}{' '}
+                  </Text>
+                  <OTP otp={otp} setOtp={setOtp} error={error} />
 
                   <ResendOTP onPress={resend} />
-
                 </View>
 
-                <View style={{ position: 'absolute', flexDirection: 'row', alignSelf: 'center', bottom: 40 }}>
+                <View
+                  style={{
+                    position: 'absolute',
+                    flexDirection: 'row',
+                    alignSelf: 'center',
+                    bottom: 40,
+                  }}>
                   {/* back */}
                   <TouchableOpacity
                     style={{
@@ -170,10 +191,9 @@ const Verify = ({ route }: any) => {
                       height: 60,
                       justifyContent: 'center',
                       alignItems: 'center',
-                      marginRight: 40
+                      marginRight: 40,
                     }}
-                    onPress={() => navigation.goBack()}
-                  >
+                    onPress={() => navigation.goBack()}>
                     <Image
                       source={icons.back}
                       style={{
@@ -182,23 +202,22 @@ const Verify = ({ route }: any) => {
                       }}
                       resizeMode="contain"
                     />
-
                   </TouchableOpacity>
 
                   {/* next */}
                   <TouchableOpacity
                     style={{
-                      backgroundColor: otp?.join('')?.length === 6 ? '#30D792' : "#DBDBDB",
+                      backgroundColor:
+                        otp?.join('')?.length === 6 ? '#30D792' : '#DBDBDB',
                       padding: 8,
                       borderRadius: 100,
                       width: 60,
                       height: 60,
                       justifyContent: 'center',
-                      alignItems: 'center'
+                      alignItems: 'center',
                     }}
                     disabled={otp?.join('')?.length < 6}
-                    onPress={verify}
-                  >
+                    onPress={verify}>
                     <Image
                       source={icons.next}
                       style={{
@@ -209,27 +228,25 @@ const Verify = ({ route }: any) => {
                     />
                   </TouchableOpacity>
                 </View>
-
               </View>
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
-      )
+      );
     case 2:
-      return (<Loading />)
+      return <Loading />;
     default:
-      return (<RingWave />)
+      return <RingWave />;
   }
+};
 
-}
-
-export default Verify
+export default Verify;
 
 const styles = StyleSheet.create({
   container: {
     //flex: 1,
     height: SIZES.height,
     width: SIZES.width,
-    backgroundColor: '#30D792'
-  }
-})
+    backgroundColor: '#30D792',
+  },
+});

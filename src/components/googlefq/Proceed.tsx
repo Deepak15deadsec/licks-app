@@ -25,7 +25,6 @@ const Proceed = (props: any) => {
         props.setStep(2)
         const interval = setInterval(async () => {
             try {
-
                 const { data: forward }: any = await axios({
                     method: 'GET',
                     url: `${SERVER_BASE_URL}/avni-inbox/${user.id}/get-forward-mail/forwarding-noreply@google.com`,
@@ -34,7 +33,7 @@ const Proceed = (props: any) => {
                         "Content-Type": "application/json"
                     },
                 })
-                //console.log("forw", forward)
+                
                 if (forward.status === 200) {
                     clearInterval(interval); // Stop checking when response is received          
 
@@ -48,8 +47,6 @@ const Proceed = (props: any) => {
                 }
             } catch (error: any) {
                 props.setStep(1)
-
-
             }
         }, 15000); // 30 seconds
     }

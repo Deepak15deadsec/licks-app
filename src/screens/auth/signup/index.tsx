@@ -35,6 +35,7 @@ const Signup = ({ route }: any) => {
 
   let addUser = useStoreActions((store) => store.addUser)
   const setIsMailAttached = useStoreActions((store) => store.setIsMailAttached)
+  const setIsInviteAccepted = useStoreActions((store) => store.setIsInviteAccepted)
 
   const onchangeHandler = useCallback((value: any, name: string) => {
     setInput((prevState) => ({ ...prevState, [name]: value }));
@@ -81,6 +82,7 @@ const Signup = ({ route }: any) => {
           referralCode: data.referralCode
         })
         setIsMailAttached(data.isMailAttached)
+        setIsInviteAccepted(data.isInviteAccepted)
       }
     } catch (error) {
       console.log("errorsssss", error)

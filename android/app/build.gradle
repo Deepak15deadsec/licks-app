@@ -118,6 +118,13 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+
+         release {
+            storeFile file('avni.keystore')
+            storePassword 'akash@1997'
+            keyAlias 'avni_alias'
+            keyPassword 'akash@1997'
+        }
     }
     buildTypes {
         debug {
