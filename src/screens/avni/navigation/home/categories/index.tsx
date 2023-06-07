@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native'
 import React from 'react'
 import { TouchableOpacity, Image } from 'react-native'
-import { FONTS, icons } from '../../../../../constants'
+import { FONTS, icons, SIZES } from '../../../../../constants'
 import { categoriesJson } from './categoriesData'
 import { useNavigation } from '@react-navigation/native';
+
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
 
 const Categories = () => {
 
@@ -38,7 +41,9 @@ const Categories = () => {
             }}>
                 {categoriesJson?.map((category, index) => {
                     return (
-                        <View key={index} style={{
+                        <TouchableOpacity key={index}
+                        onPress={() => navigation.navigate('Catreward' as never, { name: category?.name } as never)}
+                        style={{
                             width: '47%',
                             flexDirection: 'row',
                             alignItems: 'center',
@@ -58,15 +63,15 @@ const Categories = () => {
                                 <Image
                                 source={category.icon}
                                 style={{
-                                    width: 28,
-                                    height: 28
+                                    width: wr*28,
+                                    height: hr*28
                                 }}
                                 resizeMode='contain'
                             />
                              </View>
                             
                             <Text style={{ ...FONTS.category, color: '#5C595F' }}>{category.name}</Text>
-                        </View>
+                        </TouchableOpacity>
 
 
                     )

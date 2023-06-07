@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl, StyleSheet, Platform } from 'react-native'
+import { View, Text, TouchableOpacity, Image, FlatList, RefreshControl, StyleSheet, Platform, Modal } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 //@ts-ignore
 import { SERVER_BASE_URL } from '@env'
-import { FONTS, icons, SIZES } from '../../../../constants';
+import { FONTS, icons, images, SIZES } from '../../../../constants';
 import Svg, { Path } from 'react-native-svg';
 
 let wr = (SIZES.width / 391)
@@ -23,7 +23,17 @@ const maillist = () => {
   const [data, setData] = useState([]);
   const user = useStoreState((store) => store.user)
   const navigation = useNavigation()
- 
+  const setIsMailAttached = useStoreActions((store) => store.setIsMailAttached)
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const openModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
 
   useEffect(() => {
     const fetchMailid = async () => {
@@ -39,7 +49,9 @@ const maillist = () => {
 
         setData(data)
         //console.log("Mail data length:", data);
-      
+        if (data.length === 0) {
+          setIsMailAttached(false)
+        }
 
       } catch (error) {
         console.log(error)
@@ -74,7 +86,9 @@ const maillist = () => {
 
       let response = await fetch(`${SERVER_BASE_URL}/forward-mail/${prop}`, requestOptions)
 
-
+      if (data.length === 1) {
+        setIsMailAttached(false);
+      }
 
     } catch (error) {
       console.log(error)
@@ -157,25 +171,90 @@ const maillist = () => {
 
           <View>
             <TouchableOpacity
-              onPress={() => deleteId(data?.id)}
+              //onPress={() => deleteId(data?.id)}
+              onPress={openModal}
               style={{
-                backgroundColor: true ? '#30D792' : "#DBDBDB",
-                borderRadius: 10,
+               
+              
                 justifyContent: 'center',
                 height: 32,
                 alignItems: 'center',
-               
-                padding:8
+
+             
               }}
 
             //@ts-ignore
 
             >
-              <Text style={{
-                ...FONTS.paragraph,
-                color: '#fff'
-              }}>Delete</Text>
+              <Image
+              source={images.dustbin}
+              style={{
+                width: wr*28,
+                height: hr*28
+              }}
+              resizeMode='contain'
+            />
             </TouchableOpacity>
+
+            <Modal
+              visible={modalVisible}
+              animationType="slide"
+              transparent={true}
+              onRequestClose={closeModal}
+            >
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                <View style={{ backgroundColor: 'white', padding: 20, gap:8 }}>
+                  <Text style={{ ...FONTS.size17m}}>Are you sure you want to delete?</Text>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <TouchableOpacity
+                      onPress={() => deleteId(data?.id)}
+
+                      style={{
+                        backgroundColor: '#DBDBDB',
+                        borderRadius: 5,
+                        justifyContent: 'center',
+                        height: 32,
+                        alignItems: 'center',
+
+                        padding: 8
+                      }}
+
+
+
+                    >
+                      <Text style={{
+                        ...FONTS.paragraph,
+                        color: '#fff'
+                      }}>Yes</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={closeModal}
+
+                      style={{
+                        backgroundColor: '#30D792' ,
+                        borderRadius: 5,
+                        justifyContent: 'center',
+                        height: 32,
+                        alignItems: 'center',
+
+                        padding: 8
+                      }}
+
+
+
+                    >
+                      <Text style={{
+                        ...FONTS.paragraph,
+                        color: '#fff'
+                      }}>No</Text>
+                    </TouchableOpacity>
+                  </View>
+
+
+                </View>
+              </View>
+            </Modal>
           </View>
 
         </View>
@@ -241,7 +320,7 @@ const maillist = () => {
           gap: 6,
         }}>
 
-          <Text style={{ ...FONTS.heading, color: 'black', marginBottom: 8 }}>Mail ids</Text>
+          <Text style={{ ...FONTS.heading, color: 'black', marginBottom: 8 }}>Linked Emails</Text>
 
         </View>
         {/* 
@@ -270,27 +349,92 @@ const maillist = () => {
         />
 
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Google' as never)}
-          style={{
-            backgroundColor: true ? '#30D792' : "#DBDBDB",
-            borderRadius: 10,
-            justifyContent: 'center',
-            height: 52,
-            width: "40%",
-            alignItems: 'center',
-            alignSelf:'center',
-            marginTop: 10
-          }}
+<TouchableOpacity
+ onPress={() => navigation.navigate('Google' as never)}
+              style={{
+                backgroundColor: '#cccccc',
+                borderRadius: 10,
+                flexDirection: 'row',
+                height: 142,
+                paddingTop: hr * 15,
+                paddingRight: wr * 5,
+                paddingBottom: hr * 8,
+                paddingLeft: wr * 15,
+                justifyContent: 'space-between',
+                marginTop: 10
+              }}
 
-        //@ts-ignore
+            //@ts-ignore
 
-        >
-          <Text style={{
-            ...FONTS.paragraph,
-            color: '#fff'
-          }}>ADD</Text>
-        </TouchableOpacity>
+            >
+              <View>
+                <Text style={{
+                  ...FONTS.paragraph,
+                  color: '#fff'
+                }}>connect Your Gmail</Text>
+                <Text style={{
+                  ...FONTS.size12m,
+                  color: '#fff'
+                }}>consolidate all of your shopping{'\n'}into a single view</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center',marginTop: hr * 24 }}>
+
+                  <Text style={{
+                    ...FONTS.size24b,
+                    color: '#4E96D9',
+                    
+                  }}>add now </Text>
+                  <Image
+                    source={images.enter}
+                    style={{
+                      width: wr * 26,
+                      height: hr * 26,
+
+                    }}
+                    resizeMode='contain'
+                  />
+                </View>
+              </View>
+
+              <View style={{ gap: 15 }}>
+
+
+                <Image
+                  source={images.link}
+                  style={{
+                    width: wr * 32,
+                    height: hr * 32,
+                    marginRight: wr * 80
+                  }}
+                  resizeMode='contain'
+                />
+
+
+                <Image
+                  source={images.gmail}
+                  style={{
+                    width: wr * 42,
+                    height: hr * 42,
+                    marginLeft: wr * 50,
+                    marginTop: hr * -35
+                  }}
+                  resizeMode='contain'
+                />
+
+
+
+
+                <Image
+                  source={images.green}
+                  style={{
+                    width: wr * 42,
+                    height: hr * 42,
+                    marginLeft: wr * 20
+                  }}
+                  resizeMode='contain'
+                />
+              </View>
+
+            </TouchableOpacity>
       </View>
 
 

@@ -169,7 +169,7 @@ const Mailid = ({ route }: any) => {
 
                 <View>
                   <Text style={{ ...FONTS.heading, color: 'black' }}>Avni Mail</Text>
-                  <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>Create your personalized mail</Text>
+                  <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>Create your all in one avni.club shopping mailbox</Text>
                   <View style={styles.inputContainer}>
                     <TextInput
                       style={styles.input}
@@ -191,6 +191,7 @@ const Mailid = ({ route }: any) => {
                   
                     marginTop: hr * 18
                   }}>{errorr}</Text>}
+                  
 
                 </View>
 

@@ -66,7 +66,7 @@ const Reward = () => {
             Authorization: `Bearer ${user.token}`,
           },
         });
-        // console.log("deepak", data)
+        console.log("deepak", data)
         responseData = data;
       } catch (error) {
         console.log(error);
@@ -505,7 +505,11 @@ const Reward = () => {
           <TouchableOpacity
             onPress={() => navigation.navigate('Profile' as never)}>
             <Image
-              source={icons.avatar}
+                source={ user?.gender === 'Male'
+                ? images.man
+                : user?.gender === 'Female'
+                ? images.woman
+                : icons.avatar}
               style={{
                 width: wr * 38,
                 height: hr * 38,
@@ -557,6 +561,7 @@ const Reward = () => {
             Milestone Rewards
           </Text>
           <TouchableOpacity
+             onPress={() => navigation.navigate('Rewardhtml' as never)}
             style={{
               borderRadius: 15,
               padding: 8,
@@ -592,8 +597,8 @@ const Reward = () => {
             data={data}
             renderItem={renderItem}
             ItemSeparatorComponent={renderSeparator}
-            ListFooterComponent={renderFooter}
-            ListEmptyComponent={renderEmpty}
+            //ListFooterComponent={renderFooter}
+            //ListEmptyComponent={renderEmpty}
             onEndReached={handleLoadMore}
             onEndReachedThreshold={0.5}
             keyExtractor={(item: any) => `${item.id}`}
@@ -626,7 +631,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 10,
+    marginVertical: hr*10,
   },
   emptyText: {
     flex: 1,

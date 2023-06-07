@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Platform } from 'react-native'
-import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
+import { COLORS, FONTS, SIZES, icons, TYPES, images } from '../../../../constants'
 import Svg, {
   Path,
   Circle
@@ -29,10 +29,10 @@ const Support = () => {
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={{
-              paddingTop: Platform.OS === 'android' ? hr*30 : hr*50,
-              paddingBottom: hr*30,
-              paddingLeft: wr*25,
-              paddingRight: wr*25
+              paddingTop: Platform.OS === 'android' ? hr * 30 : hr * 50,
+              paddingBottom: hr * 30,
+              paddingLeft: wr * 25,
+              paddingRight: wr * 25
             }}
           >
             <Svg width="20" height="16" viewBox="0 0 20 16" fill="none">
@@ -47,7 +47,7 @@ const Support = () => {
 
               alignSelf: 'center',
               width: SIZES.width * 0.92,
-              height: Platform.OS === 'android' ? (SIZES.height - 70) :(SIZES.height - 90),
+              height: Platform.OS === 'android' ? (SIZES.height - 70) : (SIZES.height - 90),
               borderTopLeftRadius: 30,
               borderTopRightRadius: 30,
               backgroundColor: '#ffffff80',
@@ -65,10 +65,10 @@ const Support = () => {
               borderTopLeftRadius: 30,
               borderTopRightRadius: 30,
               backgroundColor: '#FFFFFF',
-              paddingLeft: wr*24,
-              paddingRight: wr*24,
-              paddingTop: hr*20,
-              paddingBottom: hr*50
+              paddingLeft: wr * 24,
+              paddingRight: wr * 24,
+              paddingTop: hr * 20,
+              paddingBottom: hr * 50
             }}
           >
 
@@ -83,7 +83,7 @@ const Support = () => {
 
             <View>
 
-              <View style={{ marginTop: hr*30, gap: 20, marginBottom: hr*10 }}>
+              <View style={{ marginTop: hr * 30, gap: 20, marginBottom: hr * 10 }}>
                 <AvniTextInput
                   label="Support Category"
                   placeholder='Select'
@@ -105,9 +105,9 @@ const Support = () => {
                 backgroundColor: true ? '#30D792' : "#DBDBDB",
                 borderRadius: 10,
                 justifyContent: 'center',
-                height: hr*52,
+                height: hr * 52,
                 alignItems: 'center',
-                marginTop: hr*10
+                marginTop: hr * 10
               }}
 
             //@ts-ignore
@@ -118,6 +118,8 @@ const Support = () => {
                 color: '#fff'
               }}>Send</Text>
             </TouchableOpacity>
+
+           
 
 
 

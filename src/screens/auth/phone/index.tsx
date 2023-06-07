@@ -42,6 +42,10 @@ const Phone = ({ route }: any) => {
     setChecked(!checked);
   };
   const handlePrivacyPolicyPress = () => {
+    Linking.openURL('https://avni.club/privacy-policy');
+  };
+
+  const handleTerms = () => {
     Linking.openURL('https://avni.club/terms-and-conditions');
   };
 
@@ -154,8 +158,12 @@ const Phone = ({ route }: any) => {
                 />
                 <Text style={{ marginLeft: 5, color:"gray"  }}>
                   I agree to avni.club {' '}
+                  <Text style={{ textDecorationLine: 'underline', color:"gray" }} onPress={handleTerms}>
+                    T&C 
+                  </Text>
+                  {' '}and{' '}
                   <Text style={{ textDecorationLine: 'underline', color:"gray" }} onPress={handlePrivacyPolicyPress}>
-                    T&C and privacy policy
+                  privacy policy
                   </Text>
                 </Text>
               </View>

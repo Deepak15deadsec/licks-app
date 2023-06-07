@@ -30,6 +30,9 @@ import { SERVER_BASE_URL } from '@env'
 import maillist from './src/screens/avni/navigation/more/maillist';
 import Invitebox from './src/screens/auth/invitebox';
 import Faqreward from './src/screens/avni/navigation/more/faqreward';
+import CatReward from './src/screens/avni/navigation/home/categories/rewardCat';
+
+
 
 
 const theme = {
@@ -127,6 +130,8 @@ const App = () => {
             <Stack.Screen name="Maillist" component={maillist} />
             <Stack.Screen name="Allcategories" component={AllCategories} />
             <Stack.Screen name="Invitebox" component={Invitebox} />
+            <Stack.Screen name="Catreward" component={CatReward} />
+          
             <Stack.Screen
               name="Detail"
               component={Detail}
