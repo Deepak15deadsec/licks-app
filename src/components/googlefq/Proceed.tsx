@@ -12,11 +12,19 @@ import { useStoreActions, useStoreState } from '../../store/easy-peasy/hooks'
 const Proceed = (props: any) => {
 
     const [data, setData] = useState<any>();
-    
+
+    const handlePrivacyPolicyPress = () => {
+        Linking.openURL('https://avni.club/privacy-policy');
+    };
+
+    const handleTerms = () => {
+        Linking.openURL('https://avni.club/terms-and-conditions');
+    };
+
     const handleClick = async () => {
         const url = getUrl(user?.phone);
         const response = await Linking.openURL(url);
-        console.log("resp",response)
+        console.log("resp", response)
     };
 
     const user = useStoreState((store) => store.user)
@@ -33,7 +41,7 @@ const Proceed = (props: any) => {
                         "Content-Type": "application/json"
                     },
                 })
-                
+
                 if (forward.status === 200) {
                     clearInterval(interval); // Stop checking when response is received          
 
@@ -54,8 +62,20 @@ const Proceed = (props: any) => {
     switch (props.step) {
         case 1:
             return (
-                <View style={{gap:5}}>
+                <View style={{ gap: 5, alignItems: 'center' }}>
                     <Text>{data}</Text>
+                    <View>
+                        <Text>
+                        <Text style={{ textDecorationLine: 'underline', color: "gray" }} onPress={handleTerms}>
+                            T&C
+                        </Text>
+                        {' '}and{' '}
+                        <Text style={{ textDecorationLine: 'underline', color: "gray" }} onPress={handlePrivacyPolicyPress}>
+                            privacy policy
+                        </Text>
+                        </Text>
+                       
+                    </View>
                     <TouchableOpacity
                         style={{
                             borderRadius: 15,
@@ -82,16 +102,28 @@ const Proceed = (props: any) => {
         case 2:
             return (
                 <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-                    <Text>Fetching Confirmation</Text>
-                    <LottieView source={images.loader} autoPlay loop />
+                    <Text>Fetching Confirmation ...</Text>
+                    {/* <LottieView source={images.loader} autoPlay loop /> */}
 
                 </View>
             )
 
         case 3:
             return (
-                <View style={{gap:2, alignItems:'center'}}>
-                    <Text>confirmation received</Text>
+                <View style={{ gap: 2, alignItems: 'center' }}>
+                    <Text style={{bottom: 20}}>confirmation received</Text>
+                    <View>
+                        <Text>
+                        <Text style={{ textDecorationLine: 'underline', color: "gray" }} onPress={handleTerms}>
+                            T&C
+                        </Text>
+                        {' '}and{' '}
+                        <Text style={{ textDecorationLine: 'underline', color: "gray" }} onPress={handlePrivacyPolicyPress}>
+                            privacy policy
+                        </Text>
+                        </Text>
+                       
+                    </View>
                     <TouchableOpacity
                         style={{
                             borderRadius: 15,

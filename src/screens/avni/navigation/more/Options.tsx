@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 import Svg, {
   Path,
@@ -7,6 +7,10 @@ import Svg, {
 } from 'react-native-svg'
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
+
+//@ts-ignore
+import { SERVER_BASE_URL } from '@env'
 
 let wr = (SIZES.width / 391)
 let hr = (SIZES.height / 812)
@@ -14,7 +18,7 @@ let hr = (SIZES.height / 812)
 const Options = () => {
   const removeUser = useStoreActions((store) => store.removeUser)
   const navigation = useNavigation()
-
+  const isMailAttached = useStoreState(store => store.isMailAttached);
 
 
   return (
@@ -76,7 +80,13 @@ const Options = () => {
       
 
         <TouchableOpacity
-          onPress={() => navigation.navigate('Maillist' as never)}
+          onPress={() => {
+            if (isMailAttached === false) {
+              navigation.navigate('Google' as never);
+            } else {
+              navigation.navigate('Maillist' as never);
+            }
+          }}
           style={{
             flexDirection: 'row',
             backgroundColor: '#fff',
