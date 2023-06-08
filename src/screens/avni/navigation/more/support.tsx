@@ -119,7 +119,7 @@ const Support = () => {
               }}>Send</Text>
             </TouchableOpacity>
 
-           
+        
 
 
 

@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity, Linking, Image } from 'react-native'
 import React, { useState } from 'react'
-import { COLORS, FONTS, icons, images } from '../../constants'
+import { COLORS, FONTS, icons, images, SIZES } from '../../constants'
 import LottieView from 'lottie-react-native'
 import axios from 'axios'
 import { getUrl } from '../../hooks/googleUrl'
@@ -8,6 +8,9 @@ import { getUrl } from '../../hooks/googleUrl'
 //@ts-ignore
 import { SERVER_BASE_URL, CRYPTO_SECRET_KEY } from '@env'
 import { useStoreActions, useStoreState } from '../../store/easy-peasy/hooks'
+
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
 
 const Proceed = (props: any) => {
 
@@ -62,19 +65,19 @@ const Proceed = (props: any) => {
     switch (props.step) {
         case 1:
             return (
-                <View style={{ gap: 5, alignItems: 'center' }}>
+                <View style={{ gap: 5, alignItems: 'center', marginTop: hr * 50 }}>
                     <Text>{data}</Text>
                     <View>
                         <Text>
-                        <Text style={{ textDecorationLine: 'underline', color: "gray" }} onPress={handleTerms}>
-                            T&C
+                            <Text style={{ textDecorationLine: 'underline', color: "gray" }} onPress={handleTerms}>
+                                T&C
+                            </Text>
+                            {' '}and{' '}
+                            <Text style={{ textDecorationLine: 'underline', color: "gray" }} onPress={handlePrivacyPolicyPress}>
+                                privacy policy
+                            </Text>
                         </Text>
-                        {' '}and{' '}
-                        <Text style={{ textDecorationLine: 'underline', color: "gray" }} onPress={handlePrivacyPolicyPress}>
-                            privacy policy
-                        </Text>
-                        </Text>
-                       
+
                     </View>
                     <TouchableOpacity
                         style={{
@@ -101,7 +104,7 @@ const Proceed = (props: any) => {
 
         case 2:
             return (
-                <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: hr * 50 }}>
                     <Text>Fetching Confirmation ...</Text>
                     {/* <LottieView source={images.loader} autoPlay loop /> */}
 
@@ -110,19 +113,19 @@ const Proceed = (props: any) => {
 
         case 3:
             return (
-                <View style={{ gap: 2, alignItems: 'center' }}>
-                    <Text style={{bottom: 20}}>confirmation received</Text>
+                <View style={{ gap: 2, alignItems: 'center', marginTop: hr * 50 }}>
+                    <Text style={{ bottom: hr * 20 }}>confirmation received</Text>
                     <View>
                         <Text>
-                        <Text style={{ textDecorationLine: 'underline', color: "gray" }} onPress={handleTerms}>
-                            T&C
+                            <Text style={{ textDecorationLine: 'underline', color: "gray" }} onPress={handleTerms}>
+                                T&C
+                            </Text>
+                            {' '}and{' '}
+                            <Text style={{ textDecorationLine: 'underline', color: "gray" }} onPress={handlePrivacyPolicyPress}>
+                                privacy policy
+                            </Text>
                         </Text>
-                        {' '}and{' '}
-                        <Text style={{ textDecorationLine: 'underline', color: "gray" }} onPress={handlePrivacyPolicyPress}>
-                            privacy policy
-                        </Text>
-                        </Text>
-                       
+
                     </View>
                     <TouchableOpacity
                         style={{
@@ -141,7 +144,7 @@ const Proceed = (props: any) => {
                             ...FONTS.h4,
                             color: COLORS.darker
                         }}>Connect your Gmail</Text>
-                        <Image style={{ height: 22, width: 22 }} source={images.gmail} resizeMode='contain' />
+                        <Image style={{ height: hr * 22, width: wr * 22 }} source={images.gmail} resizeMode='contain' />
                     </TouchableOpacity>
                 </View>
             )

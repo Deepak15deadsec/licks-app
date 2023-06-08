@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { bgs, DATA } from './screens'
-import { SIZES } from '../../constants';
+import { FONTS, SIZES } from '../../constants';
 const { width, height } = SIZES
 
 
@@ -115,19 +115,9 @@ const Intro = () => {
         };
 
         return (
-            <View style={{ position: 'absolute', paddingLeft: 20, paddingRight: 20, width, alignItems: 'center', bottom: 40, flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{ position: 'absolute', paddingLeft: 20, paddingRight: 20, width, alignItems: 'center', bottom: 40, flexDirection: 'column', justifyContent: 'space-between' }}>
 
-                {/* <View style={{ flex: 1 }}>
-                    {currentIndex < DATA.length - 1 && (
-                        <TouchableOpacity
-                            //@ts-ignore
-                            onPress={() => navigation.navigate(redirectionScreen)}
-                        >
-                            <Text>Skip</Text>
-                        </TouchableOpacity>
-                    )
-                    }
-                </View> */}
+                
 
                 <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center' }}>
                     {
@@ -166,6 +156,18 @@ const Intro = () => {
 
                             )
                         })
+                    }
+                </View>
+
+                <View style={{ flex: 1 }}>
+                    {currentIndex < DATA.length - 1 && (
+                        <TouchableOpacity
+                            //@ts-ignore
+                            onPress={() => navigation.navigate(redirectionScreen)}
+                        >
+                            <Text style={{...FONTS.size10m}}>Skip</Text>
+                        </TouchableOpacity>
+                    )
                     }
                 </View>
 

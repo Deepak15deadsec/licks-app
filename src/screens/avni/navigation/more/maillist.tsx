@@ -213,7 +213,7 @@ const maillist = () => {
                         backgroundColor: '#DBDBDB',
                         borderRadius: 5,
                         justifyContent: 'center',
-                        height: 32,
+                        height: hr * 32,
                         alignItems: 'center',
 
                         padding: 8
@@ -235,7 +235,7 @@ const maillist = () => {
                         backgroundColor: '#30D792',
                         borderRadius: 5,
                         justifyContent: 'center',
-                        height: 32,
+                        height: hr * 32,
                         alignItems: 'center',
 
                         padding: 8
@@ -352,16 +352,18 @@ const maillist = () => {
         <TouchableOpacity
           onPress={() => navigation.navigate('Google' as never)}
           style={{
-            backgroundColor: '#cccccc',
+            backgroundColor: '#e0f3ed',
             borderRadius: 10,
             flexDirection: 'row',
-            height: 142,
+            height: hr * 135,
             paddingTop: hr * 15,
             paddingRight: wr * 5,
             paddingBottom: hr * 8,
             paddingLeft: wr * 15,
             justifyContent: 'space-between',
-            marginTop: hr*10
+            marginTop: hr * 10,
+            borderWidth: 0.2,
+            borderStyle: 'dotted'
           }}
 
         //@ts-ignore
@@ -370,69 +372,97 @@ const maillist = () => {
           <View>
             <Text style={{
               ...FONTS.paragraph,
-              color: '#fff'
-            }}>connect Your Gmail</Text>
-            <Text style={{
-              ...FONTS.size12m,
-              color: '#fff'
-            }}>consolidate all of your shopping{'\n'}into a single view</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: hr * 24 }}>
+              color: '#333333',
+            }}>Connect Your Gmail</Text>
 
-              <Text style={{
-                ...FONTS.size24b,
-                color: '#30D792',
 
-              }}>add now </Text>
+
+            <View style={{ flexDirection: 'row', marginTop: hr * 15, alignItems: 'center' }}>
+
+
               <Image
-                source={images.enter}
+                source={images.gmail}
                 style={{
-                  width: wr * 26,
-                  height: hr * 26,
+                  width: wr * 32,
+                  height: hr * 32,
 
                 }}
                 resizeMode='contain'
               />
+
+              <View
+                style={{
+                  width: '20%',
+                  height: hr * 1,
+                  backgroundColor: 'black',
+
+                }}
+              ></View>
+
+
+              <Image
+                source={images.link}
+                style={{
+                  width: wr * 32,
+                  height: hr * 32,
+
+                }}
+                resizeMode='contain'
+              />
+
+              <View
+                style={{
+                  width: '20%',
+                  height: hr * 1,
+                  backgroundColor: 'black',
+
+                }}
+              ></View>
+
+              <Image
+                source={images.green}
+                style={{
+                  width: wr * 32,
+                  height: hr * 32,
+
+                }}
+                resizeMode='contain'
+              />
+
             </View>
+
+            <Text style={{
+              ...FONTS.size12m,
+              color: '#333333',
+              marginTop: hr * 15
+            }}>consolidate all of your shopping{'\n'}into a single view</Text>
           </View>
 
-          <View style={{ gap: 15 }}>
 
-
-            <Image
-              source={images.link}
+          <View style={{ alignSelf: 'center' }}>
+            <TouchableOpacity
               style={{
-                width: wr * 32,
-                height: hr * 32,
-                marginRight: wr * 80
+                backgroundColor: '#30D792',
+                borderRadius: 10,
+                justifyContent: 'center',
+                height: hr * 36,
+                alignItems: 'center',
+                paddingLeft: wr * 8,
+                paddingRight: wr * 8,
+                marginTop: hr * -6
               }}
-              resizeMode='contain'
-            />
 
+            //@ts-ignore
 
-            <Image
-              source={images.gmail}
-              style={{
-                width: wr * 42,
-                height: hr * 42,
-                marginLeft: wr * 50,
-                marginTop: hr * -35
-              }}
-              resizeMode='contain'
-            />
+            >
+              <Text style={{
+                ...FONTS.paragraph,
+                color: '#ffffff',
 
-
-
-
-            <Image
-              source={images.green}
-              style={{
-                width: wr * 42,
-                height: hr * 42,
-                marginLeft: wr * 20
-              }}
-              resizeMode='contain'
-            />
+              }}>Connect </Text>
+            </TouchableOpacity>
           </View>
+
 
         </TouchableOpacity>
       </View>

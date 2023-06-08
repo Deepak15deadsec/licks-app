@@ -20,6 +20,13 @@ const gmail = require("../assets/images/gmail.png")
 const link = require("../assets/images/link.png")
 const green = require("../assets/images/green.png")
 const enter = require("../assets/images/enter.png")
+const mailpoints = require("../assets/images/mailpoints.png")
+const mailgiftbox = require("../assets/images/mailgiftbox.png")
+const mailbnb = require("../assets/images/mailbnb.png")
+const mailcard = require("../assets/images/mailcard.png")
+const mailededition = require("../assets/images/mailededition.png")
+const mailexclusive = require("../assets/images/mailexclusive.png")
+const mailcoupon = require("../assets/images/mailcoupon.png")
 
 // Dummy
 const usFlag = require("../assets/images/us-flag.jpg");
@@ -49,6 +56,13 @@ export default {
     green,
     gmail,
     enter,
+    mailpoints,
+    mailgiftbox,
+    mailbnb,
+    mailcard,
+    mailededition,
+    mailexclusive,
+    mailcoupon,
 
     // Dummy
     usFlag,

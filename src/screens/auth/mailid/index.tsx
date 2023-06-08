@@ -9,6 +9,7 @@ import { useStoreActions } from '../../../store/easy-peasy/hooks'
 import RingWave from '../../../components/RingWave'
 import Loading from '../../../components/Loading'
 import axios from 'axios'
+import MailPointList from '../../../components/mailpoints'
 
 const Mailid = ({ route }: any) => {
   const navigation = useNavigation()
@@ -192,6 +193,8 @@ const Mailid = ({ route }: any) => {
                     marginTop: hr * 18
                   }}>{errorr}</Text>}
                   
+
+                  <MailPointList />
 
                 </View>
 
