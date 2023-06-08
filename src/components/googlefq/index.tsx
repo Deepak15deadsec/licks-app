@@ -13,13 +13,14 @@ import { useStoreActions, useStoreState } from '../../store/easy-peasy/hooks';
 import Proceed from './Proceed';
 
 
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
+
 const Googlepage = () => {
     const navigation = useNavigation()
     const user = useStoreState((store) => store.user)
     const [step, setStep] = useState(1)
 
-    let wr = (SIZES.width / 391)
-    let hr = (SIZES.height / 812)
     return (
         <View style={styles.container}>
 
@@ -81,8 +82,8 @@ const Googlepage = () => {
 
 
 
-                <View style={styles.containerr}>
-                    <View style={{ height: 480, width: "100%" }}>
+                <View >
+                    <View style={{ height: hr * 520, width: "100%" }}>
 
                         <WebView
                             source={{ uri: 'https://avni.club/faq/forward-instruction' }}
@@ -91,7 +92,7 @@ const Googlepage = () => {
                             useWebKit={false}
                             overScrollMode='always'
                             contentContainerStyle={styles.contentContainer}
-                            
+
                         />
                     </View>
 
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
     },
     webview: {
         flex: 1,
-        height: 10, // Set the desired height
+        height: hr * 10, // Set the desired height
         width: '100%', // Set the desired width
     },
     contentContainer: {
