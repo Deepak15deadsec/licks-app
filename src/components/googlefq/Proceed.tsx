@@ -140,8 +140,8 @@ const Proceed = (props: any) => {
                         <Text style={{
                             ...FONTS.h4,
                             color: COLORS.darker
-                        }}>Connect your google</Text>
-                        <Image style={{ height: 22, width: 22 }} source={icons.googleicon} resizeMode='contain' />
+                        }}>Connect your Gmail</Text>
+                        <Image style={{ height: 22, width: 22 }} source={images.gmail} resizeMode='contain' />
                     </TouchableOpacity>
                 </View>
             )

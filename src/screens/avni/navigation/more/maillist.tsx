@@ -174,26 +174,26 @@ const maillist = () => {
               //onPress={() => deleteId(data?.id)}
               onPress={openModal}
               style={{
-               
-              
+
+
                 justifyContent: 'center',
                 height: 32,
                 alignItems: 'center',
 
-             
+
               }}
 
             //@ts-ignore
 
             >
               <Image
-              source={images.dustbin}
-              style={{
-                width: wr*28,
-                height: hr*28
-              }}
-              resizeMode='contain'
-            />
+                source={images.dustbin}
+                style={{
+                  width: wr * 28,
+                  height: hr * 28
+                }}
+                resizeMode='contain'
+              />
             </TouchableOpacity>
 
             <Modal
@@ -203,8 +203,8 @@ const maillist = () => {
               onRequestClose={closeModal}
             >
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-                <View style={{ backgroundColor: 'white', padding: 20, gap:8 }}>
-                  <Text style={{ ...FONTS.size17m}}>Are you sure you want to delete?</Text>
+                <View style={{ backgroundColor: 'white', padding: 20, gap: 8 }}>
+                  <Text style={{ ...FONTS.size17m }}>Are you sure you want to delete?</Text>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <TouchableOpacity
                       onPress={() => deleteId(data?.id)}
@@ -232,7 +232,7 @@ const maillist = () => {
                       onPress={closeModal}
 
                       style={{
-                        backgroundColor: '#30D792' ,
+                        backgroundColor: '#30D792',
                         borderRadius: 5,
                         justifyContent: 'center',
                         height: 32,
@@ -349,92 +349,92 @@ const maillist = () => {
         />
 
 
-<TouchableOpacity
- onPress={() => navigation.navigate('Google' as never)}
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Google' as never)}
+          style={{
+            backgroundColor: '#cccccc',
+            borderRadius: 10,
+            flexDirection: 'row',
+            height: 142,
+            paddingTop: hr * 15,
+            paddingRight: wr * 5,
+            paddingBottom: hr * 8,
+            paddingLeft: wr * 15,
+            justifyContent: 'space-between',
+            marginTop: hr*10
+          }}
+
+        //@ts-ignore
+
+        >
+          <View>
+            <Text style={{
+              ...FONTS.paragraph,
+              color: '#fff'
+            }}>connect Your Gmail</Text>
+            <Text style={{
+              ...FONTS.size12m,
+              color: '#fff'
+            }}>consolidate all of your shopping{'\n'}into a single view</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: hr * 24 }}>
+
+              <Text style={{
+                ...FONTS.size24b,
+                color: '#30D792',
+
+              }}>add now </Text>
+              <Image
+                source={images.enter}
+                style={{
+                  width: wr * 26,
+                  height: hr * 26,
+
+                }}
+                resizeMode='contain'
+              />
+            </View>
+          </View>
+
+          <View style={{ gap: 15 }}>
+
+
+            <Image
+              source={images.link}
               style={{
-                backgroundColor: '#cccccc',
-                borderRadius: 10,
-                flexDirection: 'row',
-                height: 142,
-                paddingTop: hr * 15,
-                paddingRight: wr * 5,
-                paddingBottom: hr * 8,
-                paddingLeft: wr * 15,
-                justifyContent: 'space-between',
-                marginTop: 10
+                width: wr * 32,
+                height: hr * 32,
+                marginRight: wr * 80
               }}
-
-            //@ts-ignore
-
-            >
-              <View>
-                <Text style={{
-                  ...FONTS.paragraph,
-                  color: '#fff'
-                }}>connect Your Gmail</Text>
-                <Text style={{
-                  ...FONTS.size12m,
-                  color: '#fff'
-                }}>consolidate all of your shopping{'\n'}into a single view</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center',marginTop: hr * 24 }}>
-
-                  <Text style={{
-                    ...FONTS.size24b,
-                    color: '#4E96D9',
-                    
-                  }}>add now </Text>
-                  <Image
-                    source={images.enter}
-                    style={{
-                      width: wr * 26,
-                      height: hr * 26,
-
-                    }}
-                    resizeMode='contain'
-                  />
-                </View>
-              </View>
-
-              <View style={{ gap: 15 }}>
+              resizeMode='contain'
+            />
 
 
-                <Image
-                  source={images.link}
-                  style={{
-                    width: wr * 32,
-                    height: hr * 32,
-                    marginRight: wr * 80
-                  }}
-                  resizeMode='contain'
-                />
-
-
-                <Image
-                  source={images.gmail}
-                  style={{
-                    width: wr * 42,
-                    height: hr * 42,
-                    marginLeft: wr * 50,
-                    marginTop: hr * -35
-                  }}
-                  resizeMode='contain'
-                />
+            <Image
+              source={images.gmail}
+              style={{
+                width: wr * 42,
+                height: hr * 42,
+                marginLeft: wr * 50,
+                marginTop: hr * -35
+              }}
+              resizeMode='contain'
+            />
 
 
 
 
-                <Image
-                  source={images.green}
-                  style={{
-                    width: wr * 42,
-                    height: hr * 42,
-                    marginLeft: wr * 20
-                  }}
-                  resizeMode='contain'
-                />
-              </View>
+            <Image
+              source={images.green}
+              style={{
+                width: wr * 42,
+                height: hr * 42,
+                marginLeft: wr * 20
+              }}
+              resizeMode='contain'
+            />
+          </View>
 
-            </TouchableOpacity>
+        </TouchableOpacity>
       </View>
 
 
