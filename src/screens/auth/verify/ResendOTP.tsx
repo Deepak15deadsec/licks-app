@@ -6,10 +6,13 @@ interface Props {
     onPress:any
 }
 
+let wr = SIZES.width / 391;
+let hr = SIZES.height / 812;
+
 const ResendOTP = (props:Props) => {
     return (
         <TouchableOpacity
-            style={{ marginTop: 30, justifyContent:'center', alignSelf:'center' }}
+            style={{ marginTop: hr*30, justifyContent:'center', alignSelf:'center' }}
             onPress={props.onPress}
         >
             <Text

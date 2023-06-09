@@ -62,7 +62,7 @@ const PhoneInput = (props: Props) => {
                         ...FONTS.paragraph,
                         flex: 1,
                         color: '#4E656F',
-                        height: 63,
+                        height: hr*63,
                         padding: 10
                     }}
                     maxLength={10}
@@ -72,7 +72,7 @@ const PhoneInput = (props: Props) => {
                 color: '#F65C65',
                 ...FONTS.size16b,
                 letterSpacing: -1.03,
-                marginTop: 12
+                marginTop: hr*12
             }}>Incorrect phone, please enter the correct phone.</Text>}
         </View>
 
@@ -80,5 +80,3 @@ const PhoneInput = (props: Props) => {
 }
 
 export default PhoneInput
-
-const styles = StyleSheet.create({})

@@ -101,7 +101,7 @@ const Phone = ({ route }: any) => {
           <View
             style={{
               position: 'absolute',
-              bottom: 0,
+              bottom: hr*0,
               alignSelf: 'center',
               width: SIZES.width * 0.92,
               height: Platform.OS === 'android' ? (SIZES.height - 168) : (SIZES.height - 192),
@@ -116,7 +116,7 @@ const Phone = ({ route }: any) => {
           <View
             style={{
               position: 'absolute',
-              bottom: 0,
+              bottom: hr*0,
               width: SIZES.width,
               height: Platform.OS === 'android' ? (SIZES.height - 180) : (SIZES.height - 204),
               borderTopLeftRadius: 30,
@@ -204,8 +204,8 @@ const Phone = ({ route }: any) => {
                   backgroundColor: detail.phone.length === 10 && checked ? '#30D792' : "#DBDBDB",
                   padding: 8,
                   borderRadius: 100,
-                  width: 60,
-                  height: 60,
+                  width: wr*60,
+                  height: hr*60,
                   justifyContent: 'center',
                   alignItems: 'center'
                 }}
@@ -216,8 +216,8 @@ const Phone = ({ route }: any) => {
                 <Image
                   source={icons.next}
                   style={{
-                    width: 33,
-                    height: 22,
+                    width: wr*33,
+                    height: hr*22,
                   }}
                   resizeMode="contain"
                 />
