@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState, useRef } from 'react'
-import { FONTS } from '../../../constants';
+import { FONTS, SIZES } from '../../../constants';
 
 interface Props {
   otp: string[],
@@ -10,11 +10,14 @@ interface Props {
   }
 }
 
+let wr = SIZES.width / 391;
+let hr = SIZES.height / 812;
+
 const OTP = (props: Props) => {
 
   const otpInputRefs = useRef<any>([]);
 
-  
+
 
   const handleOtpChange = (index: number, value: any) => {
     const newOtp = [...props.otp];
@@ -39,17 +42,18 @@ const OTP = (props: Props) => {
           <TextInput
             key={index}
             style={{
-              marginHorizontal: 4,
+              marginHorizontal: wr * 4,
               fontSize: 20,
-              height: 45,
-              width: 45,
+              height: hr * 45,
+              width: wr * 45,
               borderWidth: 1,
               borderRadius: 10,
               borderColor: props.error.otp ? '#F65C65' : '#30D792',
               textAlign: 'center',
               color: 'black',
-              justifyContent:'center',
-              alignContent:'center'
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems:'center'
             }}
             value={value}
             onChangeText={(text: string) => handleOtpChange(index, text)}
@@ -67,7 +71,7 @@ const OTP = (props: Props) => {
         color: '#F65C65',
         ...FONTS.size16b,
         letterSpacing: -1.03,
-        marginTop:12
+        marginTop: hr * 12
       }}>Incorrect code, please enter the correct code.</Text>}
     </View>
 
@@ -81,6 +85,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 30
+    marginTop: hr * 30
   }
 });

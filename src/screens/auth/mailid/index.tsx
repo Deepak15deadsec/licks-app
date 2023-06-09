@@ -11,6 +11,9 @@ import Loading from '../../../components/Loading'
 import axios from 'axios'
 import MailPointList from '../../../components/mailpoints'
 
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
+
 const Mailid = ({ route }: any) => {
   const navigation = useNavigation()
   const [screen, setScreen] = useState<number>(1)
@@ -20,8 +23,7 @@ const Mailid = ({ route }: any) => {
   const setIsMailAttached = useStoreActions((store) => store.setIsMailAttached)
   const user = route?.params?.user
 
-  let wr = (SIZES.width / 391)
-  let hr = (SIZES.height / 812)
+ 
 
   const [email, setEmail] = useState('');
 
@@ -142,7 +144,7 @@ const Mailid = ({ route }: any) => {
               <View
                 style={{
                   position: 'absolute',
-                  bottom: 0,
+                  bottom: hr*0,
                   alignSelf: 'center',
                   width: SIZES.width * 0.92,
                   height: hr * 620,
@@ -156,15 +158,15 @@ const Mailid = ({ route }: any) => {
               <View
                 style={{
                   position: 'absolute',
-                  bottom: 0,
+                  bottom: hr*0,
                   width: SIZES.width,
                   height: hr * 610,
                   borderTopLeftRadius: 30,
                   borderTopRightRadius: 30,
                   backgroundColor: '#FFFFFF',
-                  paddingLeft: 24,
-                  paddingRight: 24,
-                  paddingTop: 36
+                  paddingLeft: wr*24,
+                  paddingRight: wr*24,
+                  paddingTop: hr*36
                 }}
               >
 
@@ -203,21 +205,21 @@ const Mailid = ({ route }: any) => {
                   <TouchableOpacity
                     style={{
                       backgroundColor: '#DBDBDB',
-                      width: 60,
+                      width: wr*60,
                       borderRadius: 100,
                       padding: 8,
-                      height: 60,
+                      height: hr*60,
                       justifyContent: 'center',
                       alignItems: 'center',
-                      marginRight: 40
+                      marginRight: wr*40
                     }}
                     onPress={() => navigation.goBack()}
                   >
                     <Image
                       source={icons.back}
                       style={{
-                        width: 33,
-                        height: 22,
+                        width: wr*33,
+                        height: hr*22,
                       }}
                       resizeMode="contain"
                     />
@@ -230,8 +232,8 @@ const Mailid = ({ route }: any) => {
                       backgroundColor: error.email ? "#DBDBDB" : '#30D792',
                       padding: 8,
                       borderRadius: 100,
-                      width: 60,
-                      height: 60,
+                      width:wr* 60,
+                      height: hr*60,
                       justifyContent: 'center',
                       alignItems: 'center'
                     }}
@@ -241,8 +243,8 @@ const Mailid = ({ route }: any) => {
                     <Image
                       source={icons.next}
                       style={{
-                        width: 33,
-                        height: 22,
+                        width: wr*33,
+                        height: hr*22,
                       }}
                       resizeMode="contain"
                     />
@@ -278,12 +280,12 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 10,
-    marginTop: 10,
+    marginTop: hr*10,
 
   },
   input: {
     flex: 1,
     padding: 0,
-    marginLeft: 5,
+    marginLeft: wr*5,
   },
 })

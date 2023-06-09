@@ -9,21 +9,21 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import React, {useState} from 'react';
-import {icons, SIZES, FONTS} from '../../../constants';
-import {useNavigation} from '@react-navigation/native';
+import React, { useState } from 'react';
+import { icons, SIZES, FONTS } from '../../../constants';
+import { useNavigation } from '@react-navigation/native';
 import OTP from './OTP';
 import ResendOTP from './ResendOTP';
 import axios from 'axios';
-import {enc, AES} from 'react-native-crypto-js';
+import { enc, AES } from 'react-native-crypto-js';
 
 //@ts-ignore
-import {SERVER_BASE_URL, CRYPTO_SECRET_KEY} from '@env';
-import {useStoreActions} from '../../../store/easy-peasy/hooks';
+import { SERVER_BASE_URL, CRYPTO_SECRET_KEY } from '@env';
+import { useStoreActions } from '../../../store/easy-peasy/hooks';
 import RingWave from '../../../components/RingWave';
 import Loading from '../../../components/Loading';
 
-const Verify = ({route}: any) => {
+const Verify = ({ route }: any) => {
   const navigation = useNavigation();
   const [screen, setScreen] = useState<number>(1);
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -39,7 +39,7 @@ const Verify = ({route}: any) => {
   const setIsMailAttached = useStoreActions(store => store.setIsMailAttached);
   const setIsInviteAccepted = useStoreActions((store) => store.setIsInviteAccepted)
 
-  const resend = () => {};
+  const resend = () => { };
 
   const verify = async () => {
     try {
@@ -55,7 +55,7 @@ const Verify = ({route}: any) => {
         CRYPTO_SECRET_KEY as string,
       ).toString();
 
-      const {data} = await axios({
+      const { data } = await axios({
         url: `${SERVER_BASE_URL}/oauth/verifyOtp`,
         method: 'post',
         headers: {
@@ -71,7 +71,7 @@ const Verify = ({route}: any) => {
       if (data && data.Status === 'Error') {
         setScreen(1);
 
-        setError({...error, ['otp']: true});
+        setError({ ...error, ['otp']: true });
       } else {
         if (data && data.status === 200 && data.accessToken) {
           addUser({
@@ -87,7 +87,7 @@ const Verify = ({route}: any) => {
           });
           setIsMailAttached(data.isMailAttached);
           setIsInviteAccepted(data.isInviteAccepted);
-          navigation.navigate('Avni' as never, {user} as never);
+          navigation.navigate('Avni' as never, { user } as never);
         }
 
         if (
@@ -96,7 +96,7 @@ const Verify = ({route}: any) => {
           data.message === 'Credentials not found!'
         ) {
           console.log('mail', data);
-          navigation.navigate('Mailid' as never, {user} as never);
+          navigation.navigate('Mailid' as never, { user } as never);
         }
       }
     } catch (error) {
@@ -117,7 +117,7 @@ const Verify = ({route}: any) => {
         <KeyboardAvoidingView
           keyboardVerticalOffset={10}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={{flex: 1}}>
+          style={{ flex: 1 }}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
               <View
@@ -138,7 +138,7 @@ const Verify = ({route}: any) => {
               <View
                 style={{
                   position: 'absolute',
-                  bottom: 0,
+                  bottom: hr * 0,
                   alignSelf: 'center',
                   width: SIZES.width * 0.92,
                   height: hr * 620,
@@ -151,21 +151,21 @@ const Verify = ({route}: any) => {
               <View
                 style={{
                   position: 'absolute',
-                  bottom: 0,
+                  bottom: hr * 0,
                   width: SIZES.width,
                   height: hr * 610,
                   borderTopLeftRadius: 30,
                   borderTopRightRadius: 30,
                   backgroundColor: '#FFFFFF',
-                  paddingLeft: 24,
-                  paddingRight: 24,
-                  paddingTop: 36,
+                  paddingLeft: wr * 24,
+                  paddingRight: wr * 24,
+                  paddingTop: hr * 36,
                 }}>
                 <View>
-                  <Text style={{...FONTS.heading, color: 'black'}}>
+                  <Text style={{ ...FONTS.heading, color: 'black' }}>
                     Membership Application
                   </Text>
-                  <Text style={{...FONTS.paragraph, color: '#5C595F'}}>
+                  <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>
                     {' '}
                     enter the OTP sent to your {user.phone}{' '}
                   </Text>
@@ -179,26 +179,26 @@ const Verify = ({route}: any) => {
                     position: 'absolute',
                     flexDirection: 'row',
                     alignSelf: 'center',
-                    bottom: 40,
+                    bottom: hr * 40,
                   }}>
                   {/* back */}
                   <TouchableOpacity
                     style={{
                       backgroundColor: '#DBDBDB',
-                      width: 60,
+                      width: wr * 60,
                       borderRadius: 100,
                       padding: 8,
-                      height: 60,
+                      height: hr * 60,
                       justifyContent: 'center',
                       alignItems: 'center',
-                      marginRight: 40,
+                      marginRight: wr * 40,
                     }}
                     onPress={() => navigation.goBack()}>
                     <Image
                       source={icons.back}
                       style={{
-                        width: 33,
-                        height: 22,
+                        width: wr * 33,
+                        height: hr * 22,
                       }}
                       resizeMode="contain"
                     />
@@ -211,8 +211,8 @@ const Verify = ({route}: any) => {
                         otp?.join('')?.length === 6 ? '#30D792' : '#DBDBDB',
                       padding: 8,
                       borderRadius: 100,
-                      width: 60,
-                      height: 60,
+                      width: wr * 60,
+                      height: hr * 60,
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}
@@ -221,8 +221,8 @@ const Verify = ({route}: any) => {
                     <Image
                       source={icons.next}
                       style={{
-                        width: 33,
-                        height: 22,
+                        width: wr * 33,
+                        height: hr * 22,
                       }}
                       resizeMode="contain"
                     />

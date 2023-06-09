@@ -14,6 +14,8 @@ import { bgs, DATA } from './screens'
 import { FONTS, SIZES } from '../../constants';
 const { width, height } = SIZES
 
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
 
 const Backdrop = ({ scrollX }: any) => {
     const backgroundColor = scrollX.interpolate({
@@ -88,17 +90,17 @@ const Intro = () => {
     const navigation = useNavigation();
 
     useEffect(() => {
-      const timer = setTimeout(() => {
-        if (currentIndex < DATA.length - 1) {
-          flatListRef.current.scrollToIndex({ index: currentIndex + 1, animated: true });
-          setCurrentIndex(currentIndex + 1);
-        } else {
-            //@ts-ignore
-            navigation.navigate(redirectionScreen); // Replace 'NextScreen' with the name of your desired screen
-        }
-      }, 4000);
-  
-      return () => clearTimeout(timer);
+        const timer = setTimeout(() => {
+            if (currentIndex < DATA.length - 1) {
+                flatListRef.current.scrollToIndex({ index: currentIndex + 1, animated: true });
+                setCurrentIndex(currentIndex + 1);
+            } else {
+                //@ts-ignore
+                navigation.navigate(redirectionScreen); // Replace 'NextScreen' with the name of your desired screen
+            }
+        }, 4000);
+
+        return () => clearTimeout(timer);
     }, [currentIndex, navigation]);
 
     const Indicator = ({ scrollX }: any) => {
@@ -115,9 +117,9 @@ const Intro = () => {
         };
 
         return (
-            <View style={{ position: 'absolute', paddingLeft: 20, paddingRight: 20, width, alignItems: 'center', bottom: 40, flexDirection: 'column', justifyContent: 'space-between' }}>
+            <View style={{ position: 'absolute', paddingLeft: wr * 20, paddingRight: wr * 20, width, alignItems: 'center', bottom: hr * 40, flexDirection: 'column', justifyContent: 'space-between' }}>
 
-                
+
 
                 <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center' }}>
                     {
@@ -140,8 +142,8 @@ const Intro = () => {
                                 <Animated.View
                                     key={`indicator-${i}`}
                                     style={{
-                                        height: 10,
-                                        width: 10,
+                                        height: hr * 10,
+                                        width: wr * 10,
                                         borderRadius: 5,
                                         backgroundColor: '#fff',
                                         opacity,
@@ -210,7 +212,7 @@ const Intro = () => {
                     }],
                     { useNativeDriver: false }
                 )}
-                contentContainerStyle={{ paddingBottom: 100 }}
+                contentContainerStyle={{ paddingBottom: hr * 100 }}
                 showsHorizontalScrollIndicator={false}
                 pagingEnabled
                 renderItem={({ item }) => {
@@ -218,21 +220,21 @@ const Intro = () => {
                         <View style={{ width, alignItems: 'center', padding: 20 }}>
                             <View style={{ flex: 0.7, justifyContent: 'center' }}>
                                 <Image
-                                    source={item.image }
+                                    source={item.image}
                                     style={{
-                                        width: width / 2,
-                                        height: width / 2,
+                                        width:wr* width / 2,
+                                        height: hr*width / 2,
                                         resizeMode: 'contain'
                                     }} />
                             </View>
-                            <View style={{ flex: .3, marginTop: 100, width:"90%" }}>
-                            <Text
-                                    style={{ color: '#fff', fontWeight: '300',marginBottom: 10 }}
+                            <View style={{ flex: .3, marginTop: hr * 100, width: "90%" }}>
+                                <Text
+                                    style={{ color: '#fff', fontWeight: '300', marginBottom: hr * 10 }}
                                 >{item.title}</Text>
                                 <Text
                                     style={{ color: '#fff', fontWeight: '800', fontSize: 30, }}
                                 >{item.description}</Text>
-                               
+
                             </View>
                         </View>
                     )
