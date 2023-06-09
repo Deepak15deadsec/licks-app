@@ -287,5 +287,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 0,
     marginLeft: wr*5,
+    color:'black'
   },
 })
