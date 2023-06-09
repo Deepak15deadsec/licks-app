@@ -602,12 +602,12 @@ const Reward = () => {
             onEndReached={handleLoadMore}
             onEndReachedThreshold={0.5}
             keyExtractor={(item: any) => `${item.id}`}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={handleRefresh}
-              />
-            }
+            // refreshControl={
+            //   <RefreshControl
+            //     refreshing={refreshing}
+            //     onRefresh={handleRefresh}
+            //   />
+            // }
           />
         </View>
       </View>
