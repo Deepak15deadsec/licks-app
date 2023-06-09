@@ -159,7 +159,7 @@ const Intro = () => {
                     }
                 </View>
 
-                <View style={{ flex: 1 }}>
+                {/* <View style={{ flex: 1 }}>
                     {currentIndex < DATA.length - 1 && (
                         <TouchableOpacity
                             //@ts-ignore
@@ -169,7 +169,7 @@ const Intro = () => {
                         </TouchableOpacity>
                     )
                     }
-                </View>
+                </View> */}
 
                 {/* <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
                     <TouchableOpacity
