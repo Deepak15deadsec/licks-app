@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 let wr = (SIZES.width / 391)
 let hr = (SIZES.height / 812)
 
-const Card = () => {
+const UpdateCard = () => {
     const navigation = useNavigation()
     let wr = (SIZES.width / 391)
     let hr = (SIZES.height / 812)
@@ -70,6 +70,6 @@ const Card = () => {
     )
 }
 
-export default Card
+export default UpdateCard
 
 const styles = StyleSheet.create({})

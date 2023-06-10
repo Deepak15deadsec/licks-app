@@ -23,7 +23,7 @@ import Orbit from '../../../../components/orbit/Orbit';
 import {SERVER_BASE_URL} from '@env';
 import axios from 'axios';
 import InviteCard from './InviteCard';
-import Dummytrending from './dummy';
+import Dummytrending from './Wrapper';
 
 const Home = () => {
   const user = useStoreState(store => store.user);
@@ -151,27 +151,9 @@ const Home = () => {
           paddingTop: hr * 36,
           paddingBottom: hr * 50,
         }}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <CoinCard />
-          {(!isProfileComplete() || isMailAttached === false) && (
-            <Text
-              style={{
-                marginTop: 15,
-                ...FONTS.paragraph,
-                color: '#5C595F',
-              }}>
-              Action required
-            </Text>
-          )}
-          {!isProfileComplete() && <Card />}
-          {isMailAttached === false && <Google />}
-          {isInviteAccepted === false && <InviteCard />}
-          <Categories />
-          <Dummytrending  />
-          {/* <Trending />
-          <Expiring /> */}
-          <Orbit />
-        </ScrollView>
+        
+        <Dummytrending />
+        
       </View>
     </View>
   );

@@ -16,6 +16,7 @@ const CoinCard = () => {
   const user = useStoreState(store => store.user);
   const artCoin = useStoreState(store => store.artCoin);
   const isInviteAccepted = useStoreState((store) => store.isInviteAccepted)
+  const isProfileComplete = useStoreState((store) => store.isProfileComplete)
   const setArtCoin = useStoreActions(store => store.setArtCoin);
   const navigation = useNavigation();
   let wr = SIZES.width / 391;
@@ -40,7 +41,7 @@ const CoinCard = () => {
     if (user.token) {
       user.token && fetchCoin();
     }
-  }, [user.token, isInviteAccepted]);
+  }, [user.token, isInviteAccepted, isProfileComplete]);
 
   return (
     <View
