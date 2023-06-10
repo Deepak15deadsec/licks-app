@@ -161,17 +161,18 @@ const Intro = () => {
                     }
                 </View>
 
-                {/* <View style={{ flex: 1 }}>
+                <View style={{ flex: 1 }}>
                     {currentIndex < DATA.length - 1 && (
                         <TouchableOpacity
                             //@ts-ignore
                             onPress={() => navigation.navigate(redirectionScreen)}
+                            
                         >
-                            <Text style={{...FONTS.size10m}}>Skip</Text>
+                            <Text style={{...FONTS.size14b}}>Skip</Text>
                         </TouchableOpacity>
                     )
                     }
-                </View> */}
+                </View>
 
                 {/* <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
                     <TouchableOpacity

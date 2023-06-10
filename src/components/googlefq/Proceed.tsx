@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, Linking, Image } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, TouchableOpacity, Linking, Image, Modal } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { COLORS, FONTS, icons, images, SIZES } from '../../constants'
 import LottieView from 'lottie-react-native'
 import axios from 'axios'
@@ -15,6 +15,18 @@ let hr = (SIZES.height / 812)
 const Proceed = (props: any) => {
 
     const [data, setData] = useState<any>();
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalOpened, setModalOpened] = useState(false);
+
+    const openModal = () => {
+        setModalVisible(true);
+        setModalOpened(true);
+      };
+    
+      const closeModal = () => {
+        setModalVisible(false);
+      };
+    
 
     const handlePrivacyPolicyPress = () => {
         Linking.openURL('https://avni.club/privacy-policy');
@@ -31,6 +43,14 @@ const Proceed = (props: any) => {
     };
 
     const user = useStoreState((store) => store.user)
+
+    useEffect(() => {
+        if (modalOpened) {
+          openModal();
+        }
+      }, [modalOpened]);
+
+      
     const handleNext = () => {
 
         props.setStep(2)
@@ -54,10 +74,15 @@ const Proceed = (props: any) => {
                 }
                 if (forward.status === 404) {
                     props.setStep(1)
-                    setData("Please complete the steps above")
+                    if (!modalOpened) {
+                        setModalOpened(true);
+                      }
+                    
                 }
             } catch (error: any) {
-                props.setStep(1)
+                props.setStep(1);
+                
+              
             }
         }, 15000); // 30 seconds
     }
@@ -66,9 +91,9 @@ const Proceed = (props: any) => {
         case 1:
             return (
                 <View style={{ gap: 5, alignItems: 'center', marginTop: hr * 50 }}>
-                    <Text>{data}</Text>
+                    {/* <Text>{data}</Text> */}
                     <View>
-                        <Text>
+                        <Text style={{color:'gray'}}>
                             <Text style={{ textDecorationLine: 'underline', color: "gray" }} onPress={handleTerms}>
                                 T&C
                             </Text>
@@ -98,6 +123,47 @@ const Proceed = (props: any) => {
                         }}>Next</Text>
 
                     </TouchableOpacity>
+
+                    <Modal
+                    visible={modalVisible}
+                    animationType="slide"
+                    transparent={true}
+                    onRequestClose={closeModal}
+                  >
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                      <View style={{ backgroundColor: 'white', padding: 20, gap: 8 }}>
+                        <Text style={{ ...FONTS.size17m, color:'gray' }}>Please complete the steps above</Text>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', }}>
+                        
+      
+                          <TouchableOpacity
+                            onPress={closeModal}
+      
+                            style={{
+                              backgroundColor: '#30D792',
+                              borderRadius: 5,
+                              justifyContent: 'center',
+                              height: hr * 32,
+                              alignItems: 'center',
+      
+                              padding: 8
+                            }}
+      
+      
+      
+                          >
+                            <Text style={{
+                              ...FONTS.paragraph,
+                              color: '#fff'
+                            }}>Close</Text>
+                          </TouchableOpacity>
+                        </View>
+      
+      
+                      </View>
+                    </View>
+                  </Modal>
                 </View>
 
             )
@@ -105,7 +171,7 @@ const Proceed = (props: any) => {
         case 2:
             return (
                 <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: hr * 50 }}>
-                    <Text>Fetching Confirmation ...</Text>
+                    <Text style={{color:'gray'}}>Fetching Confirmation ...</Text>
                     {/* <LottieView source={images.loader} autoPlay loop /> */}
 
                 </View>
@@ -116,7 +182,7 @@ const Proceed = (props: any) => {
                 <View style={{ gap: 2, alignItems: 'center', marginTop: hr * 50 }}>
                     <Text style={{ bottom: hr * 20 }}>confirmation received</Text>
                     <View>
-                        <Text>
+                        <Text style={{color:'gray'}}>
                             <Text style={{ textDecorationLine: 'underline', color: "gray" }} onPress={handleTerms}>
                                 T&C
                             </Text>
@@ -148,6 +214,8 @@ const Proceed = (props: any) => {
                     </TouchableOpacity>
                 </View>
             )
+
+          
 
         default:
             return (

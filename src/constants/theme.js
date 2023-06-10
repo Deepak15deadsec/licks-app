@@ -93,6 +93,7 @@ export const FONTS = {
     heading: { fontFamily: "Inter-SemiBold", fontSize: SIZES.heading, lineHeight: 30 },
     paragraph: { fontFamily: "Inter-Medium", fontSize: SIZES.paragraph, lineHeight: 20 },
     label: { fontFamily: "Inter-Regular", fontSize: SIZES.label, lineHeight: 16 },
+    earning: { fontFamily: "Inter-Bold", fontSize: SIZES.label, lineHeight: 20 },
     coin: { fontFamily: "Inter-SemiBold", fontSize: SIZES.coin, lineHeight: 36 },
     category: { fontFamily: "Inter-Medium", fontSize: SIZES.size12, lineHeight: 14.52 },
     size12s: { fontFamily: "Inter-SemiBold", fontSize: SIZES.size12, lineHeight: 14.52 },

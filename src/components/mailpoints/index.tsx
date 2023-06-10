@@ -14,7 +14,7 @@ const MailPointList = () => {
           style={styles.image}
           resizeMode="contain"
         />
-        <Text style={styles.item}>Milestone rewards</Text>
+        <Text style={styles.item}>Milestone Rewards</Text>
       </View>
       <View style={styles.itemContainer}>
         <Image
@@ -22,7 +22,7 @@ const MailPointList = () => {
           style={styles.image}
           resizeMode="contain"
         />
-        <Text style={styles.item}>Surprise gifts</Text>
+        <Text style={styles.item}>Surprise Gifts</Text>
       </View>
       <View style={styles.itemContainer}>
         <Image
@@ -54,7 +54,7 @@ const MailPointList = () => {
           style={styles.image}
           resizeMode="contain"
         />
-        <Text style={styles.item}>Limited edition collections</Text>
+        <Text style={styles.item}>Limited Edition Collections</Text>
       </View>
       <View style={styles.itemContainer}>
         <Image
@@ -62,7 +62,7 @@ const MailPointList = () => {
           style={styles.image}
           resizeMode="contain"
         />
-        <Text style={styles.item}>EXCLUSIVE EVENTS</Text>
+        <Text style={styles.item}>Exclusive Events Tickets</Text>
       </View>
     </View>
   );
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
   },
   item: {
     fontSize: 16,
+    color:'gray'
   },
 });
 

@@ -23,7 +23,7 @@ const Mailid = ({ route }: any) => {
   const setIsMailAttached = useStoreActions((store) => store.setIsMailAttached)
   const user = route?.params?.user
 
- 
+
 
   const [email, setEmail] = useState('');
 
@@ -64,58 +64,58 @@ const Mailid = ({ route }: any) => {
     if (!regex.test(lowerCaseText)) {
       setErrorr('Special characters are not allowed except for dot (.)');
     } else {
-      
 
-        try {
-          setScreen(2)
-          var myHeaders = new Headers();
-          myHeaders.append("Content-Type", "application/json");
-    
-          let raw = JSON.stringify({
-            "phone": user.phone,
-            "email": lowerCaseText.concat('@avniclub.com'),
-            "firstName": "Guest",
-            "lastName": "",
-            "smsAccess": false,
-            "locationAccess": false,
-            "gender": "None",
-            "dob": null
+
+      try {
+        setScreen(2)
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        let raw = JSON.stringify({
+          "phone": user.phone,
+          "email": lowerCaseText.concat('@avniclub.com'),
+          "firstName": "Guest",
+          "lastName": "",
+          "smsAccess": false,
+          "locationAccess": false,
+          "gender": "None",
+          "dob": null
+        })
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        let response = await fetch(`${SERVER_BASE_URL}/oauth/signup`, requestOptions)
+        let data = await response.json()
+
+        //console.log("signup", data)
+        if (data && data.status === 200 && data.accessToken) {
+          addUser({
+            id: data.id,
+            token: data.accessToken,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            email: data.email,
+            phone: !!data.phone ? data.phone : "",
+            gender: data.gender !== null ? data.gender : null,
+            dob: data.dob !== null ? data.dob : null,
+            referralCode: data.referralCode
           })
-
-          var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-          };
-    
-          let response = await fetch(`${SERVER_BASE_URL}/oauth/signup`, requestOptions)
-          let data = await response.json()
-    
-          //console.log("signup", data)
-          if (data && data.status === 200 && data.accessToken) {
-            addUser({
-              id: data.id,
-              token: data.accessToken,
-              firstName: data.firstName,
-              lastName: data.lastName,
-              email: data.email,
-              phone: !!data.phone ? data.phone : "",
-              gender: data.gender !== null ? data.gender : null,
-              dob: data.dob !== null ? data.dob : null,
-              referralCode: data.referralCode
-            })
-            setIsMailAttached(data.isMailAttached)
-          }
-        } catch (error) {
-          console.log("errorsssss", error)
+          setIsMailAttached(data.isMailAttached)
         }
-    
+      } catch (error) {
+        console.log("errorsssss", error)
       }
 
-        //navigation.navigate("Signup" as never, { user: { ...user, email: lowerCaseText.concat('@avniclub.com') } } as never);
-  
-    
+    }
+
+    //navigation.navigate("Signup" as never, { user: { ...user, email: lowerCaseText.concat('@avniclub.com') } } as never);
+
+
   };
 
 
@@ -144,7 +144,7 @@ const Mailid = ({ route }: any) => {
               <View
                 style={{
                   position: 'absolute',
-                  bottom: hr*0,
+                  bottom: hr * 0,
                   alignSelf: 'center',
                   width: SIZES.width * 0.92,
                   height: hr * 620,
@@ -158,30 +158,31 @@ const Mailid = ({ route }: any) => {
               <View
                 style={{
                   position: 'absolute',
-                  bottom: hr*0,
+                  bottom: hr * 0,
                   width: SIZES.width,
                   height: hr * 610,
                   borderTopLeftRadius: 30,
                   borderTopRightRadius: 30,
                   backgroundColor: '#FFFFFF',
-                  paddingLeft: wr*24,
-                  paddingRight: wr*24,
-                  paddingTop: hr*36
+                  paddingLeft: wr * 24,
+                  paddingRight: wr * 24,
+                  paddingTop: hr * 36
                 }}
               >
 
                 <View>
-                  <Text style={{ ...FONTS.heading, color: 'black' }}>Avni Mail</Text>
+                  <Text style={{ ...FONTS.heading, color: 'black' }}>avni.club mail</Text>
                   <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>Create your all in one avni.club shopping mailbox</Text>
                   <View style={styles.inputContainer}>
                     <TextInput
                       style={styles.input}
-                      placeholder="Enter your id"
+                      placeholder="you"
+                      placeholderTextColor='gray'
                       value={email}
                       onChangeText={handleInputChange}
                       onSubmitEditing={handleInputSubmit}
                     />
-                    <Text style={{ marginLeft: wr * 5, color:"gray" }}>@avniclub.com</Text>
+                    <Text style={{ marginLeft: wr * 5, color: "gray" }}>@avniclub.com</Text>
                   </View>
                   {error.email && <Text style={{
                     color: '#F65C65',
@@ -191,10 +192,10 @@ const Mailid = ({ route }: any) => {
                   }}>Username already taken, try another</Text>}
                   {errorr && <Text style={{
                     color: '#F65C65',
-                  
+
                     marginTop: hr * 18
                   }}>{errorr}</Text>}
-                  
+
 
                   <MailPointList />
 
@@ -205,21 +206,21 @@ const Mailid = ({ route }: any) => {
                   <TouchableOpacity
                     style={{
                       backgroundColor: '#DBDBDB',
-                      width: wr*60,
+                      width: wr * 60,
                       borderRadius: 100,
                       padding: 8,
-                      height: hr*60,
+                      height: hr * 60,
                       justifyContent: 'center',
                       alignItems: 'center',
-                      marginRight: wr*40
+                      marginRight: wr * 40
                     }}
                     onPress={() => navigation.goBack()}
                   >
                     <Image
                       source={icons.back}
                       style={{
-                        width: wr*33,
-                        height: hr*22,
+                        width: wr * 33,
+                        height: hr * 22,
                       }}
                       resizeMode="contain"
                     />
@@ -232,8 +233,8 @@ const Mailid = ({ route }: any) => {
                       backgroundColor: error.email ? "#DBDBDB" : '#30D792',
                       padding: 8,
                       borderRadius: 100,
-                      width:wr* 60,
-                      height: hr*60,
+                      width: wr * 60,
+                      height: hr * 60,
                       justifyContent: 'center',
                       alignItems: 'center'
                     }}
@@ -243,8 +244,8 @@ const Mailid = ({ route }: any) => {
                     <Image
                       source={icons.next}
                       style={{
-                        width: wr*33,
-                        height: hr*22,
+                        width: wr * 33,
+                        height: hr * 22,
                       }}
                       resizeMode="contain"
                     />
@@ -280,13 +281,13 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 10,
-    marginTop: hr*10,
+    marginTop: hr * 10,
 
   },
   input: {
     flex: 1,
     padding: 0,
-    marginLeft: wr*5,
-    color:'black'
+    marginLeft: wr * 5,
+    color: 'black'
   },
 })
