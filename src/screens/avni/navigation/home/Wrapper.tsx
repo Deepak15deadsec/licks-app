@@ -29,7 +29,7 @@ import {
 } from '../../../../store/easy-peasy/hooks';
 import Expiring from './expiring';
 import {useNavigation} from '@react-navigation/native';
-import Card from './Card';
+import ProfileCard from './ProfileCard';
 import Google from './Google';
 import Orbit from '../../../../components/orbit/Orbit';
 
@@ -450,7 +450,7 @@ const Wrapper = () => {
                 Action required
               </Text>
             )}
-            {isProfileComplete === false && <Card />}
+            {isProfileComplete === false && <ProfileCard />}
             {isMailAttached === false && <Google />}
             {isInviteAccepted === false && <InviteCard />}
 
