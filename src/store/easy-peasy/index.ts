@@ -9,10 +9,12 @@ export interface EasyPeasyStore {
   artCoin: number;
   isInviteAccepted: boolean;
   isMailAttached: boolean;
+  isProfileComplete: boolean;
   setQuery: Action<this, Date>;
   setArtCoin: Action<this, number>;
   setIsInviteAccepted: Action<this, boolean>;
   setIsMailAttached: Action<this, boolean>;
+  setIsProfileComplete: Action<this, boolean>;
   addUser: Action<this, User>;
   removeUser: Action<this>;
 }
@@ -23,6 +25,7 @@ const initialState = {
   artCoin: 0,
   isMailAttached: false,
   isInviteAccepted: false,
+  isProfileComplete : false,
   user: {
     id: '',
     token: '',
@@ -70,6 +73,9 @@ export const store = createStore<EasyPeasyStore>(
       }),
       setIsInviteAccepted: action((state: any, isInviteAccepted: boolean) => {
         state.isInviteAccepted = isInviteAccepted;
+      }),
+      setIsProfileComplete: action((state: any, isProfileComplete: boolean) => {
+        state.isProfileComplete = isProfileComplete;
       }),
     },
     {

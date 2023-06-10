@@ -73,7 +73,7 @@ const Promotion = () => {
                 },
 
             });
-            console.log("deepak", data)
+         
             setData(data)
         } catch (error) {
             console.log(error)

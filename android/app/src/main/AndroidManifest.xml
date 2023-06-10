@@ -36,7 +36,7 @@
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="https" />
             <data
-                android:host="test.avniads.com"
+                android:host="app.avni.club"
                 android:pathPrefix="/home" />
         </intent-filter>
       </activity>
