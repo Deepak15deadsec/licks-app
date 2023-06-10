@@ -38,6 +38,9 @@ const Verify = ({ route }: any) => {
   const addUser = useStoreActions(store => store.addUser);
   const setIsMailAttached = useStoreActions(store => store.setIsMailAttached);
   const setIsInviteAccepted = useStoreActions((store) => store.setIsInviteAccepted)
+  const setIsProfileComplete = useStoreActions(
+    store => store.setIsProfileComplete,
+  );
 
   const resend = () => { };
 
@@ -87,6 +90,7 @@ const Verify = ({ route }: any) => {
           });
           setIsMailAttached(data.isMailAttached);
           setIsInviteAccepted(data.isInviteAccepted);
+          setIsProfileComplete(data.isProfileComplete);
           navigation.navigate('Avni' as never, { user } as never);
         }
 
