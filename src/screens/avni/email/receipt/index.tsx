@@ -104,7 +104,7 @@ const Receipt = () => {
         : '';
 
         const subtext = data?.subject;
-        const maxLength = 13;
+        const maxLength = 27;
 
         let truncatedText = subtext.slice(0, maxLength);
         if (subtext.length > maxLength) {
@@ -163,7 +163,7 @@ const Receipt = () => {
                             <View
 
                             >
-                                <Text style={{ ...FONTS.h4, color: '#000000' }}>
+                                <Text style={{ ...FONTS.heading, color: '#000000' }}>
                                     {truncatedText} </Text>
 
                                 <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>

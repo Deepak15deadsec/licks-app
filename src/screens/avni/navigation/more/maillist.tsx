@@ -204,7 +204,7 @@ const maillist = () => {
             >
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                 <View style={{ backgroundColor: 'white', padding: 20, gap: 8 }}>
-                  <Text style={{ ...FONTS.size17m }}>Are you sure you want to delete?</Text>
+                  <Text style={{ ...FONTS.size17m, color:'gray' }}>Are you sure you want to delete?</Text>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <TouchableOpacity
                       onPress={() => deleteId(data?.id)}

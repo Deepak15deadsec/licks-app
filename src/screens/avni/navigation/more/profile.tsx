@@ -204,11 +204,13 @@ const Profile = () => {
               label="First Name"
               value={input?.firstName}
               placeholder="Enter First Name"
+              placeholderTextColor="gray"
               onChangeText={(value: any) => onchangeHandler(value, 'firstName')}
             />
             <AvniTextInput
               label="Last Name"
               value={input?.lastName}
+              placeholderTextColor="gray"
               placeholder="Enter Last Name"
               onChangeText={(value: any) => onchangeHandler(value, 'lastName')}
             />
@@ -216,6 +218,7 @@ const Profile = () => {
             <Picker
               label="Gender"
               placeholder="Select Gender"
+              placeholderTextColor="gray"
               selectedValue={input.gender}
               onValueChange={(value: any) => onchangeHandler(value, 'gender')}
               gendersTypes={gendersTypes}
@@ -223,6 +226,7 @@ const Profile = () => {
 
             <DatePicker
               label="Date of Birth"
+              placeholderTextColor="gray"
               placeholder="Enter Date of Birth"
               value={input?.dob}
               onchangeHandler={onchangeHandler}

@@ -171,7 +171,7 @@ const Invite = () => {
                             borderColor: '#cccccc',
 
                         }}>
-                            <Text>1</Text>
+                            <Text style={{color:'gray'}}>1</Text>
                         </View>
                         <View
                             style={{ alignSelf: 'center' }}
@@ -311,7 +311,7 @@ const Invite = () => {
                             borderColor: '#cccccc',
 
                         }}>
-                            <Text>2</Text>
+                            <Text style={{color:'gray'}}>2</Text>
                         </View>
                         <View
                             style={{ alignSelf: 'center' }}

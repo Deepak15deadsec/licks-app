@@ -60,7 +60,7 @@ const Month = () => {
         });
 
         setData(data);
-        console.log('monthdate', data);
+        //console.log('monthdate', data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -85,6 +85,14 @@ const Month = () => {
       day: 'numeric',
       month: 'short',
     });
+
+    const subtext = data?.description;
+    const maxLength = 30;
+
+    let truncatedText = subtext.slice(0, maxLength);
+    if (subtext.length > maxLength) {
+        truncatedText += "...";
+    }
 
     return (
       <TouchableOpacity
@@ -141,8 +149,8 @@ const Month = () => {
                                 <Text style={styles.initial}>{nameInitial}</Text>
                             </View> */}
               <View style={{gap: 5}}>
-                <Text style={{...FONTS.h4, color: '#000000'}}>
-                  {data?.description}
+                <Text style={{...FONTS.earning, color: '#000000'}}>
+                  {truncatedText}
                 </Text>
                 <Text style={{...FONTS.size10m, color: '#5C595F'}}>
                   {formattedDate}

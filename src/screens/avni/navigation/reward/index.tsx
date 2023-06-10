@@ -9,28 +9,28 @@ import {
   Platform,
   RefreshControl,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {SIZES, FONTS, images, icons} from '../../../../constants';
-import {FlatList} from 'react-native-gesture-handler';
-import {CommonFlatlist} from '../../../../components/flatlist';
-import Svg, {Path} from 'react-native-svg';
-import {searchEnum} from '../search/search.enum';
-import {useNavigation} from '@react-navigation/native';
-import {rewardJson} from '../../data/rewardJson';
+import React, { useEffect, useState } from 'react';
+import { SIZES, FONTS, images, icons } from '../../../../constants';
+import { FlatList } from 'react-native-gesture-handler';
+import { CommonFlatlist } from '../../../../components/flatlist';
+import Svg, { Path } from 'react-native-svg';
+import { searchEnum } from '../search/search.enum';
+import { useNavigation } from '@react-navigation/native';
+import { rewardJson } from '../../data/rewardJson';
 import {
   useStoreActions,
   useStoreState,
 } from '../../../../store/easy-peasy/hooks';
 import QRCode from 'react-native-qrcode-svg';
-import {Clipboard} from '@react-native-clipboard/clipboard/dist/Clipboard';
+import { Clipboard } from '@react-native-clipboard/clipboard/dist/Clipboard';
 import LottieView from 'lottie-react-native';
 
 //@ts-ignore
-import {SERVER_BASE_URL} from '@env';
+import { SERVER_BASE_URL } from '@env';
 import axios from 'axios';
 import moment from 'moment';
-import {useInfiniteQuery} from 'react-query';
-import {getRequest, queries} from '../../../../react-query';
+import { useInfiniteQuery } from 'react-query';
+import { getRequest, queries } from '../../../../react-query';
 
 let wr = SIZES.width / 391;
 let hr = SIZES.height / 812;
@@ -49,7 +49,9 @@ const Reward = () => {
     Clipboard.setString(text);
   };
 
-  const renderItem = ({item: data, index}: any) => {
+
+
+  const renderItem = ({ item: data, index }: any) => {
     // const randomThreeDigitNumber = Math.floor(Math.random() * 900) + 100;
 
     const handleCopy = () => {
@@ -58,10 +60,12 @@ const Reward = () => {
       setIsCopied(true);
     };
 
+
+
     const handleTextClick = (index: any) => {
-      // const updatedShowContent = [...showContent];
-      // updatedShowContent[index] = !updatedShowContent[index];
-      // setShowContent(updatedShowContent);
+      const updatedShowContent = [...showContent];
+      updatedShowContent[index] = !updatedShowContent[index];
+      setShowContent(updatedShowContent);
     };
 
     const inputDate = data?.validUpto;
@@ -238,7 +242,7 @@ const Reward = () => {
               <QRCode value={`${data?.voucherCode}`} size={52} />
 
               <Text
-                style={{...FONTS.h2, color: '#5C595F', letterSpacing: -0.03}}>
+                style={{ ...FONTS.h2, color: '#5C595F', letterSpacing: -0.03 }}>
                 {data?.voucherCode}
               </Text>
 
@@ -262,7 +266,7 @@ const Reward = () => {
                 gap: 5,
               }}>
               {Array.from(
-                {length: data?.maxOrderRequired},
+                { length: data?.maxOrderRequired },
                 (_, i) => i + 1,
               ).map(x => {
                 const fill =
@@ -296,7 +300,7 @@ const Reward = () => {
               }}>
               Valid upto {formattedDate}
             </Text>
-            <View style={{gap: 2}}>
+            <View style={{ gap: 2 }}>
               <Text
                 style={{
                   ...FONTS.size14m,
@@ -323,7 +327,7 @@ const Reward = () => {
                   +{data?.rewardrdArt}{' '}
                 </Text>
                 <Image
-                  style={{height: 22, width: 22}}
+                  style={{ height: 22, width: 22 }}
                   source={icons.coin}
                   resizeMode="contain"
                 />
@@ -345,7 +349,7 @@ const Reward = () => {
           </TouchableOpacity>
         </View>
 
-        {/* {showContent[index] && (
+        {showContent[index] && (
           <View
             style={{
               backgroundColor:
@@ -355,19 +359,19 @@ const Reward = () => {
               borderBottomLeftRadius: 20,
               borderBottomRightRadius: 20,
 
-              paddingHorizontal: 20,
-              paddingVertical: 8,
+              paddingHorizontal: wr * 20,
+              paddingVertical: hr * 8,
               justifyContent: 'flex-start',
               gap: 9,
-              marginTop: -2,
+              marginTop: hr * -2,
             }}>
             {data.termsAndConditions.map((term: any, index: any) => (
-              <Text key={index}>
+              <Text style={{ color: 'gray' }} key={index}>
                 {index + 1} {term}
               </Text>
             ))}
           </View>
-        )} */}
+        )}
       </View>
     );
   };
@@ -399,7 +403,7 @@ const Reward = () => {
     isFetchingNextPage,
   }: any = useInfiniteQuery(
     queries.mildstone,
-    ({pageParam = 1}) =>
+    ({ pageParam = 1 }) =>
       getRequest(
         `${SERVER_BASE_URL}/milestone?userId=${user.id}&page=${pageParam}&pageSize=${LIMIT}`,
         user.token,
@@ -418,6 +422,10 @@ const Reward = () => {
       fetchNextPage();
     }
   };
+
+  const [showContent, setShowContent] = useState(
+    Array(data.length).fill(false),
+  );
 
   return (
     <View style={styles.container}>
@@ -454,8 +462,8 @@ const Reward = () => {
                 user?.gender === 'Male'
                   ? images.man
                   : user?.gender === 'Female'
-                  ? images.woman
-                  : icons.avatar
+                    ? images.woman
+                    : icons.avatar
               }
               style={{
                 width: wr * 38,
@@ -504,7 +512,7 @@ const Reward = () => {
             padding: 0,
             gap: 6,
           }}>
-          <Text style={{...FONTS.heading, color: 'black', marginBottom: 8}}>
+          <Text style={{ ...FONTS.heading, color: 'black', marginBottom: 8 }}>
             Milestone Rewards
           </Text>
           <TouchableOpacity
@@ -519,14 +527,14 @@ const Reward = () => {
               zIndex: 50,
               right: 7,
               shadowColor: '##30D792',
-              shadowOffset: {width: 10, height: 1},
+              shadowOffset: { width: 10, height: 1 },
               shadowOpacity: 0.4,
               shadowRadius: 10,
               elevation: 5,
               backgroundColor: '#f0fcfa',
             }}>
             <Image
-              style={{height: 12, width: 12}}
+              style={{ height: 12, width: 12 }}
               source={icons.question}
               resizeMode="contain"
             />
@@ -534,7 +542,7 @@ const Reward = () => {
         </View>
 
         {isSuccess && (
-          <View style={{flex: 1}}>
+          <View style={{ flex: 1 }}>
             <CommonFlatlist
               data={data.pages.map((page: any) => page).flat()}
               renderItem={renderItem}
