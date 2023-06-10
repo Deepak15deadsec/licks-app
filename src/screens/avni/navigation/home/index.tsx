@@ -1,29 +1,36 @@
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Platform } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { COLORS, FONTS, SIZES, icons, TYPES, images } from '../../../../constants'
-import Svg, {
-  Path,
-  Circle
-} from 'react-native-svg'
-import { useColorScheme } from 'react-native';
-import CoinCard from './CoinCard';
-import Categories from './categories';
-import Trending from './trending';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  COLORS,
+  FONTS,
+  SIZES,
+  icons,
+  TYPES,
+  images,
+} from '../../../../constants';
+import Svg, {Path, Circle} from 'react-native-svg';
+import {useColorScheme} from 'react-native';
+
 import {
   useStoreActions,
   useStoreState,
 } from '../../../../store/easy-peasy/hooks';
-import Expiring from './expiring';
+
 import {useNavigation} from '@react-navigation/native';
-import Card from './Card';
-import Google from './Google';
-import Orbit from '../../../../components/orbit/Orbit';
 
 //@ts-ignore
 import {SERVER_BASE_URL} from '@env';
 import axios from 'axios';
 import InviteCard from './InviteCard';
-import Dummytrending from './Wrapper';
+import Wrapper from './Wrapper';
 
 const Home = () => {
   const user = useStoreState(store => store.user);
@@ -107,11 +114,13 @@ const Home = () => {
           <TouchableOpacity
             onPress={() => navigation.navigate('Profile' as never)}>
             <Image
-             source={ user?.gender === 'Male'
-             ? images.man
-             : user?.gender === 'Female'
-             ? images.woman
-             : icons.avatar}
+              source={
+                user?.gender === 'Male'
+                  ? images.man
+                  : user?.gender === 'Female'
+                  ? images.woman
+                  : icons.avatar
+              }
               style={{
                 width: wr * 38,
                 height: hr * 38,
@@ -151,9 +160,7 @@ const Home = () => {
           paddingTop: hr * 36,
           paddingBottom: hr * 50,
         }}>
-        
-        <Dummytrending />
-        
+        <Wrapper />
       </View>
     </View>
   );

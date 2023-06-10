@@ -142,7 +142,7 @@ const Month = () => {
                             </View> */}
               <View style={{gap: 5}}>
                 <Text style={{...FONTS.h4, color: '#000000'}}>
-                  {data?.rewardType?.name}
+                  {data?.description}
                 </Text>
                 <Text style={{...FONTS.size10m, color: '#5C595F'}}>
                   {formattedDate}
