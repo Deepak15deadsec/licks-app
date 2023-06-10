@@ -1,23 +1,26 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
-import React, { useState, useRef } from 'react'
-import { FONTS, SIZES } from '../../../constants';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {FONTS, SIZES} from '../../../constants';
 
 interface Props {
-  otp: string[],
-  setOtp: any,
+  otp: string[];
+  setOtp: any;
   error: {
-    otp: boolean
-  }
+    otp: boolean;
+  };
 }
 
 let wr = SIZES.width / 391;
 let hr = SIZES.height / 812;
 
 const OTP = (props: Props) => {
-
   const otpInputRefs = useRef<any>([]);
-
-
 
   const handleOtpChange = (index: number, value: any) => {
     const newOtp = [...props.otp];
@@ -37,15 +40,14 @@ const OTP = (props: Props) => {
 
   return (
     <View>
-      <View style={styles.container}>
+      <View style={[styles.container,{gap:8}]}>
         {props.otp.map((value: string, index: number) => (
           <TextInput
             key={index}
             style={{
-              marginHorizontal: wr * 4,
               fontSize: 20,
-              height: hr * 45,
-              width: wr * 45,
+              height: hr * 50,
+              width: wr * 50,
               borderWidth: 1,
               borderRadius: 10,
               borderColor: props.error.otp ? '#F65C65' : '#30D792',
@@ -53,38 +55,39 @@ const OTP = (props: Props) => {
               color: 'black',
               justifyContent: 'center',
               alignContent: 'center',
-              alignItems:'center'
+              alignItems: 'center',
             }}
             value={value}
             onChangeText={(text: string) => handleOtpChange(index, text)}
-            onKeyPress={({ nativeEvent: { key } }) =>
-              handleOtpKeyPress(index, key)
-            }
+            onKeyPress={({nativeEvent: {key}}) => handleOtpKeyPress(index, key)}
             maxLength={1}
             keyboardType="numeric"
             ref={(ref: any) => (otpInputRefs.current[index] = ref)}
           />
         ))}
-
       </View>
-      {props.error.otp && <Text style={{
-        color: '#F65C65',
-        ...FONTS.size16b,
-        letterSpacing: -1.03,
-        marginTop: hr * 12
-      }}>Incorrect code, please enter the correct code.</Text>}
+      {props.error.otp && (
+        <Text
+          style={{
+            color: '#F65C65',
+            ...FONTS.size16b,
+            letterSpacing: -1.03,
+            marginTop: hr * 12,
+          }}>
+          Incorrect code, please enter the correct code.
+        </Text>
+      )}
     </View>
+  );
+};
 
-  )
-}
-
-export default OTP
+export default OTP;
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: hr * 30
-  }
+    marginTop: hr * 30,
+  },
 });
