@@ -33,12 +33,12 @@ const Options = () => {
         flexDirection: 'column',
         position: 'relative',
         bottom: 0,
-        top: hr*10,
+        top: hr * 10,
         rowGap: 22,
-        paddingLeft: wr*24,
-        paddingRight: wr*24,
-        paddingTop: hr*20,
-        paddingBottom: hr*50
+        paddingLeft: wr * 24,
+        paddingRight: wr * 24,
+        paddingTop: hr * 20,
+        paddingBottom: hr * 50
       }}>
         <TouchableOpacity
           onPress={() => navigation.navigate('Mail' as never)}
@@ -58,8 +58,8 @@ const Options = () => {
             <Image
               source={icons.mail}
               style={{
-                width: wr*15,
-                height: hr*15
+                width: wr * 15,
+                height: hr * 15
               }}
               resizeMode='contain'
             />
@@ -77,7 +77,7 @@ const Options = () => {
           </View>
         </TouchableOpacity>
 
-      
+
 
         <TouchableOpacity
           onPress={() => {
@@ -102,8 +102,8 @@ const Options = () => {
             <Image
               source={icons.connect}
               style={{
-                width: wr*15,
-                height: hr*15
+                width: wr * 15,
+                height: hr * 15
               }}
               resizeMode='contain'
             />
@@ -229,13 +229,13 @@ const Options = () => {
           }}
         >
           <TouchableOpacity
-
+            onPress={() => removeUser()}
             style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
             <Image
               source={icons.power}
               style={{
-                width: wr*15,
-                height: hr*15
+                width: wr * 15,
+                height: hr * 15
               }}
               resizeMode='contain'
             />

@@ -99,6 +99,7 @@ export const store = createStore<EasyPeasyStore>(
         'artCoin',
         'isMailAttached',
         'isInviteAccepted',
+        'isProfileComplete',
       ],
     },
   ),
