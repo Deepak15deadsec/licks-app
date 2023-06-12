@@ -213,7 +213,7 @@ const maillist = () => {
                         backgroundColor: '#DBDBDB',
                         borderRadius: 5,
                         justifyContent: 'center',
-                        height: hr * 32,
+                        height: hr * 38,
                         alignItems: 'center',
 
                         padding: 8
@@ -235,7 +235,7 @@ const maillist = () => {
                         backgroundColor: '#30D792',
                         borderRadius: 5,
                         justifyContent: 'center',
-                        height: hr * 32,
+                        height: hr * 38,
                         alignItems: 'center',
 
                         padding: 8
