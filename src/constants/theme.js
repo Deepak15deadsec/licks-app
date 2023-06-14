@@ -97,7 +97,7 @@ export const FONTS = {
     coin: { fontFamily: "Inter-SemiBold", fontSize: SIZES.coin, lineHeight: 36 },
     category: { fontFamily: "Inter-Medium", fontSize: SIZES.size12, lineHeight: 14.52 },
     size12s: { fontFamily: "Inter-SemiBold", fontSize: SIZES.size12, lineHeight: 14.52 },
-    size12m: { fontFamily: "Inter-Music", fontSize: SIZES.size12, lineHeight: 14.52 },
+    size12m: { fontFamily: "Inter-Medium", fontSize: SIZES.size12, lineHeight: 14.52 },
     size10m: { fontFamily: "Inter-Medium", fontSize: SIZES.size10, lineHeight: 12.1 },
     size14m: { fontFamily: "Inter-Medium", fontSize: SIZES.size14, lineHeight: 16 },
     size14r: { fontFamily: "Inter-Regular", fontSize: SIZES.size14, lineHeight: 16 },

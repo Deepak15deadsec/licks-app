@@ -130,7 +130,7 @@ const More = () => {
         <View
           style={{
             position: 'absolute',
-            bottom: hr * 60,
+            bottom: Platform.OS === 'android' ? hr*60 : hr*100,
             width: '80%',
             paddingLeft: wr*40,
             flexDirection: 'row',

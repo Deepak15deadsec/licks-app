@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, Platform } from 'react-native'
 import { COLORS, FONTS, SIZES, icons, TYPES } from '../../../../constants'
 import Svg, {
     Path,
@@ -22,7 +22,7 @@ const Faqreward = () => {
             <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={{
-                    paddingTop: 30,
+                    paddingTop: Platform.OS === 'android' ? hr*30 : hr*50,
                     paddingBottom: 30,
                     paddingLeft: 25,
                     paddingRight: 25
@@ -40,7 +40,7 @@ const Faqreward = () => {
                
                     alignSelf: 'center',
                     width: SIZES.width * 0.92,
-                    height: hr * (SIZES.height - 70),
+                    height: Platform.OS === 'android' ? (SIZES.height - 70) :(SIZES.height - 90),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#ffffff80',
@@ -54,7 +54,7 @@ const Faqreward = () => {
                     bottom: 0,
               
                     width: SIZES.width,
-                    height: hr * (SIZES.height - 82),
+                    height: Platform.OS === 'android' ? (SIZES.height - 82) : (SIZES.height - 102),
                     borderTopLeftRadius: 30,
                     borderTopRightRadius: 30,
                     backgroundColor: '#FFFFFF',

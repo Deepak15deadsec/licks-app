@@ -32,9 +32,9 @@ const Options = () => {
       <View style={{
         flexDirection: 'column',
         position: 'relative',
-        bottom: 0,
+        bottom: hr*0,
         top: hr * 10,
-        rowGap: 22,
+        rowGap: 20,
         paddingLeft: wr * 24,
         paddingRight: wr * 24,
         paddingTop: hr * 20,

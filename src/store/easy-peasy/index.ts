@@ -59,7 +59,8 @@ export const store = createStore<EasyPeasyStore>(
           gender: null,
           referralCode: '',
         }),
-          (state.isMailAttached = false);
+        state.isMailAttached = false;
+        state.isProfileComplete = false;
         state.authenticate = false;
       }),
       setQuery: action((state: any, query: Date) => {
