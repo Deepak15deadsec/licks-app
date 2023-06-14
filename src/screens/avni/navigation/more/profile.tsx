@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,20 +16,20 @@ import {
   TYPES,
   images,
 } from '../../../../constants';
-import Svg, {Path, Circle} from 'react-native-svg';
+import Svg, { Path, Circle } from 'react-native-svg';
 import {
   useStoreActions,
   useStoreState,
 } from '../../../../store/easy-peasy/hooks';
-import {useNavigation} from '@react-navigation/native';
-import {AvniTextInput} from '../../../../components/inputs';
+import { useNavigation } from '@react-navigation/native';
+import { AvniTextInput } from '../../../../components/inputs';
 import DatePicker from '../../../../components/datepicker';
 import Picker from '../../../../components/pickers';
 import gendersTypes from '../../data/gender-types.json';
 //@ts-ignore
-import {SERVER_BASE_URL} from '@env';
+import { SERVER_BASE_URL } from '@env';
 import axios from 'axios';
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import moment from 'moment';
 
 const Profile = () => {
@@ -40,36 +40,73 @@ const Profile = () => {
   const user = useStoreState(store => store.user);
   const navigation = useNavigation();
   const addUser = useStoreActions(store => store.addUser);
-  const [input, setInput] = useState({
+  const [input, setInput] = useState<any>({
     firstName: user?.firstName,
     lastName: user?.lastName,
     gender: user?.gender,
-    dob: user.dob !== null ? moment(new Date()).format('YYYY-MM-DD') : null,
+    dob: user.dob === null ? null : user.dob,
   });
 
+
   const onchangeHandler = useCallback((value: any, name: string) => {
-    setInput(prevState => ({...prevState, [name]: value}));
+    if (name === "dob") {
+      setInput((prevState: any) => ({ ...prevState, ["dob"]: moment(value).format('YYYY-MM-DD') }));
+    }
+    else {
+      if (name === "firstName" && error.gender) {
+        setError((prevState) => ({
+          ...prevState,
+          firstName: false,
+        }));
+      }
+      if (name === "gender" && error.gender) {
+        setError((prevState) => ({
+          ...prevState,
+          gender: false,
+        }));
+      }
+      setInput((prevState: any) => ({ ...prevState, [name]: value }));
+    }
+
+    setError((prevState) => ({
+      ...prevState,
+      firstName: false,
+      gender: false
+    }));
+
   }, []);
 
   let wr = SIZES.width / 391;
   let hr = SIZES.height / 812;
 
-  const validateFields = () => {
-    // Check if any of the required fields are empty or null
-    if (
-      !user.firstName ||
-      !user.lastName ||
-      !user.email ||
-      !user.phone ||
-      !user.gender ||
-      !user.dob
-    ) {
-      return false; // Fields are not filled
-    }
-    return true; // All fields are filled
-  };
+
+
+  const [error, setError] = useState({
+    firstName: false,
+    lastName: false,
+    gender: false,
+    dob: false,
+  })
 
   const updateUser = async () => {
+
+
+    if (input.firstName === "Guest") {
+      setError((prevState) => ({
+        ...prevState,
+        firstName: true,
+      }));
+      return; // Stop further execution if there is an error
+    }
+
+    if (input.gender === "None") {
+      setError((prevState) => ({
+        ...prevState,
+        gender: true,
+      }));
+      return; // Stop further execution if there is an error
+    }
+
     let responseData;
     try {
       const payload = {
@@ -79,7 +116,9 @@ const Profile = () => {
         dob: input.dob,
       };
 
-      const {data} = await axios({
+      //console.log("payload",payload)
+
+      const { data } = await axios({
         method: 'PUT',
         url: `${SERVER_BASE_URL}/users/${user.id}`,
         headers: {
@@ -90,6 +129,7 @@ const Profile = () => {
       });
 
       responseData = data;
+      //console.log("response",responseData)
     } catch (error) {
       console.log(error);
       // Handle the error
@@ -97,10 +137,10 @@ const Profile = () => {
       if (!!responseData) {
         addUser({
           ...user,
-          firstName: responseData?.firstName,
-          lastName: responseData?.lastName,
-          gender: responseData?.gender,
-          dob: responseData?.dob,
+          firstName: responseData?.data?.firstName,
+          lastName: responseData?.data?.lastName,
+          gender: responseData?.data?.gender,
+          dob: responseData?.data?.dob,
         });
         setIsProfileComplete(true);
         navigation.goBack();
@@ -162,7 +202,7 @@ const Profile = () => {
             padding: 0,
             gap: 6,
           }}>
-          <Text style={{...FONTS.heading, color: 'black'}}>Profile</Text>
+          <Text style={{ ...FONTS.heading, color: 'black' }}>Profile</Text>
         </View>
 
         <View>
@@ -178,8 +218,8 @@ const Profile = () => {
                 user?.gender === 'Male'
                   ? images.man
                   : user?.gender === 'Female'
-                  ? images.woman
-                  : icons.avatar
+                    ? images.woman
+                    : icons.avatar
               }
               style={{
                 width: wr * 88,
@@ -195,11 +235,11 @@ const Profile = () => {
               marginTop: hr * 10,
               flexDirection: 'column',
             }}>
-            <Text style={{...FONTS.heading, color: 'black'}}>{user.email}</Text>
-            <Text style={{...FONTS.heading, color: 'black'}}>{user.phone}</Text>
+            <Text style={{ ...FONTS.heading, color: 'black' }}>{user.email}</Text>
+            <Text style={{ ...FONTS.heading, color: 'black' }}>{user.phone}</Text>
           </View>
 
-          <View style={{marginTop: hr * 30, gap: 14, marginBottom: hr * 10}}>
+          <View style={{ marginTop: hr * 30, gap: 14, marginBottom: hr * 10 }}>
             <AvniTextInput
               label="First Name"
               value={input?.firstName}
@@ -207,6 +247,10 @@ const Profile = () => {
               placeholderTextColor="gray"
               onChangeText={(value: any) => onchangeHandler(value, 'firstName')}
             />
+            {error.firstName && (
+              <Text style={{ color: 'red' }}>Please enter a valid first name</Text>
+            )}
+
             <AvniTextInput
               label="Last Name"
               value={input?.lastName}
@@ -217,12 +261,13 @@ const Profile = () => {
 
             <Picker
               label="Gender"
-              placeholder="Select Gender"
-              placeholderTextColor="gray"
               selectedValue={input.gender}
               onValueChange={(value: any) => onchangeHandler(value, 'gender')}
               gendersTypes={gendersTypes}
             />
+            {error.gender && (
+              <Text style={{ color: 'red' }}>Please select your gender</Text>
+            )}
 
             <DatePicker
               label="Date of Birth"

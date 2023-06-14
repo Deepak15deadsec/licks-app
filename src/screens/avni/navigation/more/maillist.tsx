@@ -441,6 +441,7 @@ const maillist = () => {
 
           <View style={{ alignSelf: 'center' }}>
             <TouchableOpacity
+               onPress={() => navigation.navigate('Google' as never)}
               style={{
                 backgroundColor: '#30D792',
                 borderRadius: 10,
