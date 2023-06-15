@@ -33,7 +33,7 @@ const Invite = () => {
 
 
       const handleShare = () => {
-        const message = 'Check out this awesome app!';
+        const message =   user.referralCode;
         const url = `whatsapp://send?text=${encodeURIComponent(message)}`;
       
         Linking.openURL(url)
@@ -46,7 +46,7 @@ const Invite = () => {
       };
 
       const handleFacebook = () => {
-        const message = 'Check out this awesome app!';
+        const message =   user.referralCode;
         const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(message)}`;
       
         Linking.openURL(url)
@@ -59,7 +59,7 @@ const Invite = () => {
       };
 
       const handleTwitter = () => {
-        const message = 'Check out this awesome app!';
+        const message =   user.referralCode;
         const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
       
         Linking.openURL(url)
@@ -72,7 +72,7 @@ const Invite = () => {
       };
 
       const handleInsta = () => {
-        const message = 'Check out this awesome app!';
+        const message =   user.referralCode;
         const url = `instagram://share?text=${encodeURIComponent(message)}`;
       
         Linking.openURL(url)

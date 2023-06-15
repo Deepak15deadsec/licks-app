@@ -84,7 +84,7 @@ const Googlepage = () => {
 
                 <View >
                     <View style={{ height: hr * 520, width: "100%" }}>
-
+   {/* <HTML source={{ uri: 'https://avni.club/faq/forward-instruction' }}  /> */}
                         <WebView
                             source={{ uri: 'https://avni.club/faq/forward-instruction' }}
                             style={styles.webview}

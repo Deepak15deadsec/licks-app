@@ -91,7 +91,7 @@ const AllCategories = () => {
             }}>
                 {categoriesJson?.map((category, index) => {
                     return (
-                        <View key={index} style={{
+                        <TouchableOpacity key={index} onPress={() => navigation.navigate('Catreward' as never, { name: category?.name } as never)} style={{
                             width: '47%',
                             flexDirection: 'row',
                             alignItems: 'center',
@@ -119,7 +119,7 @@ const AllCategories = () => {
                              </View>
                             
                             <Text style={{ ...FONTS.category, color: '#5C595F' }}>{category.name}</Text>
-                        </View>
+                        </TouchableOpacity>
 
 
                     )
