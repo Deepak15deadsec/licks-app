@@ -9,6 +9,7 @@ import Trending from '../navigation/home/trending'
 import Dropdown from '../../../components/dropdown'
 import { useStoreActions, useStoreState } from '../../../store/easy-peasy/hooks';
 import { useRoute } from '@react-navigation/native';
+import RenderHTML from 'react-native-render-html';
 
 //@ts-ignore
 import { SERVER_BASE_URL } from '@env'
@@ -45,7 +46,7 @@ const SentDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
 
                 })
                 setData(data)
-                console.log("details", data)
+                //console.log("details", data)
             } catch (error) {
                 console.log(error)
             }
@@ -186,7 +187,9 @@ const SentDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                     }
                 >
                     {/* <ScrollView showsVerticalScrollIndicator={true}  contentContainerStyle={styles.scrollContainer}> */}
-                    <WebView
+
+                    <RenderHTML  contentWidth={width} source={{ html: data?.message }}  />
+                    {/* <WebView
                         style={styles.webview}
                         source={{ html: data?.message }}
                         startInLoadingState={true}
@@ -197,7 +200,7 @@ const SentDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                         )}
                         scalesPageToFit={true}
 
-                    />
+                    /> */}
                     {/* </ScrollView> */}
                 </SafeAreaView>
 

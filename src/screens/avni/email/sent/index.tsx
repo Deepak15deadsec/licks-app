@@ -43,7 +43,7 @@ const Sent = () => {
 
                 setData(data)
 
-                //console.log("sent", data)
+                console.log("sent", data)
             } catch (error) {
                 console.log(error)
 

@@ -9,6 +9,10 @@ import Trending from '../navigation/home/trending'
 import Dropdown from '../../../components/dropdown'
 import { useStoreActions, useStoreState } from '../../../store/easy-peasy/hooks';
 import { useRoute } from '@react-navigation/native';
+import RenderHTML, { CustomBlockRenderer, CustomMixedRenderer, CustomTextualRenderer, HTMLContentModel } from 'react-native-render-html';
+
+
+
 
 //@ts-ignore
 import { SERVER_BASE_URL } from '@env'
@@ -20,6 +24,8 @@ import TextWithLinks from '../../../components/textwithlinks'
 let wr = (SIZES.width / 391)
 let hr = (SIZES.height / 812)
 
+
+
 const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: string } } }) => {
 
     const trending: any = trendingJson.find((x) => x.id === id)
@@ -29,6 +35,8 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
     const { s3id }: any = route.params;
     const user = useStoreState((store) => store.user)
     const [data, setData]: any = useState()
+
+
 
 
     useEffect(() => {
@@ -184,31 +192,41 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                     style={
                         {
                             flex: 1,
-                            height: "100%",
-                            width: "100%",
+
                             marginTop: 5
                         }
                     }
                 >
-                    <ScrollView showsVerticalScrollIndicator={false}  contentContainerStyle={styles.scrollContainer}>
-                    {data?.html === false ? (
-                      <TextWithLinks text={data?.text} />
+                    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
+                        {data?.html === false ? (
+                            <TextWithLinks text={data?.html} />
 
-                    ) : (
+                        ) : (
 
-                        <WebView
-                            style={styles.webview}
-                            source={{ html: data?.html }}
-                            startInLoadingState={true}
-                            renderLoading={() => (
-                                <View style={styles.loadingContainer}>
-                                    <ActivityIndicator size="large" color="black" />
-                                </View>
-                            )}
-                            scalesPageToFit={true}
+                            <View style={{ width: '100%', alignItems: 'center' }}>
+                                <RenderHTML
+                                    contentWidth={width}
+                                    source={{ html: data?.html }}
+                                    tagsStyles={{
 
-                        />
-                    )}
+                                        body: { maxWidth: "100%", padding: 5 },
+                                    }}
+                                />
+                            </View>
+
+                            // <WebView
+                            //     style={styles.webview}
+                            //     source={{ html: data?.html }}
+                            //     startInLoadingState={true}
+                            //     renderLoading={() => (
+                            //         <View style={styles.loadingContainer}>
+                            //             <ActivityIndicator size="large" color="black" />
+                            //         </View>
+                            //     )}
+                            //     scalesPageToFit={true}
+
+                            // />
+                        )}
                     </ScrollView>
                 </SafeAreaView>
 

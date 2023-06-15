@@ -40,6 +40,7 @@ const FowardScreen = ({ route: { params: { sentData } } }: any) => {
 
             var raw = JSON.stringify({
                 "userId": user?.id,
+                "from": user?.email,
                 "to": [input?.to],
                 "subject": sentData?.subject,
                 "message": input?.message,
