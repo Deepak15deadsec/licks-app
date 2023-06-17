@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs"
 import Svg, {
+  Circle,
   Path
 } from 'react-native-svg'
 import { isIphoneX } from 'react-native-iphone-x-helper'
@@ -180,10 +181,10 @@ const BottomNavigation = () => {
           tabBarIcon: ({ focused }) => (
 
             <Svg fill="none" viewBox="0 0 24 24" strokeWidth={1.8} width="30" height="30" stroke={theme === TYPES.dark ? COLORS.white : focused ? COLORS.white : COLORS.secondary}  >
-              <Path 
-              stroke-linecap="round" stroke-linejoin="round"
-               d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
-               />
+              <Path
+                stroke-linecap="round" stroke-linejoin="round"
+                d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"
+              />
             </Svg>
 
           ),
@@ -200,10 +201,10 @@ const BottomNavigation = () => {
         component={Art}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Svg width="12" height="20" viewBox="0 0 12 20" >
-              <Path
-                d="M0 13.3333H2.22222C2.22222 14.5333 3.74444 15.5556 5.55556 15.5556C7.36667 15.5556 8.88889 14.5333 8.88889 13.3333C8.88889 12.1111 7.73333 11.6667 5.28889 11.0778C2.93333 10.4889 0 9.75556 0 6.66667C0 4.67778 1.63333 2.98889 3.88889 2.42222V0H7.22222V2.42222C9.47778 2.98889 11.1111 4.67778 11.1111 6.66667H8.88889C8.88889 5.46667 7.36667 4.44444 5.55556 4.44444C3.74444 4.44444 2.22222 5.46667 2.22222 6.66667C2.22222 7.88889 3.37778 8.33333 5.82222 8.92222C8.17778 9.51111 11.1111 10.2444 11.1111 13.3333C11.1111 15.3222 9.47778 17.0111 7.22222 17.5778V20H3.88889V17.5778C1.63333 17.0111 0 15.3222 0 13.3333Z"
-                fill={theme === TYPES.dark ? COLORS.white : focused ? COLORS.white : COLORS.secondary} />
+     
+
+            <Svg width="30" height="29" viewBox="0 0 30 29" fill="none" strokeWidth={1.8} stroke={theme === TYPES.dark ? COLORS.white : focused ? COLORS.white : COLORS.secondary} >
+              <Path d="M8.18698 16.774L20.9999 16.7978L18.8363 20.4507M8 12.5H22M8.5 12.5L11 9M29 14.5C29 21.9558 22.732 28 15 28C7.26801 28 1 21.9558 1 14.5C1 7.04416 7.26801 1 15 1C22.732 1 29 7.04416 29 14.5Z" stroke-linecap="round" stroke-linejoin="round" />
             </Svg>
           ),
           tabBarButton: (props) => (

@@ -71,7 +71,7 @@ const Reward = () => {
     const inputDate = data?.validUpto;
     // const formattedDate = moment(inputDate).format('DD/MM/YYYY');
 
-    const dateString = data.updatedAt;
+    const dateString = data.validUpto;
     const formattedDate = new Date(dateString).toLocaleDateString('en-US', {
       day: 'numeric',
       month: 'short',
@@ -300,7 +300,7 @@ const Reward = () => {
               }}>
               Valid upto {formattedDate}
             </Text>
-            <View style={{ gap: 2 }}>
+            <View style={{ gap: 2, alignItems:'center' }}>
               <Text
                 style={{
                   ...FONTS.size14m,
@@ -324,7 +324,7 @@ const Reward = () => {
                     lineHeight: 20,
                     marginTop: 5,
                   }}>
-                  +{data?.rewardrdArt}{' '}
+                  +{data?.rewardedArt}{' '}
                 </Text>
                 <Image
                   style={{ height: 22, width: 22 }}
