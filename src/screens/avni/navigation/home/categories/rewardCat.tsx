@@ -281,7 +281,7 @@ const CatReward = ({ route: { params: { name } } }: { route: { params: { name: s
                 Earn </Text>
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: -2, marginTop: -4 }}>
                 <Text style={{ ...FONTS.size20s, color: data && data?.orderAcheived === data?.maxOrderRequired ? '#ffffff' : '#333333', lineHeight: 20, marginTop: 5 }}>
-                  +{data?.rewardrdArt} </Text>
+                  +{data?.rewardedArts} </Text>
                 <Image style={{ height: 22, width: 22 }} source={icons.coin} resizeMode='contain' />
               </View>
             </View>

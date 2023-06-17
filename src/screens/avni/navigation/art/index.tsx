@@ -139,7 +139,7 @@ const Art = () => {
             alignItems: 'center',
             marginVertical: hr * 20,
           }}>
-          <Text style={{...FONTS.heading, color: 'black'}}>Earnings</Text>
+          <Text style={{...FONTS.heading, color: 'black'}}>Transactions</Text>
           <View>
             <TouchableOpacity
               onPress={() => showPicker(true)}

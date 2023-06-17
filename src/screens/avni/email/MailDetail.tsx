@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions, ActivityIndicator, ScrollView, Platform } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions, ActivityIndicator, ScrollView, Platform, Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { MialNavigation } from '../../../navigation/MailNavigation'
 import { SIZES, FONTS } from '../../../constants'
@@ -53,7 +53,7 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
 
                 })
                 setData(data)
-                console.log("details", data)
+                //console.log("details", data)
             } catch (error) {
                 console.log(error)
             }
@@ -73,6 +73,35 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
         ? dateStringg.split("@")[1]
         : '';
 
+    const htmlContent = `<html>
+    <head>
+      <style>
+        body {
+          margin: 0;
+          padding: 0;
+          font-size: 40px;
+        }
+        img {
+          max-width: 100%;
+          height: auto;
+        }
+      </style>
+      <script>
+        window.addEventListener('DOMContentLoaded', function() {
+          var images = document.getElementsByTagName('img');
+          for (var i = 0; i < images.length; i++) {
+            images[i].removeAttribute('width');
+            images[i].removeAttribute('height');
+          }
+        });
+      </script>
+    </head>
+    <body>
+      ${data?.html}
+    </body>
+  </html>`;
+
+    //console.log("domain",`https://www.google.com/s2/favicons?sz=256&domain=${domain}`)
     return (
 
         <View style={styles.container}>
@@ -199,36 +228,46 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                 >
                     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
                         {data?.html === false ? (
-                            <TextWithLinks text={data?.html} />
+                            <TextWithLinks text={data?.text} />
 
                         ) : (
 
-                            <View style={{ width: '100%', alignItems: 'center' }}>
-                                <RenderHTML
-                                    contentWidth={width}
-                                    source={{ html: data?.html }}
-                                    tagsStyles={{
 
-                                        body: { maxWidth: "100%", padding: 5 },
-                                    }}
-                                />
-                            </View>
+                            // <View style={{ width: Dimensions.get('window').width - 20,   }}>
+                            //     <RenderHTML
+                            //        // contentWidth={width - 20}
+                            //         source={{ html: data?.html}}
 
-                            // <WebView
-                            //     style={styles.webview}
-                            //     source={{ html: data?.html }}
-                            //     startInLoadingState={true}
-                            //     renderLoading={() => (
-                            //         <View style={styles.loadingContainer}>
-                            //             <ActivityIndicator size="large" color="black" />
-                            //         </View>
-                            //     )}
-                            //     scalesPageToFit={true}
+                            //         contentWidth={Dimensions.get('window').width - 20} // Adjust padding
 
-                            // />
+                            //     />
+                            // </View>
+
+
+
+
+                            <WebView
+                                style={styles.webview}
+                                source={{ html: htmlContent }}
+                                startInLoadingState={true}
+                                showsVerticalScrollIndicator={false}
+                                renderLoading={() => (
+                                    <View style={styles.loadingContainer}>
+                                        <ActivityIndicator size="large" color="black" />
+                                    </View>
+                                )}
+
+                                scalesPageToFit={true}
+
+                            />
                         )}
                     </ScrollView>
                 </SafeAreaView>
+
+                <View style={{ justifyContent: 'space-between', flexDirection: 'row',marginTop:5 }}>
+                    <Text>red</Text>
+                    <Text>blue</Text>
+                </View>
 
 
 
@@ -248,8 +287,10 @@ const styles = StyleSheet.create({
     },
     webview: {
         flex: 1,
-        width: "120%",
+        //marginTop:100,
+        width: "100%",
 
+        //transform: [{ scale: 1.3 }]
     },
     loadingContainer: {
         flex: 1,
@@ -257,7 +298,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     scrollContainer: {
-        flexGrow: 1,
+        // flexGrow: 1,
+        flex: 1,
+        backgroundColor: '#FFFFFF'
     },
     circle: {
         width: wr * 50,

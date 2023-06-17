@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Platform } from 'react-native'
 import { COLORS, FONTS, SIZES, icons, TYPES, images } from '../../../../constants'
 import Svg, {
@@ -8,13 +8,29 @@ import Svg, {
 import { useNavigation } from '@react-navigation/native';
 import { AvniTextInput } from '../../../../components/inputs';
 import MessageInput from '../../../../components/inputs/MessageInput';
-
+import Picker from '../../../../components/supportpicker';
+import supportTypes from '../../data/support-types.json';
 
 const Support = () => {
   const navigation = useNavigation()
 
+  const [input, setInput] = useState<any>({
+    supportCat: "",
+  
+  });
+
   let wr = (SIZES.width / 391)
   let hr = (SIZES.height / 812)
+
+  const onchangeHandler = useCallback((value: any, name: string) => {
+   
+  
+      setInput((prevState: any) => ({ ...prevState, [name]: value }));
+    
+
+    
+
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -84,11 +100,14 @@ const Support = () => {
             <View>
 
               <View style={{ marginTop: hr * 30, gap: 20, marginBottom: hr * 10 }}>
-                <AvniTextInput
-                  label="Support Category"
-                  placeholder='Select'
-                />
+             
 
+                <Picker
+                  label="Support"
+                  selectedValue={input.support}
+                  onValueChange={(value: any) => onchangeHandler(value, 'support')}
+                  supportTypes={supportTypes}
+                />
 
                 <MessageInput
                   label="Message"
@@ -119,7 +138,7 @@ const Support = () => {
               }}>Send</Text>
             </TouchableOpacity>
 
-        
+
 
 
 
