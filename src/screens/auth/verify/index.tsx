@@ -32,6 +32,7 @@ const Verify = ({ route }: any) => {
     otp: false,
   });
   const user = route?.params?.user;
+  const {login} = useAuth() 
 
   let wr = SIZES.width / 391;
   let hr = SIZES.height / 812;
@@ -60,8 +61,8 @@ const Verify = ({ route }: any) => {
         `${otp.join('')}`,
         CRYPTO_SECRET_KEY as string,
       ).toString();
-
-      const { data } = await axios({
+  
+      const { data:encryptedData } = await axios({
         url: `${SERVER_BASE_URL}/oauth/verifyOtp`,
         method: 'post',
         headers: {
@@ -73,12 +74,19 @@ const Verify = ({ route }: any) => {
         }),
       });
 
+     
       //console.log("user",data)
-      if (data && data.Status === 'Error') {
+      if (encryptedData && encryptedData.Status === 'Error') {
         setScreen(1);
         setError({ ...error, ['otp']: true });
       } else {
-        if (data && data.status === 200 && data.accessToken) {
+        var databytes = AES.decrypt(
+          encryptedData?.data,
+          CRYPTO_SECRET_KEY as string,
+        );
+        var data:any = databytes.toString(enc.Utf8);
+     
+        if (encryptedData && encryptedData.status === 200 && data.accessToken) {
           addUser({
             firstName: data.firstName,
             lastName: data.lastName,
@@ -91,8 +99,9 @@ const Verify = ({ route }: any) => {
           setIsMailAttached(data.isMailAttached);
           setIsInviteAccepted(data.isInviteAccepted);
           setIsProfileComplete(data.isProfileComplete);
-           //@ts-ignore
-          navigation.navigate('Avni', {user});
+         
+       
+          await login(data.id, data.accessToken);
         }
 
         if (

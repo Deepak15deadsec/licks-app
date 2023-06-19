@@ -24,6 +24,7 @@ import {SERVER_BASE_URL} from '@env';
 import axios from 'axios';
 import moment from 'moment';
 import Orbit from '../../../../components/orbit/Orbit';
+import { useAuth } from '../../../../hooks/auth';
 
 const Item = ({title, description}: any) => (
   <View style={styles.item}>
@@ -39,6 +40,7 @@ const Month = () => {
   const {user, query}: {user: any; query: Date} = useStoreState(store => store);
   const [isLoading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const {id, token} = useAuth()
 
   const [data, setData] = useState([]);
 
@@ -52,10 +54,10 @@ const Month = () => {
         const {data} = await axios({
           method: 'GET',
           url: `${SERVER_BASE_URL}/earning?userId=${
-            user.id
+            id
           }&type=month&date=${moment(query).format('YYYY-MM')}`,
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 

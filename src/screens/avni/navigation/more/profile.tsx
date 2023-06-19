@@ -31,6 +31,7 @@ import { SERVER_BASE_URL } from '@env';
 import axios from 'axios';
 import { useEffect } from 'react';
 import moment from 'moment';
+import { useAuth } from '../../../../hooks/auth';
 
 const Profile = () => {
   const removeUser = useStoreActions(store => store.removeUser);
@@ -46,6 +47,7 @@ const Profile = () => {
     gender: user?.gender,
     dob: user.dob === null ? null : user.dob,
   });
+  const {id, token} = useAuth()
 
 
   const onchangeHandler = useCallback((value: any, name: string) => {
@@ -120,9 +122,9 @@ const Profile = () => {
 
       const { data } = await axios({
         method: 'PUT',
-        url: `${SERVER_BASE_URL}/users/${user.id}`,
+        url: `${SERVER_BASE_URL}/users/${id}`,
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${token}`,
         },
 
         data: payload,

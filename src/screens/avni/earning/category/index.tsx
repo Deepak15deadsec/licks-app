@@ -20,6 +20,7 @@ import {
 import {SERVER_BASE_URL} from '@env';
 import axios from 'axios';
 import moment from 'moment';
+import { useAuth } from '../../../../hooks/auth';
 
 const food = [
   {category: 'Food & Beverages', totalRewardedAmount: 20, color: '#FF0000'},
@@ -38,6 +39,7 @@ const Item = ({title, description}: any) => (
 const Category = () => {
   const {user, query}: {user: any; query: Date} = useStoreState(store => store);
   const [data, setData] = useState([]);
+  const {id, token} = useAuth()
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -45,10 +47,10 @@ const Category = () => {
         const {data} = await axios({
           method: 'GET',
           url: `${SERVER_BASE_URL}/earning?userId=${
-            user.id
+            id
           }&type=category&date=${moment(query).format('YYYY-MM')}`,
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -60,10 +62,10 @@ const Category = () => {
       }
     };
 
-    if (user.token) {
-      user.token && fetchCategories();
+    if (token) {
+      token && fetchCategories();
     }
-  }, [user.token]);
+  }, [token]);
 
   return (
     <View style={styles.container}>

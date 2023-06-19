@@ -16,6 +16,7 @@ import { SERVER_BASE_URL } from '@env'
 import axios from 'axios';
 import WebView from 'react-native-webview'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { useAuth } from '../../../hooks/auth'
 
 let wr = (SIZES.width / 391)
 let hr = (SIZES.height / 812)
@@ -30,7 +31,7 @@ const SentDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
     const { inboxId }: any = route.params;
     const user = useStoreState((store) => store.user)
     const [data, setData]: any = useState()
-
+    const { token} = useAuth()
 
     useEffect(() => {
 
@@ -40,7 +41,7 @@ const SentDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                     method: "GET",
                     url: `${SERVER_BASE_URL}/avni-sent/${id}`,
                     headers: {
-                        "Authorization": `Bearer ${user.token}`
+                        "Authorization": `Bearer ${token}`
                     },
 
 
@@ -51,10 +52,10 @@ const SentDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                 console.log(error)
             }
         }
-        if (user.token) { fetchSent() }
+        if (token) { fetchSent() }
 
 
-    }, [user.token])
+    }, [token])
 
     // const dateStringg = data?.from;
 

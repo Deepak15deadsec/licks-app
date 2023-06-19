@@ -10,6 +10,7 @@ import RingWave from '../../../components/RingWave'
 import Loading from '../../../components/Loading'
 import axios from 'axios'
 import MailPointList from '../../../components/mailpoints'
+import { AES, enc } from 'react-native-crypto-js'
 
 let wr = (SIZES.width / 391)
 let hr = (SIZES.height / 812)
@@ -90,10 +91,15 @@ const Mail = ({ route }: any) => {
         };
 
         let response = await fetch(`${SERVER_BASE_URL}/oauth/signup`, requestOptions)
-        let data = await response.json()
+        let encryptedData = await response.json()
 
+        var databytes = AES.decrypt(
+          encryptedData?.data,
+          CRYPTO_SECRET_KEY as string,
+        );
+        var data:any = databytes.toString(enc.Utf8);
         //console.log("signup", data)
-        if (data && data.status === 200 && data.accessToken) {
+        if (encryptedData && encryptedData.status === 200 && data.accessToken) {
           addUser({
             firstName: data.firstName,
             lastName: data.lastName,

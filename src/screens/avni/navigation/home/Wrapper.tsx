@@ -41,6 +41,7 @@ import {SERVER_BASE_URL} from '@env';
 import axios from 'axios';
 import moment from 'moment';
 import InviteCard from './InviteCard';
+import { useAuth } from '../../../../hooks/auth';
 
 let wr = SIZES.width / 391;
 let hr = SIZES.height / 812;
@@ -53,6 +54,7 @@ const Wrapper = () => {
   const [data, setData] = useState<any[]>([]);
   const [page, setPage] = useState<number>(1);
   const [isLoading, setLoading] = useState(false);
+  const {id, token} = useAuth()
 
   const isInviteAccepted = useStoreState(state => state.isInviteAccepted);
   const isMailAttached = useStoreState(state => state.isMailAttached);
@@ -75,7 +77,7 @@ const Wrapper = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${token}`,
         },
         cancelToken: token,
       });

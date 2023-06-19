@@ -10,6 +10,7 @@ import LottieView from 'lottie-react-native'
 //@ts-ignore
 import { SERVER_BASE_URL } from '@env'
 import axios from 'axios';
+import { useAuth } from '../../../../hooks/auth';
 
 
 let wr = (SIZES.width / 391)
@@ -28,6 +29,7 @@ const Promotion = () => {
     const [isLoading, setLoading] = useState(false);
     const [data, setData] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
+    const {id, token} = useAuth()
 
     useEffect(() => {
         const fetchMails = async () => {
@@ -35,9 +37,9 @@ const Promotion = () => {
             try {
                 const { data } = await axios({
                     method: "GET",
-                    url: `${SERVER_BASE_URL}/avni-inbox?userId=${user.id}&receipt=false`,
+                    url: `${SERVER_BASE_URL}/avni-inbox?userId=${id}&receipt=false`,
                     headers: {
-                        "Authorization": `Bearer ${user.token}`
+                        "Authorization": `Bearer ${token}`
                     }
                 })
 
@@ -52,11 +54,11 @@ const Promotion = () => {
             }
         }
 
-        if (user.token) {
-            user.token && fetchMails()
+        if (token) {
+            token && fetchMails()
         }
 
-    }, [user.token])
+    }, [token])
 
 
     const handleRefresh = async () => {
@@ -65,11 +67,11 @@ const Promotion = () => {
             setRefreshing(true);
 
             const { data } = await axios({
-                url: `${SERVER_BASE_URL}/avni-inbox?userId=${user.id}&receipt=false`,
+                url: `${SERVER_BASE_URL}/avni-inbox?userId=${id}&receipt=false`,
                 method: 'GET',
                 headers: {
                     "Content-Type": 'application/json',
-                    'Authorization': `Bearer ${user.token}`
+                    'Authorization': `Bearer ${token}`
                 },
 
             });

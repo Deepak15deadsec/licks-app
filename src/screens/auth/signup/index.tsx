@@ -19,11 +19,12 @@ import DatePicker from '../../../components/datepicker';
 import Checkbox from '../../../components/checkbox';
 import axios from 'axios';
 //@ts-ignore
-import {SERVER_BASE_URL} from '@env';
+import { SERVER_BASE_URL, CRYPTO_SECRET_KEY } from '@env';
 import {useStoreActions} from '../../../store/easy-peasy/hooks';
 import RingWave from '../../../components/RingWave';
 import Loading from '../../../components/Loading';
 import {useAuth} from '../../../hooks/auth';
+import { AES, enc } from 'react-native-crypto-js';
 
 const Signup = ({route}: any) => {
   const navigation = useNavigation();
@@ -57,7 +58,7 @@ const Signup = ({route}: any) => {
   }, []);
 
   const signup = async () => {
-    let data;
+    let encryptedData:any;
     try {
       setScreen(2);
       var myHeaders = new Headers();
@@ -84,13 +85,18 @@ const Signup = ({route}: any) => {
         `${SERVER_BASE_URL}/oauth/signup`,
         requestOptions,
       );
-      data = await response.json();
+      encryptedData = await response.json();
 
       //console.log("signup", data)
     } catch (error) {
       console.log('errorsssss', error);
     } finally {
-      if (data && data.status === 200 && data.accessToken) {
+      var databytes = AES.decrypt(
+        encryptedData?.data,
+        CRYPTO_SECRET_KEY as string,
+      );
+      var data:any = databytes.toString(enc.Utf8);
+      if (encryptedData && encryptedData.status === 200 && data.accessToken) {
         addUser({
           firstName: data.firstName,
           lastName: data.lastName,

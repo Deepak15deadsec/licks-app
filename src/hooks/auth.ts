@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Keychain from 'react-native-keychain';
 import { useStoreActions } from '../store/easy-peasy/hooks';
 
@@ -15,17 +15,18 @@ export const useAuth = () => {
     token: '',
   });
 
-  const removeUser = useStoreActions((store)=> store.removeUser)
+  const removeUser = useStoreActions((store) => store.removeUser)
 
   const login = async (id: string, token: string) => {
+    console.log("login",id)
     try {
-        setLoading(true)
+      setLoading(true)
       await Keychain.setGenericPassword(id, token);
     } catch (error) {
       console.log("Keychain couldn't be accessed!", error);
     } finally {
       setAuthenticate(true);
-      setCred({id, token});
+      setCred({ id, token });
       setLoading(false)
     }
   };
@@ -57,8 +58,13 @@ export const useAuth = () => {
       } catch (error) {
         console.log("Keychain couldn't be accessed!", error);
       } finally {
-        setAuthenticate(true);
-        setCred(cred);
+       
+        if (cred) {
+          setAuthenticate(true);
+          setCred(cred);
+          
+        }
+       
         setLoading(false);
       }
     })();

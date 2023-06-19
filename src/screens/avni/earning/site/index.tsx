@@ -21,6 +21,7 @@ import {SERVER_BASE_URL} from '@env';
 import axios from 'axios';
 import moment from 'moment';
 import Orbit from '../../../../components/orbit/Orbit';
+import { useAuth } from '../../../../hooks/auth';
 
 const Item = ({title, description}: any) => (
   <View style={styles.item}>
@@ -36,6 +37,7 @@ const Site = () => {
   const [isLoading, setLoading] = useState(false);
   const {user, query}: {user: any; query: Date} = useStoreState(store => store);
   const [data, setData] = useState([]);
+  const {id, token} = useAuth()
 
   useEffect(() => {
     const fetchSites = async () => {
@@ -44,10 +46,10 @@ const Site = () => {
         const {data} = await axios({
           method: 'GET',
           url: `${SERVER_BASE_URL}/earning?userId=${
-            user.id
+            id
           }&type=site&date=${moment(query).format('YYYY-MM')}`,
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
@@ -61,8 +63,8 @@ const Site = () => {
       }
     };
 
-    if (user.token) {
-      user.token && fetchSites();
+    if (token) {
+      token && fetchSites();
     }
   }, [query]);
 
