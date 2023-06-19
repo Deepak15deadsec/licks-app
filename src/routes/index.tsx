@@ -5,6 +5,7 @@ import {AppStack} from './AppStack';
 import {AuthStack} from './AuthStack';
 import {useAuth} from '../hooks/auth';
 import Loading from '../components/Loading';
+import { useStoreState } from '../store/easy-peasy/hooks';
 
 const theme = {
   ...DefaultTheme,
@@ -28,15 +29,10 @@ export const LinkingConfig: any = {
 };
 
 export const Router = () => {
-  const {authenticate, loading} = useAuth();
-  console.log("auth",authenticate)
-
-  if (loading) {
-    return <Loading />;
-  }
+  const isAuthenticated = useStoreState(store => store.isAuthenticated)
   return (
     <NavigationContainer theme={theme} linking={LinkingConfig}>
-      {authenticate ? <AppStack /> : <AuthStack />}
+      {isAuthenticated ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

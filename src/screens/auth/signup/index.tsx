@@ -49,8 +49,8 @@ const Signup = ({route}: any) => {
   const setIsInviteAccepted = useStoreActions(
     store => store.setIsInviteAccepted,
   );
-  const setIsProfileComplete = useStoreActions(
-    store => store.setIsProfileComplete,
+  const setIsProfileCompleted = useStoreActions(
+    store => store.setIsProfileCompleted,
   );
 
   const onchangeHandler = useCallback((value: any, name: string) => {
@@ -108,8 +108,8 @@ const Signup = ({route}: any) => {
         });
         setIsMailAttached(data.isMailAttached);
         setIsInviteAccepted(data.isInviteAccepted);
-        setIsProfileComplete(data.isProfileComplete);
-        await login(data.id, data.accessToken);
+        setIsProfileCompleted(data.isProfileComplete);
+        await login(data);
       }
     }
   };

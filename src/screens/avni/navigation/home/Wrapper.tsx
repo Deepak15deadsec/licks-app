@@ -58,7 +58,7 @@ const Wrapper = () => {
 
   const isInviteAccepted = useStoreState(state => state.isInviteAccepted);
   const isMailAttached = useStoreState(state => state.isMailAttached);
-  const isProfileComplete = useStoreState(state => state.isProfileComplete);
+  const isProfileCompleted = useStoreState(state => state.isProfileCompleted);
 
   const [showContent, setShowContent] = useState(
     Array(data.length).fill(false),
@@ -442,7 +442,7 @@ const Wrapper = () => {
         ListHeaderComponent={
           <>
             <CoinCard />
-            {(isProfileComplete === false || isMailAttached === false) && (
+            {(isProfileCompleted === false || isMailAttached === false) && (
               <Text
                 style={{
                   marginTop: 15,
@@ -452,7 +452,7 @@ const Wrapper = () => {
                 Action required
               </Text>
             )}
-            {isProfileComplete === false && <ProfileCard />}
+            {isProfileCompleted === false && <ProfileCard />}
             {isMailAttached === false && <Google />}
             {isInviteAccepted === false && <InviteCard />}
 

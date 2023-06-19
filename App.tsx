@@ -18,6 +18,8 @@ const App = () => {
   const setArtCoin = useStoreActions(store => store.setArtCoin);
   const {token} = useAuth();
 
+
+
   useEffect(() => {
     const subscription = Linking.addEventListener('url', handleOpenURL);
     return () => {
@@ -33,13 +35,12 @@ const App = () => {
         Authorization: `Bearer ${token}`,
       },
     });
-
     setIsMailAttached(true);
     setArtCoin(data.artCount);
   };
 
   const handleOpenURL = async (event: any) => {
-    const {url} = event;
+    //const {url} = event;
     await fetchme();
   };
 
