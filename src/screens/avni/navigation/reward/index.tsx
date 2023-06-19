@@ -43,7 +43,7 @@ const Reward = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState<number>(1);
   const [isLoading, setLoading] = useState(false);
-  const {id, token} = useAuth()
+  const { id, token } = useAuth()
 
   let LIMIT = 20;
 
@@ -302,7 +302,7 @@ const Reward = () => {
               }}>
               Valid upto {formattedDate}
             </Text>
-            <View style={{ gap: 2, alignItems:'center' }}>
+            <View style={{ gap: 2, alignItems: 'center' }}>
               <Text
                 style={{
                   ...FONTS.size14m,
