@@ -64,9 +64,9 @@ const Home = () => {
   //     try {
   //       const {data} = await axios({
   //         method: 'GET',
-  //         url: `${SERVER_BASE_URL}/forward-mail?userId=${user.id}`,
+  //         url: `${SERVER_BASE_URL}/forward-mail?userId=${id}`,
   //         headers: {
-  //           Authorization: `Bearer ${user.token}`,
+  //           Authorization: `Bearer ${token}`,
   //         },
   //       });
 

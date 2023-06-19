@@ -11,6 +11,7 @@ import {
 //@ts-ignore
 import {SERVER_BASE_URL} from '@env';
 import axios from 'axios';
+import { useAuth } from '../../../../hooks/auth';
 
 const CoinCard = () => {
   const user = useStoreState(store => store.user);
@@ -19,6 +20,7 @@ const CoinCard = () => {
   const isProfileComplete = useStoreState((store) => store.isProfileComplete)
   const setArtCoin = useStoreActions(store => store.setArtCoin);
   const navigation = useNavigation();
+  const {id, token} = useAuth()
   let wr = SIZES.width / 391;
   let hr = SIZES.height / 812;
 
@@ -29,7 +31,7 @@ const CoinCard = () => {
           method: 'GET',
           url: `${SERVER_BASE_URL}/oauth/me`,
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
         setArtCoin(data.artCount);
@@ -38,10 +40,10 @@ const CoinCard = () => {
       }
     };
 
-    if (user.token) {
-      user.token && fetchCoin();
+    if (token) {
+      token && fetchCoin();
     }
-  }, [user.token, isInviteAccepted, isProfileComplete]);
+  }, [token, isInviteAccepted, isProfileComplete]);
 
   return (
     <View

@@ -31,6 +31,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { useInfiniteQuery } from 'react-query';
 import { getRequest, queries } from '../../../../react-query';
+import { useAuth } from '../../../../hooks/auth';
 
 let wr = SIZES.width / 391;
 let hr = SIZES.height / 812;
@@ -42,6 +43,7 @@ const Reward = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState<number>(1);
   const [isLoading, setLoading] = useState(false);
+  const {id, token} = useAuth()
 
   let LIMIT = 20;
 
@@ -405,8 +407,8 @@ const Reward = () => {
     queries.mildstone,
     ({ pageParam = 1 }) =>
       getRequest(
-        `${SERVER_BASE_URL}/milestone?userId=${user.id}&page=${pageParam}&pageSize=${LIMIT}`,
-        user.token,
+        `${SERVER_BASE_URL}/milestone?userId=${id}&page=${pageParam}&pageSize=${LIMIT}`,
+        token,
       ),
     {
       getNextPageParam: (lastPage, allPages) => {

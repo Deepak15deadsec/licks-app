@@ -29,6 +29,7 @@ export const LinkingConfig: any = {
 
 export const Router = () => {
   const {authenticate, loading} = useAuth();
+  console.log("auth",authenticate)
 
   if (loading) {
     return <Loading />;

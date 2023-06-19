@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, useWindowDimensions, ActivityIndicator, ScrollView, Platform, Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { MialNavigation } from '../../../navigation/MailNavigation'
-import { SIZES, FONTS } from '../../../constants'
+import { SIZES, FONTS, icons } from '../../../constants'
 import { useNavigation } from '@react-navigation/native'
 import Svg, { Path } from 'react-native-svg'
 import { trendingJson } from '../data/trendingJson';
@@ -149,7 +149,7 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                     paddingLeft: wr * 24,
                     paddingRight: wr * 24,
                     paddingTop: hr * 20,
-                    paddingBottom: hr * 50,
+                    paddingBottom: hr * 20,
                     gap: 5
 
                 }}
@@ -165,8 +165,9 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                         style={{
                             flexDirection: 'row',
                             flex: 1,
-                            justifyContent: 'space-between',
+                            //justifyContent: 'space-between',
                             gap: 5,
+                            paddingRight: wr*25,
                         }}
                     >
                         <View
@@ -210,9 +211,9 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                             </View>
                         </View>
 
-                        <View>
+                        {/* <View>
                             <Dropdown sendData={data} />
-                        </View>
+                        </View> */}
 
                     </View>
 
@@ -266,9 +267,20 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                     </ScrollView>
                 </SafeAreaView>
 
-                <View style={{ justifyContent: 'space-between', flexDirection: 'row',marginTop:5 }}>
-                    <Text>red</Text>
-                    <Text>blue</Text>
+                <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: hr * 5 }}>
+                    <TouchableOpacity
+                        onPress={() => { navigation.navigate('Forward' as never, { sentData: data } as never) }}
+                        style={{ borderWidth: 1, padding: 8, borderRadius: 20, flexDirection: 'row', gap: 5 }}>
+                        <Image style={{ height: hr * 18, width: wr * 18 }} source={icons.forward} resizeMode='contain' />
+                        <Text>Foward</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={() => { navigation.navigate('Reply' as never, { sentData: data } as never) }}
+                        style={{ borderWidth: 1, padding: 8, borderRadius: 20, flexDirection: 'row', gap: 5 }}>
+                        <Image style={{ height: hr * 18, width: wr * 18 }} source={icons.reply} resizeMode='contain' />
+                        <Text>Reply</Text>
+                    </TouchableOpacity>
                 </View>
 
 

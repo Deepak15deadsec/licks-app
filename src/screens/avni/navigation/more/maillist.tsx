@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SERVER_BASE_URL } from '@env'
 import { FONTS, icons, images, SIZES } from '../../../../constants';
 import Svg, { Path } from 'react-native-svg';
+import { useAuth } from '../../../../hooks/auth';
 
 let wr = (SIZES.width / 391)
 let hr = (SIZES.height / 812)
@@ -25,6 +26,7 @@ const maillist = () => {
   const navigation = useNavigation()
   const setIsMailAttached = useStoreActions((store) => store.setIsMailAttached)
   const [modalVisible, setModalVisible] = useState(false);
+  const {id, token} = useAuth()
 
   const openModal = () => {
     setModalVisible(true);
@@ -41,9 +43,9 @@ const maillist = () => {
       try {
         const { data } = await axios({
           method: "GET",
-          url: `${SERVER_BASE_URL}/forward-mail?userId=${user.id}`,
+          url: `${SERVER_BASE_URL}/forward-mail?userId=${id}`,
           headers: {
-            "Authorization": `Bearer ${user.token}`
+            "Authorization": `Bearer ${token}`
           }
         })
 
@@ -71,7 +73,7 @@ const maillist = () => {
     try {
       var myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
-      myHeaders.append("Authorization", `Bearer ${user.token}`);
+      myHeaders.append("Authorization", `Bearer ${token}`);
 
       var raw = JSON.stringify({
         "active": false
