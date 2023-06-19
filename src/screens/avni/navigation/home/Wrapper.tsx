@@ -54,8 +54,9 @@ const Wrapper = () => {
   const [data, setData] = useState<any[]>([]);
   const [page, setPage] = useState<number>(1);
   const [isLoading, setLoading] = useState(false);
-  const {id, token} = useAuth()
+  const {id,token} = useAuth()
 
+ 
   const isInviteAccepted = useStoreState(state => state.isInviteAccepted);
   const isMailAttached = useStoreState(state => state.isMailAttached);
   const isProfileCompleted = useStoreState(state => state.isProfileCompleted);
@@ -68,7 +69,7 @@ const Wrapper = () => {
     Clipboard.setString(text);
   };
 
-  const fetchData = async (token: any) => {
+  const fetchData = async (tokenn: any) => {
     setLoading(true);
 
     try {
@@ -79,7 +80,7 @@ const Wrapper = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        cancelToken: token,
+        cancelToken: tokenn,
       });
       //console.log("mildsl", data)
 
