@@ -14,7 +14,7 @@ import MailPointList from '../../../components/mailpoints'
 let wr = (SIZES.width / 391)
 let hr = (SIZES.height / 812)
 
-const Mailid = ({ route }: any) => {
+const Mail = ({ route }: any) => {
   const navigation = useNavigation()
   const [screen, setScreen] = useState<number>(1)
   const [error, setError] = useState({ email: false });
@@ -95,8 +95,6 @@ const Mailid = ({ route }: any) => {
         //console.log("signup", data)
         if (data && data.status === 200 && data.accessToken) {
           addUser({
-            id: data.id,
-            token: data.accessToken,
             firstName: data.firstName,
             lastName: data.lastName,
             email: data.email,
@@ -265,7 +263,7 @@ const Mailid = ({ route }: any) => {
 
 }
 
-export default Mailid
+export default Mail
 
 const styles = StyleSheet.create({
   container: {

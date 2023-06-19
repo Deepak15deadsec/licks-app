@@ -23,16 +23,18 @@ import {SERVER_BASE_URL} from '@env';
 import {useStoreActions} from '../../../store/easy-peasy/hooks';
 import RingWave from '../../../components/RingWave';
 import Loading from '../../../components/Loading';
+import {useAuth} from '../../../hooks/auth';
 
 const Signup = ({route}: any) => {
   const navigation = useNavigation();
   const user = route?.params?.user;
   const [screen, setScreen] = useState<number>(1);
+  const {login} = useAuth();
 
   const [input, setInput] = useState({
     first_name: 'Guest',
     last_name: '',
-    gender: null,
+    gender: 'None',
     dob: null,
     location_access: false,
     sms_access: false,
@@ -55,6 +57,7 @@ const Signup = ({route}: any) => {
   }, []);
 
   const signup = async () => {
+    let data;
     try {
       setScreen(2);
       var myHeaders = new Headers();
@@ -81,13 +84,14 @@ const Signup = ({route}: any) => {
         `${SERVER_BASE_URL}/oauth/signup`,
         requestOptions,
       );
-      let data = await response.json();
+      data = await response.json();
 
       //console.log("signup", data)
+    } catch (error) {
+      console.log('errorsssss', error);
+    } finally {
       if (data && data.status === 200 && data.accessToken) {
         addUser({
-          id: data.id,
-          token: data.accessToken,
           firstName: data.firstName,
           lastName: data.lastName,
           email: data.email,
@@ -99,13 +103,12 @@ const Signup = ({route}: any) => {
         setIsMailAttached(data.isMailAttached);
         setIsInviteAccepted(data.isInviteAccepted);
         setIsProfileComplete(data.isProfileComplete);
+        await login(data.id, data.accessToken);
       }
-    } catch (error) {
-      console.log('errorsssss', error);
     }
   };
 
-  console.log('dob', input.dob);
+  // console.log('dob', input.dob);
 
   switch (screen) {
     case 1:
@@ -184,7 +187,6 @@ const Signup = ({route}: any) => {
                     />
                     <Picker
                       label="Gender"
-                      placeholder="Select Gender"
                       selectedValue={input.gender}
                       onValueChange={(value: any) =>
                         onchangeHandler(value, 'gender')

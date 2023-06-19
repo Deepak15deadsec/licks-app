@@ -15,6 +15,7 @@ import {getUrl} from '../../hooks/googleUrl';
 //@ts-ignore
 import {SERVER_BASE_URL, CRYPTO_SECRET_KEY} from '@env';
 import {useStoreActions, useStoreState} from '../../store/easy-peasy/hooks';
+import { useAuth } from '../../hooks/auth';
 
 let wr = SIZES.width / 391;
 let hr = SIZES.height / 812;
@@ -23,6 +24,7 @@ const Proceed = (props: any) => {
   const [data, setData] = useState<any>();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalOpened, setModalOpened] = useState(false);
+  const{token, id} = useAuth()
 
   const openModal = () => {
     setModalVisible(true);
@@ -61,9 +63,9 @@ const Proceed = (props: any) => {
       try {
         const {data: forward}: any = await axios({
           method: 'GET',
-          url: `${SERVER_BASE_URL}/avni-inbox/${user.id}/get-forward-mail/forwarding-noreply@google.com`,
+          url: `${SERVER_BASE_URL}/avni-inbox/${id}/get-forward-mail/forwarding-noreply@google.com`,
           headers: {
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         });

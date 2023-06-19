@@ -23,6 +23,7 @@ import {Clipboard} from '@react-native-clipboard/clipboard/dist/Clipboard';
 //@ts-ignore
 import {SERVER_BASE_URL} from '@env';
 import axios from 'axios';
+import { useAuth } from '../../../hooks/auth';
 
 let wr = SIZES.width / 391;
 let hr = SIZES.height / 812;
@@ -33,6 +34,7 @@ const copyToClipboard = (text: string) => {
 
 const Invitebox = () => {
   const navigation = useNavigation();
+  const {token, id} = useAuth()
   const user = useStoreState(store => store.user);
   const setIsInviteAccepted = useStoreActions(
     store => store.setIsInviteAccepted,
@@ -55,11 +57,11 @@ const Invitebox = () => {
         url: `${SERVER_BASE_URL}/oauth/invitation-rewarding`,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${token}`,
         },
         data: {
           referralCode: input.referralCode,
-          userId: user.id,
+          userId: id,
         },
       });
 
