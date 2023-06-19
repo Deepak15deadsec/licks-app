@@ -20,6 +20,7 @@ import axios from 'axios';
 import WebView from 'react-native-webview'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import TextWithLinks from '../../../components/textwithlinks'
+import { useAuth } from '../../../hooks/auth'
 
 let wr = (SIZES.width / 391)
 let hr = (SIZES.height / 812)
@@ -35,6 +36,7 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
     const { s3id }: any = route.params;
     const user = useStoreState((store) => store.user)
     const [data, setData]: any = useState()
+    const {token} = useAuth()
 
 
 
@@ -47,7 +49,7 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                     method: "GET",
                     url: `${SERVER_BASE_URL}/avni-inbox/get-html?s3_path_id=${s3id}`,
                     headers: {
-                        "Authorization": `Bearer ${user.token}`
+                        "Authorization": `Bearer ${token}`
                     },
 
 
@@ -58,10 +60,10 @@ const MailDetail = ({ route: { params: { id } } }: { route: { params: { id: stri
                 console.log(error)
             }
         }
-        if (user.token) { fetchDetails() }
+        if (token) { fetchDetails() }
 
 
-    }, [user.token])
+    }, [token])
 
     const dateStringg = data?.from;
 

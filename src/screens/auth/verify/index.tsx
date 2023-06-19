@@ -22,6 +22,7 @@ import { SERVER_BASE_URL, CRYPTO_SECRET_KEY } from '@env';
 import { useStoreActions } from '../../../store/easy-peasy/hooks';
 import RingWave from '../../../components/RingWave';
 import Loading from '../../../components/Loading';
+import { useAuth } from '../../../hooks/auth';
 
 const Verify = ({ route }: any) => {
   const navigation = useNavigation();
@@ -41,6 +42,8 @@ const Verify = ({ route }: any) => {
   const setIsProfileComplete = useStoreActions(
     store => store.setIsProfileComplete,
   );
+
+  const {token , id} = useAuth()
 
   const resend = () => { };
 
@@ -73,13 +76,10 @@ const Verify = ({ route }: any) => {
       //console.log("user",data)
       if (data && data.Status === 'Error') {
         setScreen(1);
-
         setError({ ...error, ['otp']: true });
       } else {
         if (data && data.status === 200 && data.accessToken) {
           addUser({
-            id: data.id,
-            token: data.accessToken,
             firstName: data.firstName,
             lastName: data.lastName,
             email: data.email,
@@ -91,7 +91,8 @@ const Verify = ({ route }: any) => {
           setIsMailAttached(data.isMailAttached);
           setIsInviteAccepted(data.isInviteAccepted);
           setIsProfileComplete(data.isProfileComplete);
-          navigation.navigate('Avni' as never, { user } as never);
+           //@ts-ignore
+          navigation.navigate('Avni', {user});
         }
 
         if (
@@ -99,8 +100,9 @@ const Verify = ({ route }: any) => {
           data.status === 404 &&
           data.message === 'Credentials not found!'
         ) {
-          console.log('mail', data);
-          navigation.navigate('Mailid' as never, { user } as never);
+         
+          //@ts-ignore
+          navigation.navigate('Mailid', { user });
         }
       }
     } catch (error) {

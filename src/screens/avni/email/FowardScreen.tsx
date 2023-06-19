@@ -13,8 +13,11 @@ import { useStoreActions, useStoreState } from '../../../store/easy-peasy/hooks'
 import { SERVER_BASE_URL } from '@env'
 import axios from 'axios';
 import { SentType } from './enums/email.enum'
+import { useAuth } from '../../../hooks/auth'
 
 const FowardScreen = ({ route: { params: { sentData } } }: any) => {
+
+    const {id, token} = useAuth()
 
     const navigation = useNavigation()
     const [input, setInput] = useState({
@@ -36,10 +39,10 @@ const FowardScreen = ({ route: { params: { sentData } } }: any) => {
         try {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
-            myHeaders.append("Authorization", `Bearer ${user.token}`);
+            myHeaders.append("Authorization", `Bearer ${token}`);
 
             var raw = JSON.stringify({
-                "userId": user?.id,
+                "userId": id,
                 "from": user?.email,
                 "to": [input?.to],
                 "subject": sentData?.subject,

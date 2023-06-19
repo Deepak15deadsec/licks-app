@@ -12,8 +12,11 @@ import { SentType } from './enums/email.enum'
 //@ts-ignore
 import { SERVER_BASE_URL } from '@env'
 import axios from 'axios';
+import { useAuth } from '../../../hooks/auth'
 
 const ReplyScreen = ({ route: { params: { sentData } } }: any) => {
+
+    const {id, token} = useAuth()
 
     const navigation = useNavigation()
     const [input, setInput] = useState({
@@ -35,10 +38,10 @@ const ReplyScreen = ({ route: { params: { sentData } } }: any) => {
         try {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
-            myHeaders.append("Authorization", `Bearer ${user.token}`);
+            myHeaders.append("Authorization", `Bearer ${token}`);
 
             var raw = JSON.stringify({
-                "userId": user?.id,
+                "userId": id,
                 "from": user?.email,
                 "to": [sentData?.from],
                 "subject": sentData?.subject,

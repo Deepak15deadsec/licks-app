@@ -3,7 +3,6 @@ import {User} from '../type';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface EasyPeasyStore {
-  authenticate: Boolean;
   user: User;
   query: Date;
   artCoin: number;
@@ -20,15 +19,12 @@ export interface EasyPeasyStore {
 }
 
 const initialState = {
-  authenticate: false,
   query: new Date(),
   artCoin: 0,
   isMailAttached: false,
   isInviteAccepted: false,
-  isProfileComplete : false,
+  isProfileComplete: false,
   user: {
-    id: '',
-    token: '',
     firstName: '',
     lastName: '',
     email: '',
@@ -45,14 +41,11 @@ export const store = createStore<EasyPeasyStore>(
       ...initialState,
       addUser: action((state: any, user: User) => {
         state.user = user;
-        state.authenticate = true;
       }),
       removeUser: action((state: any) => {
         (state.user = {
           firstName: '',
           lastName: '',
-          id: '',
-          token: '',
           email: '',
           phone: '',
           dob: null,
@@ -61,7 +54,7 @@ export const store = createStore<EasyPeasyStore>(
         }),
         state.isMailAttached = false;
         state.isProfileComplete = false;
-        state.authenticate = false;
+        state.isInviteAccepted = false;
       }),
       setQuery: action((state: any, query: Date) => {
         state.query = query;
@@ -96,7 +89,6 @@ export const store = createStore<EasyPeasyStore>(
       },
       allow: [
         'user',
-        'authenticate',
         'artCoin',
         'isMailAttached',
         'isInviteAccepted',
