@@ -3,17 +3,19 @@ import {User} from '../type';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export interface EasyPeasyStore {
+  isAuthenticated: boolean;
   user: User;
   query: Date;
   artCoin: number;
   isInviteAccepted: boolean;
   isMailAttached: boolean;
-  isProfileComplete: boolean;
+  isProfileCompleted: boolean;
   setQuery: Action<this, Date>;
   setArtCoin: Action<this, number>;
+  setIsAuthenticated: Action<this, boolean>;
   setIsInviteAccepted: Action<this, boolean>;
   setIsMailAttached: Action<this, boolean>;
-  setIsProfileComplete: Action<this, boolean>;
+  setIsProfileCompleted: Action<this, boolean>;
   addUser: Action<this, User>;
   removeUser: Action<this>;
 }
@@ -22,8 +24,9 @@ const initialState = {
   query: new Date(),
   artCoin: 0,
   isMailAttached: false,
+  isAuthenticated: false,
   isInviteAccepted: false,
-  isProfileComplete: false,
+  isProfileCompleted: false,
   user: {
     firstName: '',
     lastName: '',
@@ -53,7 +56,7 @@ export const store = createStore<EasyPeasyStore>(
           referralCode: '',
         }),
         state.isMailAttached = false;
-        state.isProfileComplete = false;
+        state.isProfileCompleted = false;
         state.isInviteAccepted = false;
       }),
       setQuery: action((state: any, query: Date) => {
@@ -68,9 +71,12 @@ export const store = createStore<EasyPeasyStore>(
       setIsInviteAccepted: action((state: any, isInviteAccepted: boolean) => {
         state.isInviteAccepted = isInviteAccepted;
       }),
-      setIsProfileComplete: action((state: any, isProfileComplete: boolean) => {
-        state.isProfileComplete = isProfileComplete;
+      setIsProfileCompleted: action((state: any, isProfileCompleted: boolean) => {
+        state.isProfileCompleted = isProfileCompleted;
       }),
+      setIsAuthenticated: action((state: any, isAuthenticated: boolean) => {
+        state.isAuthenticated= isAuthenticated;
+      })
     },
     {
       storage: {
@@ -89,10 +95,11 @@ export const store = createStore<EasyPeasyStore>(
       },
       allow: [
         'user',
+        'isAuthenticated',
         'artCoin',
         'isMailAttached',
         'isInviteAccepted',
-        'isProfileComplete',
+        'isProfileCompleted',
       ],
     },
   ),

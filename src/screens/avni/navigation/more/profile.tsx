@@ -35,8 +35,8 @@ import { useAuth } from '../../../../hooks/auth';
 
 const Profile = () => {
   const removeUser = useStoreActions(store => store.removeUser);
-  const setIsProfileComplete = useStoreActions(
-    store => store.setIsProfileComplete,
+  const setIsProfileCompleted = useStoreActions(
+    store => store.setIsProfileCompleted,
   );
   const user = useStoreState(store => store.user);
   const navigation = useNavigation();
@@ -144,7 +144,7 @@ const Profile = () => {
           gender: responseData?.data?.gender,
           dob: responseData?.data?.dob,
         });
-        setIsProfileComplete(true);
+        setIsProfileCompleted(true);
         navigation.goBack();
       }
     }

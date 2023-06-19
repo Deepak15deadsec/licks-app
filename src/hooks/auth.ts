@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import * as Keychain from 'react-native-keychain';
-import { useStoreActions } from '../store/easy-peasy/hooks';
+import {useStoreActions} from '../store/easy-peasy/hooks';
 
 type Cred = {
   id: string;
@@ -8,74 +8,84 @@ type Cred = {
 };
 
 export const useAuth = () => {
-  const [authenticate, setAuthenticate] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
   const [cred, setCred] = useState<Cred>({
     id: '',
     token: '',
   });
 
-  const removeUser = useStoreActions((store) => store.removeUser)
+  const setIsAuthenticated = useStoreActions(store => store.setIsAuthenticated);
+  const addUser = useStoreActions(store => store.addUser);
+  const removeUser = useStoreActions(store => store.removeUser);
+  const setIsMailAttached = useStoreActions(store => store.setIsMailAttached);
+  const setIsInviteAccepted = useStoreActions(
+    store => store.setIsInviteAccepted,
+  );
+  const setIsProfileCompleted = useStoreActions(
+    store => store.setIsProfileCompleted,
+  );
 
-  const login = async (id: string, token: string) => {
-    console.log("login",id)
+  const login = async (data: any) => {
     try {
-      setLoading(true)
-      await Keychain.setGenericPassword(id, token);
+      await Keychain.setGenericPassword(data.id, data.accessToken);
     } catch (error) {
       console.log("Keychain couldn't be accessed!", error);
     } finally {
-      setAuthenticate(true);
-      setCred({ id, token });
-      setLoading(false)
+      addUser({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phone: !!data.phone ? data.phone : '',
+        gender: data.gender !== null ? data.gender : null,
+        dob: data.dob !== null ? data.dob : null,
+        referralCode: data.referralCode,
+      });
+      setIsMailAttached(data.isMailAttached);
+      setIsInviteAccepted(data.isInviteAccepted);
+      setIsProfileCompleted(data.isProfileComplete);
+      setCred({id: data.id, token: data.token});
+      setIsAuthenticated(true);
     }
   };
 
   const logout = async () => {
     try {
-      setLoading(true);
       await Keychain.resetGenericPassword();
     } catch (error) {
       console.log("Keychain couldn't be accessed!", error);
     } finally {
-      setAuthenticate(false);
       setCred({
         id: '',
         token: '',
       });
-      removeUser()
-      setLoading(false)
+      removeUser();
+      setIsAuthenticated(false);
     }
   };
 
   useEffect(() => {
-    (async () => {
-      let cred;
+    const fetchCred = async () => {
+      let data: any;
       try {
-        setLoading(true);
-        const data: any = await Keychain.getGenericPassword();
-        cred = data;
+        data = await Keychain.getGenericPassword();
       } catch (error) {
         console.log("Keychain couldn't be accessed!", error);
       } finally {
-       
-        if (cred) {
-          setAuthenticate(true);
-          setCred(cred);
-          
+        if (!!data) {
+          setCred({
+            id: data.username,
+            token: data.password,
+          });
+          setIsAuthenticated(true);
         }
-       
-        setLoading(false);
       }
-    })();
+    };
+    fetchCred();
   }, []);
 
   return {
-    authenticate,
     login,
     logout,
-    loading,
     token: cred.token,
-    id: cred.id
+    id: cred.id,
   };
 };

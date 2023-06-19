@@ -9,22 +9,22 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import React, { useState } from 'react';
-import { icons, SIZES, FONTS } from '../../../constants';
-import { useNavigation } from '@react-navigation/native';
+import React, {useState} from 'react';
+import {icons, SIZES, FONTS} from '../../../constants';
+import {useNavigation} from '@react-navigation/native';
 import OTP from './OTP';
 import ResendOTP from './ResendOTP';
 import axios from 'axios';
-import { enc, AES } from 'react-native-crypto-js';
+import {enc, AES} from 'react-native-crypto-js';
 
 //@ts-ignore
-import { SERVER_BASE_URL, CRYPTO_SECRET_KEY } from '@env';
-import { useStoreActions } from '../../../store/easy-peasy/hooks';
+import {SERVER_BASE_URL, CRYPTO_SECRET_KEY} from '@env';
+import {useStoreActions} from '../../../store/easy-peasy/hooks';
 import RingWave from '../../../components/RingWave';
 import Loading from '../../../components/Loading';
-import { useAuth } from '../../../hooks/auth';
+import {useAuth} from '../../../hooks/auth';
 
-const Verify = ({ route }: any) => {
+const Verify = ({route}: any) => {
   const navigation = useNavigation();
   const [screen, setScreen] = useState<number>(1);
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -32,21 +32,12 @@ const Verify = ({ route }: any) => {
     otp: false,
   });
   const user = route?.params?.user;
-  const {login} = useAuth() 
+  const {login} = useAuth();
 
   let wr = SIZES.width / 391;
   let hr = SIZES.height / 812;
 
-  const addUser = useStoreActions(store => store.addUser);
-  const setIsMailAttached = useStoreActions(store => store.setIsMailAttached);
-  const setIsInviteAccepted = useStoreActions((store) => store.setIsInviteAccepted)
-  const setIsProfileComplete = useStoreActions(
-    store => store.setIsProfileComplete,
-  );
-
-  const {token , id} = useAuth()
-
-  const resend = () => { };
+  const resend = () => {};
 
   const verify = async () => {
     try {
@@ -61,8 +52,9 @@ const Verify = ({ route }: any) => {
         `${otp.join('')}`,
         CRYPTO_SECRET_KEY as string,
       ).toString();
-  
-      const { data:encryptedData } = await axios({
+
+      console.log('SERVER_BASE_URL', SERVER_BASE_URL);
+      const {data: encryptedData} = await axios({
         url: `${SERVER_BASE_URL}/oauth/verifyOtp`,
         method: 'post',
         headers: {
@@ -74,34 +66,17 @@ const Verify = ({ route }: any) => {
         }),
       });
 
-     
-      //console.log("user",data)
       if (encryptedData && encryptedData.Status === 'Error') {
         setScreen(1);
-        setError({ ...error, ['otp']: true });
+        setError({...error, ['otp']: true});
       } else {
-        var databytes = AES.decrypt(
-          encryptedData?.data,
-          CRYPTO_SECRET_KEY as string,
-        );
-        var data:any = databytes.toString(enc.Utf8);
-     
-        if (encryptedData && encryptedData.status === 200 && data.accessToken) {
-          addUser({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            phone: !!data.phone ? data.phone : '',
-            gender: data.gender !== null ? data.gender : null,
-            dob: data.dob !== null ? data.dob : null,
-            referralCode: data.referralCode,
-          });
-          setIsMailAttached(data.isMailAttached);
-          setIsInviteAccepted(data.isInviteAccepted);
-          setIsProfileComplete(data.isProfileComplete);
-         
-       
-          await login(data.id, data.accessToken);
+        if (encryptedData && encryptedData.status === 200) {
+          var databytes = AES.decrypt(
+            encryptedData?.data,
+            CRYPTO_SECRET_KEY as string,
+          );
+          var data: any = databytes.toString(enc.Utf8);
+          await login(JSON.parse(data));
         }
 
         if (
@@ -109,9 +84,8 @@ const Verify = ({ route }: any) => {
           data.status === 404 &&
           data.message === 'Credentials not found!'
         ) {
-         
           //@ts-ignore
-          navigation.navigate('Mailid', { user });
+          navigation.navigate('Mailid', {user});
         }
       }
     } catch (error) {
@@ -132,7 +106,7 @@ const Verify = ({ route }: any) => {
         <KeyboardAvoidingView
           keyboardVerticalOffset={10}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={{ flex: 1 }}>
+          style={{flex: 1}}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
               <View
@@ -177,10 +151,10 @@ const Verify = ({ route }: any) => {
                   paddingTop: hr * 36,
                 }}>
                 <View>
-                  <Text style={{ ...FONTS.heading, color: 'black' }}>
+                  <Text style={{...FONTS.heading, color: 'black'}}>
                     Membership Application
                   </Text>
-                  <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>
+                  <Text style={{...FONTS.paragraph, color: '#5C595F'}}>
                     {' '}
                     enter the OTP sent to your {user.phone}{' '}
                   </Text>
