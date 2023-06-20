@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -9,24 +9,26 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { SharedElement } from 'react-native-shared-element';
-import { FONTS, icons, images, SIZES } from '../../../../constants';
-import { trendingJson } from '../../data/trendingJson';
+import {SharedElement} from 'react-native-shared-element';
+import {FONTS, icons, images, SIZES} from '../../../../constants';
+import {trendingJson} from '../../data/trendingJson';
 import {
   useStoreActions,
   useStoreState,
 } from '../../../../store/easy-peasy/hooks';
-import { formatDate } from '../../../../utils/formatDate';
+import {formatDate} from '../../../../utils/formatDate';
 import LottieView from 'lottie-react-native';
 
 //@ts-ignore
-import { SERVER_BASE_URL } from '@env';
+import {SERVER_BASE_URL} from '@env';
 import axios from 'axios';
 import moment from 'moment';
 import Orbit from '../../../../components/orbit/Orbit';
-import { useAuth } from '../../../../hooks/auth';
+import {useAuth} from '../../../../hooks/auth';
+import {getRequest, queries} from '../../../../react-query';
+import {useQuery} from 'react-query';
 
-const Item = ({ title, description }: any) => (
+const Item = ({title, description}: any) => (
   <View style={styles.item}>
     <Text style={styles.title}>{title}</Text>
     <Text style={styles.description}>{description}</Text>
@@ -37,49 +39,29 @@ let wr = SIZES.width / 391;
 let hr = SIZES.height / 812;
 
 const Month = () => {
-  const { user, query }: { user: any; query: Date } = useStoreState(store => store);
-  const [isLoading, setLoading] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
-  const { id, token } = useAuth()
+  const query = useStoreState(store => store.query);
+  const {id, token} = useAuth();
 
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetchEarnings = async () => {
-      setLoading(true);
-      // const to = formatDate(query)
-
-      try {
-
-        const { data } = await axios({
-          method: 'GET',
-          url: `${SERVER_BASE_URL}/earning?userId=${id
-            }&type=month&date=${moment(query).format('YYYY-MM')}`,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setData(data);
-        //console.log('monthdate', data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (token && query && id) {
-      fetchEarnings();
-    }
-  }, [query, id, token]);
+  const {data=[], isLoading} = useQuery(
+    [queries.month],
+    () =>
+      getRequest(
+        `${SERVER_BASE_URL}/earning?userId=${id}&type=month&date=${moment(
+          query,
+        ).format('YYYY-MM')}`,
+        token,
+      ),
+    {
+      enabled: !!id && !!token && !!query,
+    },
+  );
 
   // const handleRefresh = () => {
   //     setRefreshing(true);
   //     fetchEarnings();
   // };
 
-  const renderItem = ({ item: data, index }: any) => {
+  const renderItem = ({item: data, index}: any) => {
     const dateStringg = data?.name;
     const nameInitial = dateStringg ? dateStringg.charAt(0).toUpperCase() : '';
 
@@ -94,7 +76,7 @@ const Month = () => {
 
     let truncatedText = subtext.slice(0, maxLength);
     if (subtext.length > maxLength) {
-      truncatedText += "...";
+      truncatedText += '...';
     }
 
     return (
@@ -151,25 +133,25 @@ const Month = () => {
               {/* <View style={styles.circle}>
                                 <Text style={styles.initial}>{nameInitial}</Text>
                             </View> */}
-              <View style={{ gap: 5 }}>
-                <Text style={{ ...FONTS.earning, color: '#000000' }}>
+              <View style={{gap: 5}}>
+                <Text style={{...FONTS.earning, color: '#000000'}}>
                   {truncatedText}
                 </Text>
-                <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
+                <Text style={{...FONTS.size10m, color: '#5C595F'}}>
                   {formattedDate}
                 </Text>
               </View>
             </View>
           </View>
 
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+          <View style={{flexDirection: 'row', alignItems: 'center', gap: 2}}>
             <Image
-              style={{ height: hr * 16, width: wr * 16 }}
+              style={{height: hr * 16, width: wr * 16}}
               source={icons.coin}
               resizeMode="contain"
             />
             <Text
-              style={{ ...FONTS.size12s, color: '#5C595F', marginRight: wr * 3 }}>
+              style={{...FONTS.size12s, color: '#5C595F', marginRight: wr * 3}}>
               {data?.rewardedAmount}
             </Text>
           </View>
@@ -186,7 +168,7 @@ const Month = () => {
   );
 
   if (isLoading) {
-    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+    <View style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
       {/* <ActivityIndicator size={100} color="red" /> */}
       <LottieView source={images.loader} autoPlay loop />
     </View>;
@@ -195,7 +177,7 @@ const Month = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        contentContainerStyle={{ paddingLeft: 0 }}
+        contentContainerStyle={{paddingLeft: 0}}
         data={data}
         renderItem={renderItem}
         nestedScrollEnabled={true}
@@ -204,7 +186,7 @@ const Month = () => {
         //     <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
         // }
         showsVerticalScrollIndicator={false}
-        keyExtractor={({ id }) => id}
+        keyExtractor={({id}) => id}
         ItemSeparatorComponent={() => {
           return (
             <View
