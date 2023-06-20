@@ -53,7 +53,6 @@ const Verify = ({route}: any) => {
         CRYPTO_SECRET_KEY as string,
       ).toString();
 
-      console.log('SERVER_BASE_URL', SERVER_BASE_URL);
       const {data: encryptedData} = await axios({
         url: `${SERVER_BASE_URL}/oauth/verifyOtp`,
         method: 'post',

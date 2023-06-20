@@ -1,3 +1,7 @@
 export const queries = {
-  mildstone: 'mildstone',
+  mildstones: 'mildstones',
+  trendings:'trendings',
+  category:'category',
+  month:'month',
+  site:'site',
 };

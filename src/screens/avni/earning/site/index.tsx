@@ -22,6 +22,8 @@ import axios from 'axios';
 import moment from 'moment';
 import Orbit from '../../../../components/orbit/Orbit';
 import { useAuth } from '../../../../hooks/auth';
+import { useQuery } from 'react-query';
+import { getRequest, queries } from '../../../../react-query';
 
 const Item = ({title, description}: any) => (
   <View style={styles.item}>
@@ -34,39 +36,24 @@ let wr = SIZES.width / 391;
 let hr = SIZES.height / 812;
 
 const Site = () => {
-  const [isLoading, setLoading] = useState(false);
-  const {user, query}: {user: any; query: Date} = useStoreState(store => store);
-  const [data, setData] = useState([]);
-  const {id, token} = useAuth()
 
-  useEffect(() => {
-    const fetchSites = async () => {
-      setLoading(true);
-      try {
-        const {data} = await axios({
-          method: 'GET',
-          url: `${SERVER_BASE_URL}/earning?userId=${
-            id
-          }&type=site&date=${moment(query).format('YYYY-MM')}`,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+  const query = useStoreState(store => store.query);
+  const {id, token} = useAuth();
 
-        setData(data);
+  const {data = [], isLoading} = useQuery(
+    [queries.category],
+    () =>
+      getRequest(
+        `${SERVER_BASE_URL}/earning?userId=${
+          id
+        }&type=site&date=${moment(query).format('YYYY-MM')}`,
+        token,
+      ),
+    {
+      enabled: !!id && !!token && !!query,
+    },
+  );
 
-        //console.log("sites", data)
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (token) {
-      token && fetchSites();
-    }
-  }, [query]);
 
   const renderEmpty = () => (
     <View style={styles.emptyText}>

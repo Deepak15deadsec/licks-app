@@ -44,20 +44,6 @@ const Home = () => {
 
   const theme = useColorScheme();
 
-  const isProfileComplete = () => {
-    // Check if all the required fields in the user object are filled
-    if (
-      user.firstName &&
-      user.lastName &&
-      user.email &&
-      user.phone &&
-      user.gender &&
-      user.dob
-    ) {
-      return true; // Profile is complete
-    }
-    return false; // Profile is not complete
-  };
 
   // useEffect(() => {
   //   const fetchMailid = async () => {

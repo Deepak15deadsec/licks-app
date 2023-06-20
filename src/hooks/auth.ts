@@ -49,7 +49,7 @@ export const useAuth = () => {
 
   const logout = async () => {
     try {
-      await Keychain.resetGenericPassword();
+     await Keychain.resetGenericPassword();
     } catch (error) {
       console.log("Keychain couldn't be accessed!", error);
     } finally {
