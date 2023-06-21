@@ -42,7 +42,7 @@ const Month = () => {
   const query = useStoreState(store => store.query);
   const {id, token} = useAuth();
 
-  const {data=[], isLoading} = useQuery(
+  const {data = [], isLoading} = useQuery(
     [queries.month],
     () =>
       getRequest(
@@ -104,10 +104,10 @@ const Month = () => {
                 alignItems: 'center',
                 gap: 5,
               }}>
-              {data?.name !== null && (
+              {data?.name === null ? (
                 <Image
                   source={{
-                    uri: `https://www.google.com/s2/favicons?sz=256&domain=${data?.name}`,
+                    uri: `https://www.google.com/s2/favicons?sz=256&domain=avni.club`,
                   }}
                   style={{
                     width: wr * 23,
@@ -115,12 +115,10 @@ const Month = () => {
                   }}
                   resizeMode="contain"
                 />
-              )}
-
-              {data?.name === null && (
+              ) : (
                 <Image
                   source={{
-                    uri: `https://www.google.com/s2/favicons?sz=256&domain=avni.club`,
+                    uri: `https://www.google.com/s2/favicons?sz=256&domain=${data?.name}`,
                   }}
                   style={{
                     width: wr * 23,

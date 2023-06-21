@@ -12,6 +12,8 @@ import {
 import {SERVER_BASE_URL} from '@env';
 import axios from 'axios';
 import { useAuth } from '../../../../hooks/auth';
+import { useQuery } from 'react-query';
+import { getRequest, queries } from '../../../../react-query';
 
 const CoinCard = () => {
   const user = useStoreState(store => store.user);
@@ -24,6 +26,17 @@ const CoinCard = () => {
   let wr = SIZES.width / 391;
   let hr = SIZES.height / 812;
 
+
+  // const {data, isLoading} = useQuery(
+  //   [queries.user],
+  //   () =>
+  //     getRequest(`${SERVER_BASE_URL}/milestone/offers?trending=true`, token),
+  //   {
+  //     enabled: !!token && !!isInviteAccepted && !!isProfileCompleted,
+  //   },
+  // );
+
+
   useEffect(() => {
     const fetchCoin = async () => {
       try {
@@ -34,6 +47,7 @@ const CoinCard = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+        //console.log("data", data);
         setArtCoin(data.artCount);
       } catch (error) {
         console.log(error);

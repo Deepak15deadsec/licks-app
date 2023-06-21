@@ -94,9 +94,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.avni_app"
+    namespace "club.avni"
     defaultConfig {
-        applicationId "com.avni_app"
+        applicationId "club.avni"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
