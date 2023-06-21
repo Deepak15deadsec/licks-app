@@ -11,6 +11,7 @@ import Loading from '../../../components/Loading'
 import axios from 'axios'
 import MailPointList from '../../../components/mailpoints'
 import { AES, enc } from 'react-native-crypto-js'
+import { useAuth } from '../../../hooks/auth'
 
 let wr = (SIZES.width / 391)
 let hr = (SIZES.height / 812)
@@ -23,7 +24,7 @@ const Mail = ({ route }: any) => {
   let addUser = useStoreActions((store) => store.addUser)
   const setIsMailAttached = useStoreActions((store) => store.setIsMailAttached)
   const user = route?.params?.user
-
+  const {login} = useAuth();
 
 
   const [email, setEmail] = useState('');
@@ -93,23 +94,15 @@ const Mail = ({ route }: any) => {
         let response = await fetch(`${SERVER_BASE_URL}/oauth/signup`, requestOptions)
         let encryptedData = await response.json()
 
-        var databytes = AES.decrypt(
-          encryptedData?.data,
-          CRYPTO_SECRET_KEY as string,
-        );
-        var data:any = databytes.toString(enc.Utf8);
+       
         //console.log("signup", data)
-        if (encryptedData && encryptedData.status === 200 && data.accessToken) {
-          addUser({
-            firstName: data.firstName,
-            lastName: data.lastName,
-            email: data.email,
-            phone: !!data.phone ? data.phone : "",
-            gender: data.gender !== null ? data.gender : null,
-            dob: data.dob !== null ? data.dob : null,
-            referralCode: data.referralCode
-          })
-          setIsMailAttached(data.isMailAttached)
+        if (encryptedData && encryptedData.status === 200 ) {
+          var databytes = AES.decrypt(
+            encryptedData?.data,
+            CRYPTO_SECRET_KEY as string,
+          );
+          var data:any = databytes.toString(enc.Utf8);
+          await login(JSON.parse(data));
         }
       } catch (error) {
         console.log("errorsssss", error)

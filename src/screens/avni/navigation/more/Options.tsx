@@ -80,7 +80,7 @@ const Options = () => {
 
         <TouchableOpacity
           onPress={() => {
-            if (isMailAttached === false) {
+            if (isMailAttached === true) {
               navigation.navigate('Google' as never);
             } else {
               navigation.navigate('Maillist' as never);

@@ -384,7 +384,7 @@ const Wrapper = () => {
               backgroundColor:
                 item && item?.orderAcheived === item?.maxOrderRequired
                   ? '#00d74f'
-                  : '#fbf5c5',
+                  : '#e1f1e1',
               borderBottomLeftRadius: 20,
               borderBottomRightRadius: 20,
 

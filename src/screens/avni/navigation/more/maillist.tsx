@@ -3,12 +3,16 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
 import { useNavigation } from '@react-navigation/native';
+import { getRequest, queries, queryClient } from '../../../../react-query';
+import { useQuery } from 'react-query';
 
 //@ts-ignore
-import { SERVER_BASE_URL } from '@env'
+import { SERVER_BASE_URL, CRYPTO_SECRET_KEY } from '@env';
 import { FONTS, icons, images, SIZES } from '../../../../constants';
 import Svg, { Path } from 'react-native-svg';
 import { useAuth } from '../../../../hooks/auth';
+import { AES, enc } from 'react-native-crypto-js';
+
 
 let wr = (SIZES.width / 391)
 let hr = (SIZES.height / 812)
@@ -21,12 +25,12 @@ const Item = ({ title, description }: any) => (
 );
 
 const maillist = () => {
-  const [data, setData] = useState([]);
+
   const user = useStoreState((store) => store.user)
   const navigation = useNavigation()
   const setIsMailAttached = useStoreActions((store) => store.setIsMailAttached)
   const [modalVisible, setModalVisible] = useState(false);
-  const {id, token} = useAuth()
+  const { id, token } = useAuth()
 
   const openModal = () => {
     setModalVisible(true);
@@ -37,35 +41,17 @@ const maillist = () => {
   };
 
 
-  useEffect(() => {
-    const fetchMailid = async () => {
-
-      try {
-        const { data } = await axios({
-          method: "GET",
-          url: `${SERVER_BASE_URL}/forward-mail?userId=${id}`,
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        })
-
-        setData(data)
-        //console.log("Mail data length:", data);
-        if (data.length === 0) {
-          setIsMailAttached(false)
-        }
-
-      } catch (error) {
-        console.log(error)
-
-      }
-    }
 
 
-    fetchMailid()
+  const { data, isLoading } = useQuery(
+    [queries.maillist],
+    () => getRequest(`${SERVER_BASE_URL}/forward-mail?userId=${id}`, token),
+    {
+      enabled: !!token,
+    },
 
+  );
 
-  }, [])
 
 
   const deleteId = async (prop: any) => {
@@ -105,7 +91,7 @@ const maillist = () => {
 
   const renderItem = ({ item: data, index }: any) => {
 
-    const dateString = data.updatedAt;
+    const dateString = data.createdAt;
     const formattedDate = new Date(dateString).toLocaleDateString('en-US', {
       day: 'numeric',
       month: 'short'
@@ -206,7 +192,7 @@ const maillist = () => {
             >
               <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
                 <View style={{ backgroundColor: 'white', padding: 20, gap: 8 }}>
-                  <Text style={{ ...FONTS.size17m, color:'gray' }}>Are you sure you want to delete?</Text>
+                  <Text style={{ ...FONTS.size17m, color: 'gray' }}>Are you sure you want to delete?</Text>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <TouchableOpacity
                       onPress={() => deleteId(data?.id)}
@@ -443,7 +429,7 @@ const maillist = () => {
 
           <View style={{ alignSelf: 'center' }}>
             <TouchableOpacity
-               onPress={() => navigation.navigate('Google' as never)}
+              onPress={() => navigation.navigate('Google' as never)}
               style={{
                 backgroundColor: '#30D792',
                 borderRadius: 10,

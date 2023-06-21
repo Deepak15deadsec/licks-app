@@ -41,7 +41,7 @@ const Site = () => {
   const {id, token} = useAuth();
 
   const {data = [], isLoading} = useQuery(
-    [queries.category],
+    [queries.site],
     () =>
       getRequest(
         `${SERVER_BASE_URL}/earning?userId=${
@@ -54,7 +54,7 @@ const Site = () => {
     },
   );
 
-
+console.log("datas",data)
   const renderEmpty = () => (
     <View style={styles.emptyText}>
       <Text>No earnings for this month</Text>
