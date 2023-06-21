@@ -112,11 +112,6 @@ android {
         }
     }
 
-    // Load keystore
-    def keystorePropertiesFile = rootProject.file("signing.properties");
-    def keystoreProperties = new Properties()
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
