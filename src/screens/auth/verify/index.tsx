@@ -75,13 +75,14 @@ const Verify = ({route}: any) => {
             CRYPTO_SECRET_KEY as string,
           );
           var data: any = databytes.toString(enc.Utf8);
+          console.log("data", data)
           await login(JSON.parse(data));
         }
 
         if (
-          data &&
-          data.status === 404 &&
-          data.message === 'Credentials not found!'
+          encryptedData &&
+          encryptedData.status === 404 &&
+          encryptedData.message === 'Credentials not found!'
         ) {
           //@ts-ignore
           navigation.navigate('Mailid', {user});

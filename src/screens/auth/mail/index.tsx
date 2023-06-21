@@ -68,7 +68,7 @@ const Mail = ({ route }: any) => {
 
 
       try {
-        setScreen(2)
+        //setScreen(2)
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 

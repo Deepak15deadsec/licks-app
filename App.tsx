@@ -25,7 +25,7 @@ const App = () => {
     return () => {
       subscription.remove();
     };
-  });
+  },[token]);
 
   const fetchme = async () => {
     const {data} = await axios({
