@@ -84,8 +84,8 @@ const Verify = ({route}: any) => {
           encryptedData.status === 404 &&
           encryptedData.message === 'Credentials not found!'
         ) {
-          //@ts-ignore
-          navigation.navigate('Mailid', {user});
+          //console.log('mail', encryptedData);
+          navigation.navigate('Mailid' as never, {user} as never);
         }
       }
     } catch (error) {

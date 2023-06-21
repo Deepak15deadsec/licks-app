@@ -7,6 +7,8 @@ import { useStoreActions, useStoreState } from '../../../../../store/easy-peasy/
 import { useNavigation } from '@react-navigation/native'
 import { Clipboard } from '@react-native-clipboard/clipboard/dist/Clipboard';
 import LottieView from 'lottie-react-native'
+import { getRequest, queries, queryClient } from '../../../../../react-query';
+import { useQuery } from 'react-query';
 
 //@ts-ignore
 import { SERVER_BASE_URL } from '@env'
@@ -23,53 +25,35 @@ const CatReward = ({ route: { params: { name } } }: { route: { params: { name: s
   const user = useStoreState((store) => store.user)
   const [isCopied, setIsCopied] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [data, setData] = useState<any[]>([])
+
   const [page, setPage] = useState<number>(1)
-  const [isLoading, setLoading] = useState(false);
+
   const {id, token} = useAuth()
 
 
-  const [showContent, setShowContent] = useState(Array(data.length).fill(false));
 
   const copyToClipboard = (text: string) => {
     Clipboard.setString(text);
   };
 
 
-  const fetchData = async (token: any) => {
-    setLoading(true);
 
-    try {
+  const {data, isLoading} = useQuery(
+    [queries.categoryreward],
+    () =>
+      getRequest(`${SERVER_BASE_URL}/milestone/offers?category=${name}`, token),
+    {
+      enabled: !!token,
+    },
+  );
 
-      const { data } = await axios({
-        url: `${SERVER_BASE_URL}/milestone/offers?category=${name}`,
-        method: 'GET',
-        headers: {
-          "Content-Type": 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        cancelToken: token
-      });
-      //console.log("catname", data)
+  const [showContent, setShowContent] = useState<any>([]);
 
-      setData(data)
-
-    } catch (error) {
-      console.log(error)
-    } finally {
-
-      setLoading(false);
+  useEffect(()=>{
+    if(data && data.length > 0){
+      setShowContent(Array(data.length).fill(false))
     }
-  };
-
-  useEffect(() => {
-    const source = axios.CancelToken.source();
-    fetchData(source.token);
-    return () => {
-      source.cancel('Request canceled');
-    };
-  }, []);
-
+  },[data])
 
   const renderItem = ({ item: data, index }: any) => {
 
@@ -301,7 +285,7 @@ const CatReward = ({ route: { params: { name } } }: { route: { params: { name: s
 
         {showContent[index] && (<View
           style={{
-            backgroundColor: data && data?.orderAcheived === data?.maxOrderRequired ? '#00d74f' : '#fbf5c5',
+            backgroundColor: data && data?.orderAcheived === data?.maxOrderRequired ? '#00d74f' : '#e1f1e1',
             borderBottomLeftRadius: 20,
             borderBottomRightRadius: 20,
 

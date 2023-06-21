@@ -6,6 +6,9 @@ import { trendingJson } from '../../data/trendingJson';
 import { useNavigation } from '@react-navigation/native';
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
 import LottieView from 'lottie-react-native'
+import { getRequest, queries, queryClient } from '../../../../react-query';
+import { useQuery } from 'react-query';
+
 
 //@ts-ignore
 import { SERVER_BASE_URL } from '@env'
@@ -26,65 +29,20 @@ const Item = ({ title, description }: any) => (
 const Promotion = () => {
     const user = useStoreState((store) => store.user)
     const navigation = useNavigation()
-    const [isLoading, setLoading] = useState(false);
-    const [data, setData] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
-    const {id, token} = useAuth()
+    const { id, token } = useAuth()
 
-    useEffect(() => {
-        const fetchMails = async () => {
-            setLoading(true);
-            try {
-                const { data } = await axios({
-                    method: "GET",
-                    url: `${SERVER_BASE_URL}/avni-inbox?userId=${id}&receipt=false`,
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
-                })
-
-                setData(data)
-
-                //console.log("promotion", data)
-            } catch (error) {
-                console.log(error)
-
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        if (token) {
-            token && fetchMails()
-        }
-
-    }, [token])
-
+    const { data, isLoading, refetch } = useQuery(
+        [queries.promotions],
+        () =>
+            getRequest(`${SERVER_BASE_URL}/avni-inbox?userId=${id}&receipt=false`, token),
+        {
+            enabled: !!token,
+        },
+    );
 
     const handleRefresh = async () => {
-
-        try {
-            setRefreshing(true);
-
-            const { data } = await axios({
-                url: `${SERVER_BASE_URL}/avni-inbox?userId=${id}&receipt=false`,
-                method: 'GET',
-                headers: {
-                    "Content-Type": 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-
-            });
-         
-            setData(data)
-        } catch (error) {
-            console.log(error)
-        } finally {
-            setRefreshing(false)
-
-        }
-
-
+        await queryClient.refetchQueries([queries.promotions]);
     };
 
     const renderItem = ({ item: data }: any) => {
@@ -100,8 +58,8 @@ const Promotion = () => {
             month: 'short'
         });
         const domain = dateStringg
-        ? dateStringg.split("@")[1]
-        : '';
+            ? dateStringg.split("@")[1]
+            : '';
 
         const subtext = data?.subject;
         const maxLength = 27;
@@ -138,12 +96,12 @@ const Promotion = () => {
                         }}>
                             {/* <View style={styles.circle}>
                                 <Text style={styles.initial}>{nameInitial}</Text>
-                            </View> */} 
+                            </View> */}
                             <Image
-                             source={{
-                                uri: `https://www.google.com/s2/favicons?sz=256&domain=${domain}`,
-                            }}
-                                
+                                source={{
+                                    uri: `https://www.google.com/s2/favicons?sz=256&domain=${domain}`,
+                                }}
+
                                 style={{
                                     width: wr * 23,
                                     height: hr * 23
@@ -204,9 +162,9 @@ const Promotion = () => {
                     renderItem={renderItem}
                     nestedScrollEnabled={true}
                     keyExtractor={(item: any) => `${item.id}`}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-                    }
+                    refreshing={isLoading}
+                    onRefresh={handleRefresh}
+                    refreshControl={<RefreshControl refreshing={isLoading} onRefresh={handleRefresh} />}
                     ItemSeparatorComponent={() => {
                         return (
                             <View

@@ -6,6 +6,8 @@ import { trendingJson } from '../../data/trendingJson';
 import { useNavigation } from '@react-navigation/native';
 import { useStoreActions, useStoreState } from '../../../../store/easy-peasy/hooks';
 import LottieView from 'lottie-react-native'
+import { getRequest, queries, queryClient } from '../../../../react-query';
+import { useQuery } from 'react-query';
 
 //@ts-ignore
 import { SERVER_BASE_URL } from '@env'
@@ -27,63 +29,20 @@ const Sent = () => {
     const user = useStoreState((store) => store.user)
     const navigation = useNavigation()
     const {id, token} = useAuth()
-    const [isLoading, setLoading] = useState(false);
-    const [data, setData] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
 
-    useEffect(() => {
-        const fetchMails = async () => {
-            setLoading(true);
-            try {
-                const { data } = await axios({
-                    method: "GET",
-                    url: `${SERVER_BASE_URL}/avni-sent?userId=${id}`,
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
-                })
 
-                setData(data)
-
-                console.log("sent", data)
-            } catch (error) {
-                console.log(error)
-
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        if (token) {
-            token && fetchMails()
-        }
-
-    }, [token])
+    const { data, isLoading, refetch } = useQuery(
+        [queries.sent],
+        () =>
+            getRequest(`${SERVER_BASE_URL}/avni-sent?userId=${id}`, token),
+        {
+            enabled: !!token,
+        },
+    );
 
     const handleRefresh = async () => {
-
-        try {
-            setRefreshing(true);
-
-            const { data } = await axios({
-                url: `${SERVER_BASE_URL}/avni-sent?userId=${id}`,
-                method: 'GET',
-                headers: {
-                    "Content-Type": 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-
-            });
-          
-            setData(data)
-        } catch (error) {
-            console.log(error)
-        } finally {
-            setRefreshing(false)
-
-        }
-
-
+        await queryClient.refetchQueries([queries.sent]);
     };
 
     const renderItem = ({ item: data, index }: any) => {
@@ -211,9 +170,9 @@ const Sent = () => {
                     renderItem={renderItem}
                     nestedScrollEnabled={true}
                     keyExtractor={(item: any) => `${item.id}`}
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-                    }
+                    refreshing={isLoading}
+                    onRefresh={handleRefresh}
+                    refreshControl={<RefreshControl refreshing={isLoading} onRefresh={handleRefresh} />}
                     ItemSeparatorComponent={() => {
                         return (
                             <View
