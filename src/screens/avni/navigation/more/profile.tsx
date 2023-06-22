@@ -120,6 +120,7 @@ const Profile = () => {
 
       //console.log("payload",payload)
 
+
       const { data } = await axios({
         method: 'PUT',
         url: `${SERVER_BASE_URL}/users/${id}`,
