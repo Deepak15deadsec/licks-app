@@ -447,6 +447,8 @@ PODS:
     - React-Core
   - RNGestureHandler (2.11.0):
     - React-Core
+  - RNKeychain (8.1.1):
+    - React-Core
   - RNReanimated (3.2.0):
     - DoubleConversion
     - FBLazyVector
@@ -563,6 +565,7 @@ DEPENDENCIES:
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNShare (from `../node_modules/react-native-share`)
@@ -685,6 +688,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNKeychain:
+    :path: "../node_modules/react-native-keychain"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -762,6 +767,7 @@ SPEC CHECKSUMS:
   RNCPicker: 0bc2f0a29abcca7b7ed44a2d036aac9ab6d25700
   RNDateTimePicker: 7ecd54a97fc3749f38c3c89a171f6cbd52f3c142
   RNGestureHandler: 026038a97d4c8649ce397a22e162ca58b4e6c230
+  RNKeychain: ff836453cba46938e0e9e4c22e43d43fa2c90333
   RNReanimated: c931b356bda56c0196110bdc462e48e4c2668dc3
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNShare: d82e10f6b7677f4b0048c23709bd04098d5aee6c
