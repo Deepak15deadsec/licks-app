@@ -18,30 +18,27 @@ const App = () => {
   const setArtCoin = useStoreActions(store => store.setArtCoin);
   const {token} = useAuth();
 
-
-
   useEffect(() => {
-    const subscription = Linking.addEventListener('url', handleOpenURL);
+    const subscription = Linking.addEventListener('url', handleDeepLink);
     return () => {
       subscription.remove();
     };
-  },[token]);
+  });
 
-  const fetchme = async () => {
+  const rewardUpdated = async () => {
     const {data} = await axios({
       method: 'GET',
-      url: `${SERVER_BASE_URL}//oauth/me`,
+      url: `${SERVER_BASE_URL}/oauth/me`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    setIsMailAttached(true);
     setArtCoin(data.artCount);
   };
 
-  const handleOpenURL = async (event: any) => {
-    //const {url} = event;
-    await fetchme();
+  const handleDeepLink = async (event: any) => {
+    setIsMailAttached(true);
+    await rewardUpdated();
   };
 
   useEffect(() => {
