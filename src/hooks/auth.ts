@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import * as Keychain from 'react-native-keychain';
 import {useStoreActions} from '../store/easy-peasy/hooks';
 
@@ -8,11 +8,7 @@ type Cred = {
 };
 
 export const useAuth = () => {
-  const [cred, setCred] = useState<Cred>({
-    id: '',
-    token: '',
-  });
-
+  const [cred, setCred] = useState<Cred>({id: '', token: ''});
   const setIsAuthenticated = useStoreActions(store => store.setIsAuthenticated);
   const addUser = useStoreActions(store => store.addUser);
   const removeUser = useStoreActions(store => store.removeUser);
@@ -24,19 +20,22 @@ export const useAuth = () => {
     store => store.setIsProfileCompleted,
   );
 
-  const login = async (data: any) => {
-    try {
-      await Keychain.setGenericPassword(data.id, data.accessToken);
-    } catch (error) {
-      console.log("Keychain couldn't be accessed!", error);
-    } finally {
+  const login = useCallback(
+    async (data: any) => {
+      try {
+        await Keychain.setGenericPassword(data.id, data.accessToken);
+      } catch (error) {
+        console.log("Keychain couldn't be accessed!", error);
+        return;
+      }
+
       addUser({
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
-        phone: !!data.phone ? data.phone : '',
-        gender: data.gender !== null ? data.gender : null,
-        dob: data.dob !== null ? data.dob : null,
+        phone: data.phone || '',
+        gender: data.gender ?? null,
+        dob: data.dob ?? null,
         referralCode: data.referralCode,
       });
       setIsMailAttached(data.isMailAttached);
@@ -44,43 +43,46 @@ export const useAuth = () => {
       setIsProfileCompleted(data.isProfileComplete);
       setCred({id: data.id, token: data.token});
       setIsAuthenticated(true);
-    }
-  };
+    },
+    [
+      addUser,
+      setIsMailAttached,
+      setIsInviteAccepted,
+      setIsProfileCompleted,
+      setIsAuthenticated,
+    ],
+  );
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
-     await Keychain.resetGenericPassword();
+      await Keychain.resetGenericPassword();
     } catch (error) {
       console.log("Keychain couldn't be accessed!", error);
-    } finally {
-      setCred({
-        id: '',
-        token: '',
-      });
-      removeUser();
-      setIsAuthenticated(false);
+      return;
     }
-  };
+
+    setCred({id: '', token: ''});
+    removeUser();
+    setIsAuthenticated(false);
+  }, [removeUser, setIsAuthenticated]);
 
   useEffect(() => {
     const fetchCred = async () => {
-      let data: any;
+      let data: Keychain.UserCredentials | false;
       try {
         data = await Keychain.getGenericPassword();
       } catch (error) {
         console.log("Keychain couldn't be accessed!", error);
-      } finally {
-        if (!!data) {
-          setCred({
-            id: data.username,
-            token: data.password,
-          });
-          setIsAuthenticated(true);
-        }
+        return;
+      }
+
+      if (data && typeof data === 'object') {
+        setCred({id: data.username, token: data.password});
+        setIsAuthenticated(true);
       }
     };
     fetchCred();
-  }, []);
+  }, [setIsAuthenticated]);
 
   return {
     login,
