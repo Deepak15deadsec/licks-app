@@ -17,31 +17,31 @@ const App = () => {
   const {token} = useAuth();
 
   useEffect(() => {
-    const handleDeepLink = async (event: any) => {
-      setIsMailAttached(true);
-      await rewardUpdated();
+    const handleDeepLink = async (token: string) => {
+      let responseData;
+      try {
+        const {data} = await axios.get(`${SERVER_BASE_URL}/oauth/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        responseData = data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setArtCoin(responseData.artCount);
+        setIsMailAttached(true);
+      }
     };
 
-    const subscription = Linking.addEventListener('url', handleDeepLink);
+    const subscription = Linking.addEventListener('url', () =>
+      handleDeepLink(token),
+    );
 
     return () => {
       subscription.remove();
     };
   }, [token]);
-
-  const rewardUpdated = useCallback(async () => {
-    try {
-      const {data} = await axios.get(`${SERVER_BASE_URL}/oauth/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setArtCoin(data.artCount);
-    } catch (error) {
-      // Handle error gracefully
-      console.log('Reward update failed:', error);
-    }
-  }, [setArtCoin, token]);
 
   useEffect(() => {
     SplashScreen.hide();

@@ -41,9 +41,6 @@ const Verify = ({route}: any) => {
 
   const verify = async () => {
     try {
-      //api call
-      //setScreen(2)
-
       var phoneCode = AES.encrypt(
         `${user.phone}`,
         CRYPTO_SECRET_KEY as string,
@@ -75,7 +72,6 @@ const Verify = ({route}: any) => {
             CRYPTO_SECRET_KEY as string,
           );
           var data: any = databytes.toString(enc.Utf8);
-          console.log("data", data)
           await login(JSON.parse(data));
         }
 
@@ -84,8 +80,8 @@ const Verify = ({route}: any) => {
           encryptedData.status === 404 &&
           encryptedData.message === 'Credentials not found!'
         ) {
-          //console.log('mail', encryptedData);
-          navigation.navigate('Mailid' as never, {user} as never);
+          // @ts-ignore
+          navigation.navigate('Mailid', {user});
         }
       }
     } catch (error) {
