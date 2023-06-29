@@ -7,7 +7,7 @@ import axios from 'axios'
 import { enc, AES } from 'react-native-crypto-js';
 //@ts-ignore
 import { SERVER_BASE_URL, CRYPTO_SECRET_KEY } from '@env';
-import Language from '../../../components/language';
+
 
 
 const Phone = ({ route }: any) => {
