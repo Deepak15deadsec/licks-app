@@ -8,7 +8,6 @@ import Token from '../screens/avni/navigation/more/faqtoken';
 import Googlepage from '../components/googlefq';
 import SentDetail from '../screens/avni/email/SentDetail';
 import AllCategories from '../screens/avni/navigation/home/categories/AllCategories';
-import maillist from '../screens/avni/navigation/more/maillist';
 import Invitebox from '../screens/auth/invitebox';
 import Faqreward from '../screens/avni/navigation/more/faqreward';
 import CatReward from '../screens/avni/navigation/home/categories/rewardCat';
@@ -18,10 +17,10 @@ import Invite from '../screens/avni/navigation/more/invite';
 import Terms from '../screens/avni/navigation/more/terms';
 import {Detail} from '../screens/avni';
 import {BottomNavigation} from '../navigation';
+import Maillist from '../screens/avni/navigation/more/maillist';
+import Listfollow from '../screens/avni/navigation/more/prodfollow/listfollow';
 
 const Stack = createSharedElementStackNavigator();
-
-
 
 export const AppStack = () => {
   return (
@@ -42,10 +41,11 @@ export const AppStack = () => {
       <Stack.Screen name="Reply" component={ReplyScreen} />
       <Stack.Screen name="Forward" component={FowardScreen} />
       <Stack.Screen name="Google" component={Googlepage} />
-      <Stack.Screen name="Maillist" component={maillist} />
+      <Stack.Screen name="Maillist" component={Maillist} />
       <Stack.Screen name="Allcategories" component={AllCategories} />
       <Stack.Screen name="Invitebox" component={Invitebox} />
       <Stack.Screen name="Catreward" component={CatReward} />
+      <Stack.Screen name="Followprod" component={Listfollow} />
       <Stack.Screen
         name="Detail"
         component={Detail}

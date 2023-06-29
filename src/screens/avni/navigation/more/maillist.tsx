@@ -36,10 +36,11 @@ const Item = ({title, description}: any) => (
   </View>
 );
 
-const maillist = () => {
-  const user = useStoreState(store => store.user);
-  const navigation = useNavigation();
-  const setIsMailAttached = useStoreActions(store => store.setIsMailAttached);
+const Maillist = () => {
+
+  const user = useStoreState((store) => store.user)
+  const navigation = useNavigation()
+  const setIsMailAttached = useStoreActions((store) => store.setIsMailAttached)
   const [modalVisible, setModalVisible] = useState(false);
   const {id, token} = useAuth();
 
@@ -476,4 +477,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default maillist;
+export default Maillist

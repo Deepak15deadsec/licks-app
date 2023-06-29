@@ -45,6 +45,7 @@ export const useAuth = () => {
       setIsAuthenticated(true);
     },
     [
+      cred,
       addUser,
       setIsMailAttached,
       setIsInviteAccepted,
@@ -64,7 +65,7 @@ export const useAuth = () => {
     setCred({id: '', token: ''});
     removeUser();
     setIsAuthenticated(false);
-  }, [removeUser, setIsAuthenticated]);
+  }, [removeUser, setIsAuthenticated, cred]);
 
   useEffect(() => {
     const fetchCred = async () => {
