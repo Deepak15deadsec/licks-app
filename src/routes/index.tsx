@@ -38,12 +38,12 @@ export const Router = () => {
   const {token} = useAuth();
 
   useEffect(() => {
-    console.log('token1', token);
+    
 
     const handleDeepLink = async (token: string) => {
       let responseData;
       try {
-        console.log('token', token);
+        //console.log('token', token);
         responseData = await getRequest(`${SERVER_BASE_URL}/oauth/me`, token);
       } catch (error) {
         console.log(error);
