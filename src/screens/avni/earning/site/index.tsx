@@ -54,7 +54,6 @@ const Site = () => {
     },
   );
 
-console.log("datas",data)
   const renderEmpty = () => (
     <View style={styles.emptyText}>
       <Text>No earnings for this month</Text>

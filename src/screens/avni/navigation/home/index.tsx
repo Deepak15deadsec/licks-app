@@ -34,11 +34,7 @@ import Wrapper from './Wrapper';
 
 const Home = () => {
   const user = useStoreState(store => store.user);
-  const isMailAttached = useStoreState(store => store.isMailAttached);
-  const isInviteAccepted = useStoreState(store => store.isInviteAccepted);
   const navigation = useNavigation();
-  const [data, setData] = useState([]);
-
   let wr = SIZES.width / 391;
   let hr = SIZES.height / 812;
 
