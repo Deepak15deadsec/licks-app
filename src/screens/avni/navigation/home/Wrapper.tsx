@@ -140,7 +140,7 @@ const Wrapper = () => {
                 >
                   <Image
                     source={{
-                      uri: item?.brandImage[0],
+                      uri: item?.brandImages[0],
                     }}
                     style={{
                       width: wr * 58,

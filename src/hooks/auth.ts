@@ -82,7 +82,7 @@ export const useAuth = () => {
       }
     };
     fetchCred();
-  }, []);
+  }, [login, logout]);
 
   return {
     login,
