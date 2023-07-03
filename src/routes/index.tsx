@@ -38,25 +38,27 @@ export const Router = () => {
   const {token} = useAuth();
 
   useEffect(() => {
-    
-
+    console.log("token", token);
     const handleDeepLink = async (token: string) => {
-      let responseData;
       try {
-        //console.log('token', token);
-        responseData = await getRequest(`${SERVER_BASE_URL}/oauth/me`, token);
-      } catch (error) {
-        console.log(error);
-      } finally {
+        const responseData = await getRequest(
+          `${SERVER_BASE_URL}/oauth/me`,
+          token,
+        );
         setArtCoin(responseData.artCount);
         setIsMailAttached(true);
+      } catch (error) {
+        console.log(error);
       }
     };
 
-    const subscription = Linking.addEventListener(
-      'url',
-      () => token && handleDeepLink(token),
-    );
+    const handleUrl = ({url}: {url: string}) => {
+      if (token) {
+        handleDeepLink(token);
+      }
+    };
+
+    const subscription = Linking.addEventListener('url', handleUrl);
 
     return () => {
       subscription.remove();

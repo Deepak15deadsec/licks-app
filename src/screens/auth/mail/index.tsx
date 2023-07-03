@@ -34,6 +34,7 @@ const Mail = ({ route }: any) => {
   };
 
   const handleInputSubmit = async () => {
+   
     try {
       const { data } = await axios({
         url: `${SERVER_BASE_URL}/users/validate-email/${email.concat('@avniclub.com')}`,
@@ -55,9 +56,7 @@ const Mail = ({ route }: any) => {
     }
 
   };
-  console.log("error", error)
-
-
+  
   const lowerCaseText = email.toLowerCase();
 
   const handleSubmit = async () => {
@@ -66,8 +65,6 @@ const Mail = ({ route }: any) => {
     if (!regex.test(lowerCaseText)) {
       setErrorr('Special characters are not allowed except for dot (.)');
     } else {
-
-
       try {
         //setScreen(2)
         var myHeaders = new Headers();
@@ -94,8 +91,7 @@ const Mail = ({ route }: any) => {
         let response = await fetch(`${SERVER_BASE_URL}/oauth/signup`, requestOptions)
         let encryptedData = await response.json()
 
-       
-        //console.log("signup", data)
+
         if (encryptedData && encryptedData.status === 200 ) {
           var databytes = AES.decrypt(
             encryptedData?.data,
@@ -105,7 +101,7 @@ const Mail = ({ route }: any) => {
           await login(JSON.parse(data));
         }
       } catch (error) {
-        console.log("errorsssss", error)
+        console.log("error", error)
       }
 
     }
