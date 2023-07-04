@@ -33,62 +33,7 @@ const Listfollow = () => {
     const [modalVisible, setModalVisible] = useState(false);
     const { id, token } = useAuth()
 
-    const openModal = () => {
-        setModalVisible(true);
-    };
-
-    const closeModal = () => {
-        setModalVisible(false);
-    };
-
-
-
-
-    const { data, isLoading } = useQuery(
-        [queries.maillist],
-        () => getRequest(`${SERVER_BASE_URL}/forward-mail?userId=${id}`, token),
-        {
-            enabled: !!token,
-        },
-
-    );
-
-
-
-    const deleteId = async (prop: any) => {
-
-        try {
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-            myHeaders.append("Authorization", `Bearer ${token}`);
-
-            var raw = JSON.stringify({
-                "active": false
-            });
-
-            var requestOptions = {
-                method: 'PUT',
-                headers: myHeaders,
-                body: raw,
-                redirect: 'follow'
-            };
-
-            let response = await fetch(`${SERVER_BASE_URL}/forward-mail/${prop}`, requestOptions)
-
-            if (data.length === 1) {
-                setIsMailAttached(false);
-            }
-
-        } catch (error) {
-            console.log(error)
-        }
-        finally {
-            navigation.goBack()
-        }
-
-    }
-
-
+   
 
     const renderItem = ({ item: trending, index }: any) => {
 

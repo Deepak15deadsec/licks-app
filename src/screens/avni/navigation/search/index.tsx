@@ -14,7 +14,24 @@ import { useNavigation } from '@react-navigation/native';
 import { SharedElement } from 'react-native-shared-element';
 import { CommonFlatlist } from '../../../../components/flatlist';
 import { searchEnum } from './search.enum'
-import Dropdown from '../../../../components/dropdown';
+import { useAuth } from '../../../../hooks/auth';
+import { getRequest, queries } from '../../../../react-query';
+import { useQuery } from 'react-query';
+
+//@ts-ignore
+import { SERVER_BASE_URL } from '@env';
+import axios from 'axios';
+
+const debounce = (func: any, delay: any) => {
+  let timeoutId: any;
+  return (...args: any) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func(...args);
+    }, delay);
+  };
+};
+
 
 const Search = () => {
 
@@ -22,65 +39,94 @@ const Search = () => {
   const [input, setInput] = useState({
     query: ""
   })
-
+  const [query, setQuery] = useState('');
   const user = useStoreState((store) => store.user)
   const is_keyboard_enabled = useKeyboard()
 
   let wr = (SIZES.width / 391)
   let hr = (SIZES.height / 812)
+  //const query = useStoreState(store => store.query);
+  const { id, token } = useAuth();
   const theme = useColorScheme();
 
-  const [data, setData] = useState<any[]>([])
+  //const [data, setData] = useState<any[]>([])
   const [type, setType] = useState(searchEnum.INFINITE as string)
   const [page, setPage] = useState(1)
-  const [isLoading, setLoading] = useState(false);
+  const [dataa, setDataa] = useState([])
 
-  const onchangeHandler = (value: string, name: string) => {
-    if (value !== "") {
-      try {
-        setData(trendingJson)
-        setLoading(true)
-      } catch (error: any) {
-        Alert.alert(error)
-        setLoading(false)
-      } finally {
-        setType(searchEnum.SEARCH)
-        setInput({ ...input, [name]: value })
-        setLoading(false)
-      }
-    } else {
-      setType(searchEnum.INFINITE)
-      setInput({ ...input, [name]: value })
+
+ 
+  const fetchSearchResults = async (query: string) => {
+    const response = await fetch(`https://mapi.avni.club/elastic/product/_search?name=${query}*`, {
+      method: 'get',
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await response.json();
+    console.log("data", data)
+    setDataa(data.results);
+    return data;
+  };
+
+  const debouncedSearch = debounce(fetchSearchResults, 300);
+
+  const { data, isLoading, isError, error } = useQuery(
+    ['searchResults', input?.query],
+    () => debouncedSearch(input?.query),
+    {
+      enabled: Boolean(input?.query),
     }
+  );
 
-  }
+  const handleInputChange = (value: string, name: string) => {
+    setInput({ ...input, [name]: value })
 
-  useEffect(() => {
-    setData(trendingJson)
-  }, [trendingJson])
+  };
+
+
+
+  // const onchangeHandler = (value: string, name: string) => {
+  //   if (value !== "") {
+  //     try {
+  //       const searchResult = trendingJson.filter(item =>
+  //         item.name.toLowerCase().includes(value.toLowerCase())
+  //       );
+
+  //       setData(searchResult);
+  //     } catch (error: any) {
+  //       Alert.alert(error.message);
+  //     } finally {
+  //       setType(searchEnum.SEARCH);
+  //       setInput({ ...input, [name]: value });
+
+  //     }
+  //   } else {
+  //     setType(searchEnum.INFINITE);
+  //     setInput({ ...input, [name]: value });
+  //     setData(trendingJson); // Restore the full data when the search query is empty
+  //   }
+  // };
+
+
+  // useEffect(() => {
+  //   setData(trendingJson)
+  // }, [trendingJson])
 
 
   //flatlist components
-  const renderItem = ({ item: trending }: any) => {
+  const renderItem = ({ item: dataa }: any) => {
+    //console.log("item",dataa)
     return (
+      
       <TouchableOpacity
-        onPress={() => {
-          navigation.navigate('Detail' as never, { id: trending.id } as never)
-        }}
+        // onPress={() => {
+        //   navigation.navigate('Detail' as never, { id: trending.id } as never)
+        // }}
         style={{
           flexDirection: 'column',
 
         }}>
 
-        <Image
-          source={trending.banner}
-          style={{
-            height: 150,
-            width: '100%',
-            borderRadius: 5
-          }}
-          resizeMode='cover'
-        />
+       
         <View
           style={{
             position: 'absolute',
@@ -94,50 +140,10 @@ const Search = () => {
             style={{
               ...FONTS.size12s, letterSpacing: -0.03
             }}
-          >{trending.percentDiscount} OFF</Text>
+          >{dataa?.name} OFF</Text>
         </View>
 
-        <View
-          style={{
-            marginTop: 10,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}>
-          <View style={{
-            gap: 3
-          }}>
-
-            <View style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: 5
-            }}>
-              <Image
-                source={trending.icon}
-                style={{
-                  width: 23,
-                  height: 23
-                }}
-                resizeMode='contain'
-              />
-
-              <Text style={{ ...FONTS.category, color: '#000000' }}>
-                {trending.name}</Text>
-
-            </View>
-
-            <Text style={{ ...FONTS.size10m, color: '#5C595F' }}>
-              {trending.expire}</Text>
-
-          </View>
-
-          <View>
-            <Text style={{ ...FONTS.size12s, color: '#5C595F', marginRight: 3 }}>
-              {trending.price}</Text>
-          </View>
-
-        </View>
+      
       </TouchableOpacity>
     )
   }
@@ -234,8 +240,8 @@ const Search = () => {
             <Image
               source={icons.avatar}
               style={{
-                width: wr*38,
-                height: hr*38
+                width: wr * 38,
+                height: hr * 38
               }}
               resizeMode='contain'
             />
@@ -248,10 +254,10 @@ const Search = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-         
+
           alignSelf: 'center',
           width: SIZES.width * 0.92,
-          height: is_keyboard_enabled ?  (SIZES.height - 190) : (SIZES.height - 83),
+          height: is_keyboard_enabled ? (SIZES.height - 190) : (SIZES.height - 83),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#ffffff80',
@@ -263,9 +269,9 @@ const Search = () => {
         style={{
           position: 'absolute',
           bottom: 0,
-   
+
           width: SIZES.width,
-          height: is_keyboard_enabled ?  (SIZES.height - 250) :  (SIZES.height - 95),
+          height: is_keyboard_enabled ? (SIZES.height - 250) : (SIZES.height - 95),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
           backgroundColor: '#FFFFFF',
@@ -279,13 +285,13 @@ const Search = () => {
           padding: 0,
           gap: 6,
         }}>
-          
-            <Text style={{ ...FONTS.heading, color: 'black' }}>Search</Text>
-        
+
+          <Text style={{ ...FONTS.heading, color: 'black' }}>Search</Text>
+
 
           <SearchInput
             value={input.query}
-            onChangeText={(value: any) => onchangeHandler(value, "query")}
+            onChangeText={(value: any) => handleInputChange(value, "query")}
             placeholder='What would you like to search?'
           />
         </View>
@@ -298,12 +304,13 @@ const Search = () => {
         }}>
 
           <CommonFlatlist
-            data={data}
+            data={dataa}
             ListHeaderComponent={renderHeader}
             renderItem={renderItem}
             ItemSeparatorComponent={renderSeparator}
             ListFooterComponent={renderFooter}
             ListEmptyComponent={renderEmpty}
+            keyExtractor={(item: any) => `${item.id}`}
             onEndReachedThreshold={0.2}
             onEndReached={fetchMoreData}
           />
