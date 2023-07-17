@@ -9,22 +9,22 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import React, {useState} from 'react';
-import {icons, SIZES, FONTS} from '../../../constants';
-import {useNavigation} from '@react-navigation/native';
+import React, { useState } from 'react';
+import { icons, SIZES, FONTS } from '../../../constants';
+import { useNavigation } from '@react-navigation/native';
 import OTP from './OTP';
 import ResendOTP from './ResendOTP';
 import axios from 'axios';
-import {enc, AES} from 'react-native-crypto-js';
+import { enc, AES } from 'react-native-crypto-js';
 
 //@ts-ignore
-import {SERVER_BASE_URL, CRYPTO_SECRET_KEY} from '@env';
-import {useStoreActions} from '../../../store/easy-peasy/hooks';
+import { SERVER_BASE_URL, CRYPTO_SECRET_KEY } from '@env';
+import { useStoreActions } from '../../../store/easy-peasy/hooks';
 import RingWave from '../../../components/RingWave';
 import Loading from '../../../components/Loading';
-import {useAuth} from '../../../hooks/auth';
+import { useAuth } from '../../../hooks/auth';
 
-const Verify = ({route}: any) => {
+const Verify = ({ route }: any) => {
   const navigation = useNavigation();
   const [screen, setScreen] = useState<number>(1);
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -32,12 +32,27 @@ const Verify = ({route}: any) => {
     otp: false,
   });
   const user = route?.params?.user;
-  const {login} = useAuth();
+  const { login } = useAuth();
 
   let wr = SIZES.width / 391;
   let hr = SIZES.height / 812;
 
-  const resend = () => {};
+  const resend = async () => {
+
+    var phoneCode = AES.encrypt(`${user.phone}`, CRYPTO_SECRET_KEY as string).toString();
+    const { data } = await axios({
+      url: `${SERVER_BASE_URL}/oauth/requestOtp`,
+      method: "post",
+      headers: {
+        "content-type": "application/json"
+      },
+      data: JSON.stringify({
+        phoneCode: phoneCode
+      })
+    })
+
+
+  };
 
   const verify = async () => {
     try {
@@ -50,7 +65,7 @@ const Verify = ({route}: any) => {
         CRYPTO_SECRET_KEY as string,
       ).toString();
 
-      const {data: encryptedData} = await axios({
+      const { data: encryptedData } = await axios({
         url: `${SERVER_BASE_URL}/oauth/verifyOtp`,
         method: 'post',
         headers: {
@@ -64,7 +79,7 @@ const Verify = ({route}: any) => {
 
       if (encryptedData && encryptedData.Status === 'Error') {
         setScreen(1);
-        setError({...error, ['otp']: true});
+        setError({ ...error, ['otp']: true });
       } else {
         if (encryptedData && encryptedData.status === 200) {
           var databytes = AES.decrypt(
@@ -81,7 +96,7 @@ const Verify = ({route}: any) => {
           encryptedData.message === 'Credentials not found!'
         ) {
           // @ts-ignore
-          navigation.navigate('Mailid', {user});
+          navigation.navigate('Mailid', { user });
         }
       }
     } catch (error) {
@@ -102,7 +117,7 @@ const Verify = ({route}: any) => {
         <KeyboardAvoidingView
           keyboardVerticalOffset={10}
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          style={{flex: 1}}>
+          style={{ flex: 1 }}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
               <View
@@ -147,10 +162,10 @@ const Verify = ({route}: any) => {
                   paddingTop: hr * 36,
                 }}>
                 <View>
-                  <Text style={{...FONTS.heading, color: 'black'}}>
+                  <Text style={{ ...FONTS.heading, color: 'black' }}>
                     Membership Application
                   </Text>
-                  <Text style={{...FONTS.paragraph, color: '#5C595F'}}>
+                  <Text style={{ ...FONTS.paragraph, color: '#5C595F' }}>
                     {' '}
                     enter the OTP sent to your {user.phone}{' '}
                   </Text>
