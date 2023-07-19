@@ -35,7 +35,7 @@ const RingWave = () => {
                             />)
                     })
                 }
-                <Text>Loading...</Text>
+                <Text style={{color:'white'}}>Loading...</Text>
                 {/* <Feather name='phone-outgoing' size={32} color="#fff" /> */}
             </View>
         </View>

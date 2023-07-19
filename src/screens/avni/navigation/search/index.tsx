@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Image, useColorScheme, ScrollView, KeyboardAvoidingView, Platform, FlatList, Alert, Button, Keyboard, ActivityIndicator } from 'react-native'
-import { COLORS, FONTS, SIZES, icons } from '../../../../constants';
+import React, { useState, useEffect, useRef, useCallback } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, Image, useColorScheme, ScrollView, KeyboardAvoidingView, Platform, FlatList, Alert, Button, Keyboard, ActivityIndicator, Dimensions } from 'react-native'
+import { COLORS, FONTS, SIZES, icons, images } from '../../../../constants';
 import Svg, {
   Path,
   Circle
@@ -17,6 +17,9 @@ import { searchEnum } from './search.enum'
 import { useAuth } from '../../../../hooks/auth';
 import { getRequest, queries } from '../../../../react-query';
 import { useQuery } from 'react-query';
+import Swiper from 'react-native-swiper';
+import Picker from '../../../../components/variantpicker';
+import RenderHTML, { CustomBlockRenderer, CustomMixedRenderer, CustomTextualRenderer, HTMLContentModel } from 'react-native-render-html';
 
 //@ts-ignore
 import { SERVER_BASE_URL } from '@env';
@@ -34,14 +37,16 @@ const debounce = (func: any, delay: any) => {
 
 
 const Search = () => {
-
+  const [selectedItemIndex, setSelectedItemIndex] = useState(0);
   const navigation = useNavigation()
-  const [input, setInput] = useState({
+  const [input, setInput] = useState<any>({
     query: ""
   })
   const [query, setQuery] = useState('');
   const user = useStoreState((store) => store.user)
   const is_keyboard_enabled = useKeyboard()
+
+
 
   let wr = (SIZES.width / 391)
   let hr = (SIZES.height / 812)
@@ -54,12 +59,10 @@ const Search = () => {
   const [page, setPage] = useState(1)
   const [dataa, setDataa] = useState([])
 
-
- 
   const fetchSearchResults = async (query: string) => {
-    const response = await fetch(`https://mapi.avni.club/elastic/product/_search?name=${query}*`, {
+    const response = await fetch(`https://adsapi.avniads.com/product/_search?name=${query}*`, {
       method: 'get',
-      headers: { 'Authorization': `Bearer ${token}` }
+      headers: { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NzNjZDFlNC04NWI3LTQyZGQtYTQzMC04MTc0YTI2MzkwMjciLCJlbWFpbCI6InB2YWxsYXRAZ21haWwuY29tIiwiaWF0IjoxNjg5NzQ3NjkyLCJleHAiOjE2ODk4MzQwOTJ9.qxHlOFEqETe9soABg0KmTP548A0Qm-j64tG2qcTPFjI' }
     });
     const data = await response.json();
     console.log("data", data)
@@ -76,6 +79,10 @@ const Search = () => {
       enabled: Boolean(input?.query),
     }
   );
+
+  // const onchangeHandler = useCallback((title: string, price: string, src:any) => {
+  //   setInput((prevState: any) => ({ ...prevState, selectedTitle: title, selectedPrice: price, selectedImage: src }));
+  // }, []);
 
   const handleInputChange = (value: string, name: string) => {
     setInput({ ...input, [name]: value })
@@ -115,36 +122,108 @@ const Search = () => {
   //flatlist components
   const renderItem = ({ item: dataa }: any) => {
     //console.log("item",dataa)
+
     return (
-      
-      <TouchableOpacity
-        // onPress={() => {
-        //   navigation.navigate('Detail' as never, { id: trending.id } as never)
-        // }}
-        style={{
-          flexDirection: 'column',
 
-        }}>
+      <View style={styles.containerr}>
+        <View style={styles.header}>
+          <Image style={styles.profileImage} source={{ uri: dataa?.brand?.images[0] }} />
+          <Text style={styles.username}>{dataa?.brand.name}</Text>
+        </View>
+        {/* <View style={styles.slide} >
+          <Image source={{ uri: input.selectedImage }}  style={styles.image} />
+        </View> */}
+        <Swiper style={{ height: 300 }}
+          autoplayTimeout={3}  >
+          {dataa.variants.map((image: any, index: any) => (
+            <View style={styles.slide} key={index}>
+              <Image source={{ uri: image.src }} style={styles.image} />
+            </View>
+          ))}
+        </Swiper>
+        <View style={{ flexDirection: 'row', marginTop: 10, }}>
+          {/* <Picker
+            label="Support"
+            selectedValue={input.selectedTitle}
+            onValueChange={onchangeHandler}
+            supportTypes={dataa.variants}
+          /> */}
+          <ScrollView horizontal={true}>
+            <View style={styles.containervariant}>
+              {dataa.variants.map((variant: any, index: any) => (
+                <TouchableOpacity
+                  style={[
+                    styles.slidevariant,
+                    index === selectedItemIndex && styles.selectedTitle,
+                  ]}
+                  onPress={() => setSelectedItemIndex(index)}
+                  key={index}
+                >
+                  <Text
+                    style={[
+                      styles.varianttitle,
+                      index === selectedItemIndex && styles.selectedTitle,
+                    ]}
+                  >
+                    {variant.title}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </ScrollView>
 
-       
-        <View
-          style={{
-            position: 'absolute',
-            right: 5,
-            top: 5,
-            padding: 4,
-            borderRadius: 4,
-            backgroundColor: '#30D792'
-          }}>
-          <Text
-            style={{
-              ...FONTS.size12s, letterSpacing: -0.03
-            }}
-          >{dataa?.name} OFF</Text>
+        </View>
+        <View style={{ flexDirection: 'row', marginTop: 8, justifyContent: 'space-between', alignItems: 'center' }}>
+          <View style={{flexDirection:'row', gap:20}}>
+            <Text style={styles.caption}>{dataa.variants[selectedItemIndex].price}</Text>
+            <View style={{ alignItems: 'center' }}>
+              <Text style={styles.caption}>{dataa.variants[selectedItemIndex].compare_at_price}</Text>
+              <View style={{
+                width: '130%',
+                height: 1,
+                backgroundColor: 'black',
+                marginTop: -10,
+              }} />
+            </View>
+          </View>
+
+          <TouchableOpacity
+              
+              style={{
+                backgroundColor: '#30D792',
+                borderRadius: 10,
+                justifyContent: 'center',
+                height: hr * 36,
+                alignItems: 'center',
+                paddingLeft: wr * 8,
+                paddingRight: wr * 8,
+                marginTop: hr * -6,
+              }}
+
+              //@ts-ignore
+            >
+              <Text
+                style={{
+                  ...FONTS.paragraph,
+                  color: '#ffffff',
+                }}>
+                Apply
+              </Text>
+            </TouchableOpacity>
+        </View>
+        <View style={{ marginTop: 8 }}>
+          <RenderHTML
+            // contentWidth={width - 20}
+            source={{ html: dataa?.body_html }}
+
+            contentWidth={Dimensions.get('window').width - 20} // Adjust padding
+
+          />
         </View>
 
-      
-      </TouchableOpacity>
+
+
+      </View>
     )
   }
 
@@ -156,7 +235,7 @@ const Search = () => {
             marginBottom: 15
           }}>
             <Text style={{ ...FONTS.size14m, color: 'black', letterSpacing: -0.03 }}>
-              All Categories
+              All Products
             </Text>
           </View>
         )
@@ -169,7 +248,7 @@ const Search = () => {
             justifyContent: 'space-between'
           }}>
             <Text style={{ ...FONTS.size14m, color: 'black', letterSpacing: -0.03 }}>
-              Searched Categories
+              Searched Products
             </Text>
             <TouchableOpacity
               style={{
@@ -228,11 +307,11 @@ const Search = () => {
 
       <View style={{ flexDirection: "row", justifyContent: 'flex-end', gap: 20, alignItems: 'center', padding: 20 }}>
         <View style={{ flexDirection: 'row', gap: 16, justifyContent: 'space-between', alignItems: 'center' }}>
-          <Svg width="18" height="20" viewBox="0 0 18 20" fill="none">
+          {/* <Svg width="18" height="20" viewBox="0 0 18 20" fill="none">
             <Path
               d="M11.7836 17.3125C11.041 18.4375 10.1135 19 9 19C7.88654 19 6.95904 18.4375 6.21636 17.3125M14.6619 15.625H3.33808C3.01277 15.6252 2.69325 15.538 2.41218 15.3725C2.13111 15.2071 1.89858 14.9691 1.73834 14.6831C1.5781 14.397 1.49591 14.0731 1.50016 13.7445C1.50441 13.4158 1.59495 13.0942 1.76254 12.8125C2.85532 10.9723 3.43261 8.86665 3.43272 6.72063V5.5C3.43272 4.30653 3.90196 3.16193 4.73722 2.31802C5.57247 1.47411 6.70532 1 7.88654 1H10.1135C11.2947 1 12.4275 1.47411 13.2628 2.31802C14.098 3.16193 14.5673 4.30653 14.5673 5.5V6.72063C14.5673 8.866 15.144 10.9731 16.2375 12.8125C16.405 13.0942 16.4956 13.4158 16.4998 13.7445C16.5041 14.0731 16.4219 14.397 16.2617 14.6831C16.1014 14.9691 15.8689 15.2071 15.5878 15.3725C15.3068 15.538 14.9872 15.6252 14.6619 15.625Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
             />
-          </Svg>
+          </Svg> */}
 
           <TouchableOpacity
             onPress={() => navigation.navigate('Profile' as never)}
@@ -274,7 +353,7 @@ const Search = () => {
           height: is_keyboard_enabled ? (SIZES.height - 250) : (SIZES.height - 95),
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
-          backgroundColor: '#FFFFFF',
+          backgroundColor: '#eee',
           paddingLeft: 24,
           paddingRight: 24,
           paddingTop: 20,
@@ -347,5 +426,58 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
-  }
+  },
+  containerr: {
+    marginVertical: 10,
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  profileImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 15,
+    marginRight: 10,
+  },
+  username: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+
+  caption: {
+    fontSize: 16,
+  },
+  slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  image: {
+    width: '100%',
+    height: 300,
+    resizeMode: 'cover',
+  },
+  containervariant: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  slidevariant: {
+    marginHorizontal: 10,
+  },
+  varianttitle: {
+    textAlign: 'center',
+    padding: 10,
+
+  },
+  selectedTitle: {
+    borderColor: 'blue', // Customize the border color for selected item
+    borderWidth: 0.5,
+    borderRadius: 10,
+  },
 })

@@ -24,12 +24,8 @@ const Support = () => {
 
   const onchangeHandler = useCallback((value: any, name: string) => {
    
-  
       setInput((prevState: any) => ({ ...prevState, [name]: value }));
-    
-
-    
-
+ 
   }, []);
 
   return (

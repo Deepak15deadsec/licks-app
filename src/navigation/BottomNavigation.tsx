@@ -150,7 +150,7 @@ const BottomNavigation = () => {
           )
         }}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="Search"
         component={Search}
         options={{
@@ -172,7 +172,7 @@ const BottomNavigation = () => {
             />
           )
         }}
-      /> */}
+      />
 
       <Tab.Screen
         name="Reward"
