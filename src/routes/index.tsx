@@ -63,7 +63,7 @@ export const Router = () => {
     return () => {
       subscription.remove();
     };
-  }, [token]);
+  }, [token, isAuthenticated]);
 
   return (
     <NavigationContainer theme={theme} linking={LinkingConfig}>

@@ -1,6 +1,7 @@
+
 import React, {useEffect, useState, useCallback} from 'react';
 import * as Keychain from 'react-native-keychain';
-import {useStoreActions} from '../store/easy-peasy/hooks';
+import {useStoreActions, useStoreState} from '../store/easy-peasy/hooks';
 
 type Cred = {
   id: string;
@@ -11,6 +12,7 @@ export const useAuth = () => {
   const [cred, setCred] = useState<Cred>({id: '', token: ''});
   const setIsAuthenticated = useStoreActions(store => store.setIsAuthenticated);
   const addUser = useStoreActions(store => store.addUser);
+  const setToken = useStoreActions(store => store.setToken )
   const removeUser = useStoreActions(store => store.removeUser);
   const setIsMailAttached = useStoreActions(store => store.setIsMailAttached);
   const setIsInviteAccepted = useStoreActions(
@@ -19,6 +21,7 @@ export const useAuth = () => {
   const setIsProfileCompleted = useStoreActions(
     store => store.setIsProfileCompleted,
   );
+  const token = useStoreState(store=> store.token)
 
   const login = useCallback(
     async (data: any) => {
@@ -43,6 +46,7 @@ export const useAuth = () => {
       setIsProfileCompleted(data.isProfileComplete);
       setCred({id: data.id, token: data.token});
       setIsAuthenticated(true);
+      setToken(data.accessToken)
     },
     [
       addUser,
@@ -87,7 +91,7 @@ export const useAuth = () => {
   return {
     login,
     logout,
-    token: cred.token,
+    token: token,
     id: cred.id,
   };
 };

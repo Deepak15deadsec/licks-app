@@ -18,11 +18,14 @@ export interface EasyPeasyStore {
   setIsProfileCompleted: Action<this, boolean>;
   addUser: Action<this, User>;
   removeUser: Action<this>;
+  token: string;
+  setToken: Action<this, string>;
 }
 
 const initialState = {
   query: new Date(),
   artCoin: 0,
+  token:'',
   isMailAttached: false,
   isAuthenticated: false,
   isInviteAccepted: false,
@@ -76,6 +79,9 @@ export const store = createStore<EasyPeasyStore>(
       }),
       setIsAuthenticated: action((state: any, isAuthenticated: boolean) => {
         state.isAuthenticated= isAuthenticated;
+      }),
+      setToken: action((state: any, token: string) => {
+        state.token= token;
       })
     },
     {
@@ -100,6 +106,7 @@ export const store = createStore<EasyPeasyStore>(
         'isMailAttached',
         'isInviteAccepted',
         'isProfileCompleted',
+        'token',
       ],
     },
   ),

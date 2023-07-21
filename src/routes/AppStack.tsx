@@ -19,6 +19,7 @@ import {Detail} from '../screens/avni';
 import {BottomNavigation} from '../navigation';
 import Maillist from '../screens/avni/navigation/more/maillist';
 import Listfollow from '../screens/avni/navigation/more/prodfollow/listfollow';
+import Discounts from '../screens/avni/navigation/discount';
 
 const Stack = createSharedElementStackNavigator();
 
@@ -46,6 +47,7 @@ export const AppStack = () => {
       <Stack.Screen name="Invitebox" component={Invitebox} />
       <Stack.Screen name="Catreward" component={CatReward} />
       <Stack.Screen name="Followprod" component={Listfollow} />
+      <Stack.Screen name="Discount" component={Discounts} />
       <Stack.Screen
         name="Detail"
         component={Detail}

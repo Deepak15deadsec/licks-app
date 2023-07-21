@@ -62,7 +62,7 @@ const Search = () => {
   const fetchSearchResults = async (query: string) => {
     const response = await fetch(`https://adsapi.avniads.com/product/_search?name=${query}*`, {
       method: 'get',
-      headers: { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NzNjZDFlNC04NWI3LTQyZGQtYTQzMC04MTc0YTI2MzkwMjciLCJlbWFpbCI6InB2YWxsYXRAZ21haWwuY29tIiwiaWF0IjoxNjg5NzQ3NjkyLCJleHAiOjE2ODk4MzQwOTJ9.qxHlOFEqETe9soABg0KmTP548A0Qm-j64tG2qcTPFjI' }
+      headers: { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNzIyYThhNS1kNzU5LTRjMzEtODU1Mi0yODUyYTM4NjAwYzUiLCJlbWFpbCI6InB2YWxsYXRAZ21haWwuY29tIiwiaWF0IjoxNjg5ODM1MTg4LCJleHAiOjE2ODk5MjE1ODh9.ewAkiLG3Zm-l0dj74biI5gUWMXdGfWylPjPs-7BXlBQ' }
     });
     const data = await response.json();
     console.log("data", data)

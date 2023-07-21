@@ -55,10 +55,13 @@ const Maillist = () => {
   const {data, isLoading} = useQuery(
     [queries.maillist],
     () => getRequest(`${SERVER_BASE_URL}/forward-mail?userId=${id}`, token),
+    
     {
       enabled: !!token,
     },
+   
   );
+  //console.log("dtaa",data)
 
   const deleteId = async (prop: any) => {
     try {
