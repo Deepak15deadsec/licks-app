@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Image, useColorScheme, ScrollView, KeyboardAvoidingView, Platform, FlatList, Alert, Button, Keyboard, ActivityIndicator, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Image, useColorScheme, ScrollView, KeyboardAvoidingView, Platform, FlatList, Alert, Button, Keyboard, ActivityIndicator, Dimensions, TouchableWithoutFeedback } from 'react-native'
 import { COLORS, FONTS, SIZES, icons, images } from '../../../../constants';
 import { useStoreState } from '../../../../store/easy-peasy/hooks';
 import { useKeyboard } from '../../../../utils/useKeyboard';
@@ -12,8 +12,7 @@ import { useQuery } from 'react-query';
 //@ts-ignore
 import { SERVER_BASE_URL } from '@env';
 import axios from 'axios';
-
-
+import Svg, { Path } from 'react-native-svg';
 
 const Discount = () => {
     const [selectedItemIndex, setSelectedItemIndex] = useState(0);
@@ -24,8 +23,7 @@ const Discount = () => {
     const [query, setQuery] = useState('');
     const user = useStoreState((store) => store.user)
     const is_keyboard_enabled = useKeyboard()
-
-
+    const [isLoading, setLoading] = useState(false);
 
     let wr = (SIZES.width / 391)
     let hr = (SIZES.height / 812)
@@ -34,33 +32,47 @@ const Discount = () => {
     const theme = useColorScheme();
 
     //const [data, setData] = useState<any[]>([])
+    const handleScratch = (index: number) => {
+        setScratchedArray(prevState => {
+          const newState = [...prevState];
+          newState[index] = true;
+          return newState;
+        });
+      };
 
+ 
     const [page, setPage] = useState(1)
     const [dataa, setDataa] = useState([])
 
     const fetchSearchResults = async () => {
+        setLoading(true);
         try {
             const response = await fetch(
-                'https://adsapi.avniads.com/discount/shopify?limit=10',
+                `${SERVER_BASE_URL}/elastic/_list?index=discounts&limit=10`,
                 {
                     method: 'get',
                     headers: {
                         Authorization:
-                            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNzIyYThhNS1kNzU5LTRjMzEtODU1Mi0yODUyYTM4NjAwYzUiLCJlbWFpbCI6InB2YWxsYXRAZ21haWwuY29tIiwiaWF0IjoxNjg5ODM1MTg4LCJleHAiOjE2ODk5MjE1ODh9.ewAkiLG3Zm-l0dj74biI5gUWMXdGfWylPjPs-7BXlBQ', // Replace with your actual access token
+                            `Bearer ${token}`, // Replace with your actual access token
                     },
                 }
             );
             const data = await response.json();
-            //console.log('data', data);
-            setDataa(data.discounts);
+           // console.log('data', data);
+            setDataa(data.results);
         } catch (error) {
             console.error('Error fetching data:', error);
+        }
+        finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
         fetchSearchResults();
     }, []);
+
+    const [isScratchedArray, setScratchedArray] = useState<boolean[]>([]);
 
     const handleInputChange = (value: string, name: string) => {
         setInput({ ...input, [name]: value })
@@ -69,9 +81,6 @@ const Discount = () => {
 
     //flatlist components
     const renderItem = ({ item: data, index }: any) => {
-        console.log('data', dataa);
-        const inputDate = data?.validUpto;
-        // const formattedDate = moment(inputDate).format('DD/MM/YYYY');
 
         const dateString = data?.ends_at;
         const formattedDate = new Date(dateString).toLocaleDateString('en-US', {
@@ -80,15 +89,22 @@ const Discount = () => {
             year: 'numeric'
         });
 
+        const sentence = data.type.join(' ');
+        const subtext = sentence;
+        const maxLength = 55;
+        let truncatedText = subtext.slice(0, maxLength);
+        if (subtext.length > maxLength) {
+          truncatedText += '...';
+        }
         return (
-            <View>
+            <View style={{ borderTopRightRadius: 20, borderTopLeftRadius: 20,  borderWidth: 1, borderBottomLeftRadius: 20, borderBottomRightRadius: 20, borderStyle: 'dashed', }}>
                 <View
                     key={index}
                     style={{
                         backgroundColor: '#fff',
                         borderTopRightRadius: 20,
                         borderTopLeftRadius: 20,
-                        height: 70,
+                        height: 85,
                         paddingHorizontal: 20,
                         paddingVertical: 10,
                         alignItems: 'center'
@@ -120,16 +136,16 @@ const Discount = () => {
                                 <TouchableOpacity
                                 //   onPress={() => navigation.navigate('Detail' as never, { id: reward.advertiser_id } as never)}
                                 >
-                                    {/* <Image
-                    source={{
-                      uri: data?.brandImage[0],
-                    }}
-                    style={{
-                      width: wr * 58,
-                      height: hr * 58,
-                    }}
-                    resizeMode='contain'
-                  /> */}
+                                    <Image
+                                        source={{
+                                            uri: data?.brand?.images[0],
+                                        }}
+                                        style={{
+                                            width: wr * 38,
+                                            height: hr * 38,
+                                        }}
+                                        resizeMode='contain'
+                                    />
                                 </TouchableOpacity>
 
 
@@ -142,17 +158,24 @@ const Discount = () => {
                                 }}>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                         <Text style={{ ...FONTS.size14b, color: '#5C595F', lineHeight: 16, letterSpacing: -0.03 }}>
-                                            {data?.title}</Text>
-                                        {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-                                        <Text style={{ ...FONTS.size14b, color: '#30D792', lineHeight: 16, letterSpacing: -0.03 }}>
-                                            + {data?.rewardrdArt} </Text>
-                                        <Image style={{ height: 16, width: 16 }} source={icons.coin} resizeMode='contain' />
-                                    </View> */}
+                                            {data?.brand.name}</Text>
+
 
                                     </View>
 
+
                                     <Text style={{ ...FONTS.size14m, color: '#5C595F', letterSpacing: -0.03 }}>
-                                        {data?.title} </Text>
+                                        {truncatedText} </Text>
+
+                                    <TouchableWithoutFeedback onPress={() => handleScratch(index)}>
+                                        <View style={styles.coupon}>
+                                            {isScratchedArray[index] ? (
+                                                <Text style={styles.revealedText}> {data?.discountCodes[0].code}</Text>
+                                            ) : (
+                                                <Text style={styles.scratchText}>Touch to reveal coupon</Text>
+                                            )}
+                                        </View>
+                                    </TouchableWithoutFeedback>
                                 </View>
 
                             </View>
@@ -180,7 +203,9 @@ const Discount = () => {
                         width: 40,
                         height: '50%',
                         left: -20,
-                        zIndex: 1000
+                        zIndex: 1000,
+                        borderStyle: 'dashed',
+                        borderWidth: 1,
                     }} />
                     <View style={{
                         flex: 1,
@@ -196,7 +221,9 @@ const Discount = () => {
                         width: 40,
                         height: '50%',
                         right: -20,
-                        zIndex: 1000
+                        zIndex: 1000,
+                        borderStyle: 'dashed',
+                        borderWidth: 1,
                     }} />
                 </View>
                 {/* dotted line */}
@@ -264,13 +291,13 @@ const Discount = () => {
         <View
             style={styles.container}>
 
-            <View style={{ flexDirection: "row", justifyContent: 'flex-end', gap: 20, alignItems: 'center', padding: 20 }}>
+            {/* <View style={{ flexDirection: "row", justifyContent: 'flex-end', gap: 20, alignItems: 'center', padding: 20 }}>
                 <View style={{ flexDirection: 'row', gap: 16, justifyContent: 'space-between', alignItems: 'center' }}>
-                    {/* <Svg width="18" height="20" viewBox="0 0 18 20" fill="none">
+                    <Svg width="18" height="20" viewBox="0 0 18 20" fill="none">
             <Path
               d="M11.7836 17.3125C11.041 18.4375 10.1135 19 9 19C7.88654 19 6.95904 18.4375 6.21636 17.3125M14.6619 15.625H3.33808C3.01277 15.6252 2.69325 15.538 2.41218 15.3725C2.13111 15.2071 1.89858 14.9691 1.73834 14.6831C1.5781 14.397 1.49591 14.0731 1.50016 13.7445C1.50441 13.4158 1.59495 13.0942 1.76254 12.8125C2.85532 10.9723 3.43261 8.86665 3.43272 6.72063V5.5C3.43272 4.30653 3.90196 3.16193 4.73722 2.31802C5.57247 1.47411 6.70532 1 7.88654 1H10.1135C11.2947 1 12.4275 1.47411 13.2628 2.31802C14.098 3.16193 14.5673 4.30653 14.5673 5.5V6.72063C14.5673 8.866 15.144 10.9731 16.2375 12.8125C16.405 13.0942 16.4956 13.4158 16.4998 13.7445C16.5041 14.0731 16.4219 14.397 16.2617 14.6831C16.1014 14.9691 15.8689 15.2071 15.5878 15.3725C15.3068 15.538 14.9872 15.6252 14.6619 15.625Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
             />
-          </Svg> */}
+          </Svg>
 
                     <TouchableOpacity
                         onPress={() => navigation.navigate('Profile' as never)}
@@ -285,8 +312,23 @@ const Discount = () => {
                         />
                     </TouchableOpacity>
                 </View>
-            </View>
+            </View> */}
 
+            <TouchableOpacity
+                onPress={() => navigation.goBack()}
+                style={{
+                    paddingTop: Platform.OS === 'android' ? hr * 30 : hr * 50,
+                    paddingBottom: 30,
+                    paddingLeft: 25,
+                    paddingRight: 25,
+                }}>
+                <Svg width="20" height="16" viewBox="0 0 20 16" fill="none">
+                    <Path
+                        d="M18.7165 6.95109H4.37986L10.6433 1.80561C11.1439 1.39439 11.1439 0.719571 10.6433 0.308354C10.5246 0.210607 10.3835 0.133058 10.2283 0.0801464C10.073 0.0272349 9.90655 0 9.73845 0C9.57035 0 9.40391 0.0272349 9.24864 0.0801464C9.09337 0.133058 8.95233 0.210607 8.83359 0.308354L0.375351 7.25687C0.256366 7.35442 0.161968 7.47028 0.0975606 7.59784C0.0331529 7.72539 0 7.86213 0 8.00022C0 8.13832 0.0331529 8.27505 0.0975606 8.40261C0.161968 8.53016 0.256366 8.64603 0.375351 8.74358L8.83359 15.6921C8.95242 15.7897 9.09349 15.8671 9.24874 15.92C9.404 15.9728 9.5704 16 9.73845 16C9.9065 16 10.0729 15.9728 10.2282 15.92C10.3834 15.8671 10.5245 15.7897 10.6433 15.6921C10.7621 15.5945 10.8564 15.4786 10.9207 15.351C10.985 15.2235 11.0181 15.0868 11.0181 14.9487C11.0181 14.8107 10.985 14.674 10.9207 14.5464C10.8564 14.4189 10.7621 14.303 10.6433 14.2054L4.37986 9.0599H18.7165C19.4224 9.0599 20 8.58542 20 8.0055C20 7.42557 19.4224 6.95109 18.7165 6.95109Z"
+                        fill="white"
+                    />
+                </Svg>
+            </TouchableOpacity>
 
             <View
                 style={{
@@ -324,7 +366,7 @@ const Discount = () => {
                     gap: 6,
                 }}>
 
-                    <Text style={{ ...FONTS.heading, color: 'black' }}>Search</Text>
+                    <Text style={{ ...FONTS.heading, color: 'black' }}>Discounts</Text>
 
 
 
@@ -336,20 +378,26 @@ const Discount = () => {
                     flex: 1,
                     marginTop: 20,
                 }}>
+                    {isLoading ? (
+                        <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                            <ActivityIndicator size={100} color="red" />
 
-                    <CommonFlatlist
-                        data={dataa}
-                        //ListHeaderComponent={renderHeader}
-                        renderItem={renderItem}
-                        ItemSeparatorComponent={renderSeparator}
-                        //ListFooterComponent={renderFooter}
-                        ListEmptyComponent={renderEmpty}
-                        keyExtractor={(item: any) => `${item.id}`}
-                        onEndReachedThreshold={0.2}
-                        onEndReached={fetchMoreData}
-                    />
+                        </View>
 
+                    ) : (
+                        <CommonFlatlist
+                            data={dataa}
+                            //ListHeaderComponent={renderHeader}
+                            renderItem={renderItem}
+                            ItemSeparatorComponent={renderSeparator}
+                            //ListFooterComponent={renderFooter}
+                            ListEmptyComponent={renderEmpty}
+                            keyExtractor={(item: any) => `${item.id}`}
+                            onEndReachedThreshold={0.2}
+                            onEndReached={fetchMoreData}
+                        />
 
+                    )}
                 </View>
 
             </View>
@@ -382,5 +430,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    coupon: {
 
+        backgroundColor: '#fff',
+       
+        borderRadius: 10,
+    },
+    scratchText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'gray',
+        marginVertical: 0,
+        marginHorizontal: 0,
+    },
+    revealedText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: 'gray',
+        marginVertical: 0,
+        marginHorizontal: 0,
+    },
 })
