@@ -222,7 +222,11 @@ const Intro = () => {
         pagingEnabled
         renderItem={({item}) => {
           return (
+            
             <View style={{width, alignItems: 'center', padding: 15*wr}}>
+               <View style={{ alignItems: 'center', marginTop: hr * 37 }}>
+                <Text style={{ color: '#E7E7E9', fontSize: 28, fontWeight: '700' }}>LI<Text style={{ color: '#A259FF' }}>CKS</Text></Text>
+            </View>
               <View style={{flex: 0.7, justifyContent: 'center'}}>
                 <Image
                   source={item.image}
@@ -242,7 +246,7 @@ const Intro = () => {
                   }}>
                   {item.title}
                 </Text> */}
-                <Text style={{color: '#fff', fontWeight: '800', fontSize: 35, textAlign:'center'}}>
+                <Text style={{color: '#fff', fontWeight: '700', fontSize: 26, textAlign:'center'}}>
                   {item.description}
                 </Text>
               </View>

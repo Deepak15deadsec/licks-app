@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import {AuthStack} from './AuthStack';
+import {AppStack} from './AppStack'
 import {useAuth} from '../hooks/auth';
 import Loading from '../components/Loading';
 import {useStoreActions, useStoreState} from '../store/easy-peasy/hooks';
@@ -24,7 +25,7 @@ export const Router = () => {
  
   return (
     <NavigationContainer theme={theme} >
-      {isAuthenticated ? <AuthStack /> : <AuthStack />}
+      {isAuthenticated ? <AppStack /> : <AppStack />}
     </NavigationContainer>
   );
 };

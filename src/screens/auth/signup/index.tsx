@@ -29,7 +29,7 @@ const Signup = ({route}: any) => {
   const navigation = useNavigation();
   const user = route?.params?.user;
   const [screen, setScreen] = useState<number>(1);
-  const {login} = useAuth();
+  
 
   const [input, setInput] = useState({
     first_name: 'Guest',

@@ -24,7 +24,7 @@ const Mail = ({ route }: any) => {
   let addUser = useStoreActions((store) => store.addUser)
   const setIsMailAttached = useStoreActions((store) => store.setIsMailAttached)
   const user = route?.params?.user
-  const {login} = useAuth();
+
 
 
   const [email, setEmail] = useState('');
