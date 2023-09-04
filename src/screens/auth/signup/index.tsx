@@ -14,7 +14,6 @@ import {icons, SIZES, FONTS} from '../../../constants';
 import {useNavigation} from '@react-navigation/native';
 import {AvniTextInput} from '../../../components/inputs';
 import Picker from '../../../components/pickers';
-import gendersTypes from './../../avni/data/gender-types.json';
 import DatePicker from '../../../components/datepicker';
 import Checkbox from '../../../components/checkbox';
 import axios from 'axios';
@@ -24,7 +23,7 @@ import {useStoreActions} from '../../../store/easy-peasy/hooks';
 import RingWave from '../../../components/RingWave';
 import Loading from '../../../components/Loading';
 import {useAuth} from '../../../hooks/auth';
-import { AES, enc } from 'react-native-crypto-js';
+
 
 const Signup = ({route}: any) => {
   const navigation = useNavigation();
@@ -57,62 +56,7 @@ const Signup = ({route}: any) => {
     setInput(prevState => ({...prevState, [name]: value}));
   }, []);
 
-  const signup = async () => {
-    let encryptedData:any;
-    try {
-      setScreen(2);
-      var myHeaders = new Headers();
-      myHeaders.append('Content-Type', 'application/json');
-
-      let raw = JSON.stringify({
-        phone: user.phone,
-        email: user.email,
-        firstName: input.first_name,
-        lastName: input.last_name,
-        smsAccess: input?.sms_access,
-        locationAccess: input?.location_access,
-        gender: input?.gender,
-        dob: input?.dob,
-      });
-      var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow',
-      };
-
-      let response = await fetch(
-        `${SERVER_BASE_URL}/oauth/signup`,
-        requestOptions,
-      );
-      encryptedData = await response.json();
-
-      //console.log("signup", data)
-    } catch (error) {
-      console.log('errorsssss', error);
-    } finally {
-      var databytes = AES.decrypt(
-        encryptedData?.data,
-        CRYPTO_SECRET_KEY as string,
-      );
-      var data:any = databytes.toString(enc.Utf8);
-      if (encryptedData && encryptedData.status === 200 && data.accessToken) {
-        addUser({
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          phone: !!data.phone ? data.phone : '',
-          gender: data.gender !== null ? data.gender : null,
-          dob: data.dob !== null ? data.dob : null,
-          referralCode: data.referralCode,
-        });
-        setIsMailAttached(data.isMailAttached);
-        setIsInviteAccepted(data.isInviteAccepted);
-        setIsProfileCompleted(data.isProfileComplete);
-        await login(data);
-      }
-    }
-  };
+ 
 
   // console.log('dob', input.dob);
 
@@ -191,14 +135,7 @@ const Signup = ({route}: any) => {
                       }
                       placeholder="Enter Last Name"
                     />
-                    <Picker
-                      label="Gender"
-                      selectedValue={input.gender}
-                      onValueChange={(value: any) =>
-                        onchangeHandler(value, 'gender')
-                      }
-                      gendersTypes={gendersTypes}
-                    />
+                   
                     <DatePicker
                       label="Date of Birth"
                       placeholder="Enter Date of Birth"

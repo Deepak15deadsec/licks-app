@@ -4,7 +4,7 @@ import { icons, SIZES, FONTS } from '../../../constants'
 import { useNavigation } from '@react-navigation/native';
 import PhoneInput from './PhoneInput';
 import axios from 'axios'
-import { enc, AES } from 'react-native-crypto-js';
+
 //@ts-ignore
 import { SERVER_BASE_URL, CRYPTO_SECRET_KEY } from '@env';
 
@@ -54,30 +54,7 @@ const Phone = ({ route }: any) => {
   }, [user])
 
 
-  const requestForOtp = async () => {
-    let phone = detail.callingCode.concat(detail.phone)
-    var phoneCode = AES.encrypt(`${phone}`, CRYPTO_SECRET_KEY as string).toString();
-    const { data } = await axios({
-      url: `${SERVER_BASE_URL}/oauth/requestOtp`,
-      method: "post",
-      headers: {
-        "content-type": "application/json"
-      },
-      data: JSON.stringify({
-        phoneCode: phoneCode
-      })
-    })
-
-    if (data && data.Status === "Success") {
-      //@ts-ignore
-      navigation.navigate('Verify', {
-        user: { ...user, phone: phone }
-      })
-    } else {
-      setError({ ...error, ['phone']: true })
-    }
-
-  }
+  
 
   return (
     <KeyboardAvoidingView
@@ -211,7 +188,7 @@ const Phone = ({ route }: any) => {
                 }}
                 disabled={detail.phone.length < 10 || !checked}
                 //@ts-ignore
-                onPress={requestForOtp}
+                //onPress={requestForOtp}
               >
                 <Image
                   source={icons.next}

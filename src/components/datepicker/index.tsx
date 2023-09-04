@@ -1,8 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { FONTS, SIZES } from '../../constants';
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import moment from 'moment';
+
 
 
 let wr = (SIZES.width / 391)
@@ -53,7 +52,7 @@ const DatePicker = (props: any) => {
             </View>
 
 
-            <DateTimePickerModal
+            {/* <DateTimePickerModal
                 isVisible={show}
                 mode="date"
                 onConfirm={(value) => {
@@ -62,7 +61,7 @@ const DatePicker = (props: any) => {
                 }}
                 onCancel={() => setShow(!show)}
 
-            />
+            /> */}
 
 
 

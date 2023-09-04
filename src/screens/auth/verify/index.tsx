@@ -15,7 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 import OTP from './OTP';
 import ResendOTP from './ResendOTP';
 import axios from 'axios';
-import { enc, AES } from 'react-native-crypto-js';
+
 
 //@ts-ignore
 import { SERVER_BASE_URL, CRYPTO_SECRET_KEY } from '@env';
@@ -37,79 +37,9 @@ const Verify = ({ route }: any) => {
   let wr = SIZES.width / 391;
   let hr = SIZES.height / 812;
 
-  const resend = async () => {
-
-    var phoneCode = AES.encrypt(`${user.phone}`, CRYPTO_SECRET_KEY as string).toString();
-    const { data } = await axios({
-      url: `${SERVER_BASE_URL}/oauth/requestOtp`,
-      method: "post",
-      headers: {
-        "content-type": "application/json"
-      },
-      data: JSON.stringify({
-        phoneCode: phoneCode
-      })
-    })
+  
 
 
-  };
-
-  const verify = async () => {
-    try {
-      var phoneCode = AES.encrypt(
-        `${user.phone}`,
-        CRYPTO_SECRET_KEY as string,
-      ).toString();
-      var otpCode = AES.encrypt(
-        `${otp.join('')}`,
-        CRYPTO_SECRET_KEY as string,
-      ).toString();
-
-      const { data: encryptedData } = await axios({
-        url: `${SERVER_BASE_URL}/oauth/verifyOtp`,
-        method: 'post',
-        headers: {
-          'content-type': 'application/json',
-        },
-        data: JSON.stringify({
-          phoneCode: phoneCode,
-          otpCode: otpCode,
-        }),
-      });
-
-      if (encryptedData && encryptedData.Status === 'Error') {
-        setScreen(1);
-        setError({ ...error, ['otp']: true });
-      } else {
-        if (encryptedData && encryptedData.status === 200) {
-          var databytes = AES.decrypt(
-            encryptedData?.data,
-            CRYPTO_SECRET_KEY as string,
-          );
-          var data: any = databytes.toString(enc.Utf8);
-          await login(JSON.parse(data));
-        }
-
-        if (
-          encryptedData &&
-          encryptedData.status === 404 &&
-          encryptedData.message === 'Credentials not found!'
-        ) {
-          // @ts-ignore
-          navigation.navigate('Mailid', { user });
-        }
-      }
-    } catch (error) {
-      if (error instanceof TypeError) {
-        console.error('A type error occurred:', error);
-      } else if (error instanceof RangeError) {
-        console.error('A range error occurred:', error);
-      } else {
-        console.error('An unknown error occurred:', error);
-      }
-      setScreen(1);
-    }
-  };
 
   switch (screen) {
     case 1:
@@ -171,7 +101,6 @@ const Verify = ({ route }: any) => {
                   </Text>
                   <OTP otp={otp} setOtp={setOtp} error={error} />
 
-                  <ResendOTP onPress={resend} />
                 </View>
 
                 <View
@@ -217,7 +146,7 @@ const Verify = ({ route }: any) => {
                       alignItems: 'center',
                     }}
                     disabled={otp?.join('')?.length < 6}
-                    onPress={verify}>
+                    >
                     <Image
                       source={icons.next}
                       style={{

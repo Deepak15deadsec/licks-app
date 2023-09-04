@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TextInput } from 'react-native'
 import React, { useState } from 'react'
-import CountryPicker from 'react-native-country-picker-modal'
+
 import { SIZES, FONTS } from '../../../constants'
 
 
@@ -32,7 +32,7 @@ const PhoneInput = (props: Props) => {
                 borderColor: '#30D792'
             }}>
 
-                <CountryPicker
+                {/* <CountryPicker
                     withFilter
                     withFlag
                     withCallingCodeButton
@@ -43,7 +43,7 @@ const PhoneInput = (props: Props) => {
                     }
                     }
 
-                />
+                /> */}
 
                 <View style={{
                     height: 40,

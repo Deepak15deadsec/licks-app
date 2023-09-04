@@ -10,7 +10,7 @@ import RingWave from '../../../components/RingWave'
 import Loading from '../../../components/Loading'
 import axios from 'axios'
 import MailPointList from '../../../components/mailpoints'
-import { AES, enc } from 'react-native-crypto-js'
+
 import { useAuth } from '../../../hooks/auth'
 
 let wr = (SIZES.width / 391)
@@ -59,57 +59,7 @@ const Mail = ({ route }: any) => {
   
   const lowerCaseText = email.toLowerCase();
 
-  const handleSubmit = async () => {
-    const regex = /^[a-zA-Z0-9.]+$/; // Regex pattern to allow letters, numbers, and dot
-
-    if (!regex.test(lowerCaseText)) {
-      setErrorr('Special characters are not allowed except for dot (.)');
-    } else {
-      try {
-        //setScreen(2)
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        let raw = JSON.stringify({
-          "phone": user.phone,
-          "email": lowerCaseText.concat('@avniclub.com'),
-          "firstName": "Guest",
-          "lastName": "",
-          "smsAccess": false,
-          "locationAccess": false,
-          "gender": "None",
-          "dob": null
-        })
-
-        var requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: raw,
-          redirect: 'follow'
-        };
-
-        let response = await fetch(`${SERVER_BASE_URL}/oauth/signup`, requestOptions)
-        let encryptedData = await response.json()
-
-
-        if (encryptedData && encryptedData.status === 200 ) {
-          var databytes = AES.decrypt(
-            encryptedData?.data,
-            CRYPTO_SECRET_KEY as string,
-          );
-          var data:any = databytes.toString(enc.Utf8);
-          await login(JSON.parse(data));
-        }
-      } catch (error) {
-        console.log("error", error)
-      }
-
-    }
-
-    //navigation.navigate("Signup" as never, { user: { ...user, email: lowerCaseText.concat('@avniclub.com') } } as never);
-
-
-  };
+  
 
 
 
@@ -232,7 +182,7 @@ const Mail = ({ route }: any) => {
                       alignItems: 'center'
                     }}
                     disabled={error.email}
-                    onPress={handleSubmit}
+                   // onPress={handleSubmit}
                   >
                     <Image
                       source={icons.next}

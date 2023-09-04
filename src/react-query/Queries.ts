@@ -9,4 +9,5 @@ export const queries = {
   categoryreward:'categoryreward',
   sent:'sent',
   maillist:'maillist',
+  discount:'discount',
 };

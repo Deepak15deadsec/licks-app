@@ -1,6 +1,5 @@
 
 import React, {useEffect, useState, useCallback} from 'react';
-import * as Keychain from 'react-native-keychain';
 import {useStoreActions, useStoreState} from '../store/easy-peasy/hooks';
 
 type Cred = {
@@ -23,75 +22,7 @@ export const useAuth = () => {
   );
   const token = useStoreState(store=> store.token)
 
-  const login = useCallback(
-    async (data: any) => {
-      try {
-        await Keychain.setGenericPassword(data.id, data.accessToken);
-      } catch (error) {
-        console.log("Keychain couldn't be accessed!", error);
-        return;
-      }
 
-      addUser({
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.email,
-        phone: data.phone || '',
-        gender: data.gender ?? null,
-        dob: data.dob ?? null,
-        referralCode: data.referralCode,
-      });
-      setIsMailAttached(data.isMailAttached);
-      setIsInviteAccepted(data.isInviteAccepted);
-      setIsProfileCompleted(data.isProfileComplete);
-      setCred({id: data.id, token: data.token});
-      setIsAuthenticated(true);
-      setToken(data.accessToken)
-    },
-    [
-      addUser,
-      setIsMailAttached,
-      setIsInviteAccepted,
-      setIsProfileCompleted,
-      setIsAuthenticated,
-    ],
-  );
 
-  const logout = useCallback(async () => {
-    try {
-      await Keychain.resetGenericPassword();
-    } catch (error) {
-      console.log("Keychain couldn't be accessed!", error);
-      return;
-    }
-
-    setCred({id: '', token: ''});
-    removeUser();
-    setIsAuthenticated(false);
-  }, [removeUser, setIsAuthenticated]);
-
-  useEffect(() => {
-    const fetchCred = async () => {
-      let data: Keychain.UserCredentials | false;
-      try {
-        data = await Keychain.getGenericPassword();
-      } catch (error) {
-        console.log("Keychain couldn't be accessed!", error);
-        return;
-      }
-
-      if (data && typeof data === 'object') {
-        setCred({id: data.username, token: data.password});
-        setIsAuthenticated(true);
-      }
-    };
-    fetchCred();
-  }, [login, logout]);
-
-  return {
-    login,
-    logout,
-    token: token,
-    id: cred.id,
-  };
+ 
 };

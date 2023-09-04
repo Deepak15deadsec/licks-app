@@ -55,7 +55,7 @@ const Square = ({scrollX}: any) => {
       style={{
         width: height,
         height: height,
-        backgroundColor: '#fff',
+        backgroundColor: '#0F111E',
         borderRadius: 86,
         position: 'absolute',
         top: -height * 0.6,
@@ -144,8 +144,8 @@ const Intro = () => {
               <Animated.View
                 key={`indicator-${i}`}
                 style={{
-                  height: hr * 10,
-                  width: wr * 10,
+                  height: hr * 3,
+                  width: wr * 30,
                   borderRadius: 5,
                   backgroundColor: '#fff',
                   opacity,
@@ -227,22 +227,22 @@ const Intro = () => {
                 <Image
                   source={item.image}
                   style={{
-                    width: (wr * width) / 2,
-                    height: (hr * width) / 2,
+                    width: (wr * width) / 1.3 ,
+                    height: (hr * width)/ 1.3 ,
                     resizeMode: 'contain',
                   }}
                 />
               </View>
-              <View style={{flex: 0.3, marginTop: hr * 100, width: '90%'}}>
-                <Text
+              <View style={{flex: 0.3, marginTop: hr * 20, width: '90%'}}>
+                {/* <Text
                   style={{
                     color: '#fff',
                     fontWeight: '300',
                     marginBottom: hr * 10,
                   }}>
                   {item.title}
-                </Text>
-                <Text style={{color: '#fff', fontWeight: '800', fontSize: 30}}>
+                </Text> */}
+                <Text style={{color: '#fff', fontWeight: '800', fontSize: 35, textAlign:'center'}}>
                   {item.description}
                 </Text>
               </View>

@@ -1,24 +1,24 @@
 import {images} from '../../constants';
 
-export const bgs = ['#30D792', '#FF4D00', '#691EEA'];
+export const bgs = ['#0F111E', '#0F111E', '#0F111E'];
 export const DATA = [
   {
     key: '3571572',
     title: 'WELCOME TO THE CLUB',
-    description: 'earn rewards for every shopping',
-    image: images.intro1,
+    description: 'Discover your favourite creator’s unique collectibles',
+    image: images.image1,
   },
   {
     key: '3571747',
     title: 'ALL IN ONCE PLACE',
     description:
-      'reward tokens, digital collectibles, exclusive offers, coupons & cash backs',
-    image: images.intro2,
+      'Complete tasks to earn their exclusive merch curated by them',
+    image: images.image3,
   },
   {
     key: '3571680',
     title: 'YOU ARE SPECIAL',
-    description: 'offers you receive personalized & exclusive too',
-    image: images.intro3,
+    description: 'Trade the collectibles & rewards on the marketplace',
+    image: images.image4,
   },
 ];
