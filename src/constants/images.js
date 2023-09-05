@@ -10,6 +10,7 @@ const image4 = require("../assets/images/image4.png");
 const image5 = require("../assets/images/image5.png");
 const image6 = require("../assets/images/image6.png");
 const image8 = require("../assets/images/image8.png");
+const image16 = require("../assets/images/image16.png");
 const home = require("../assets/images/home.png");
 const icon = require("../assets/images/icon.png");
 const screenshot1 = require("../assets/images/screenshot1.png");
@@ -29,6 +30,7 @@ export default {
     image5,
     image6,
     image8,
+    image16,
     home,
     icon,
     screenshot1,
