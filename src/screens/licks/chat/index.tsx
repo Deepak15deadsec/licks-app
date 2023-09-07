@@ -6,9 +6,10 @@ import Svg, {
     Circle
 } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native';
-import { FONTS, images, SIZES } from '../../../../constants';
+import { FONTS, images, SIZES } from '../../../constants';
 
-
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
 const Tasktwo = () => {
     const navigation = useNavigation()
 
@@ -17,8 +18,7 @@ const Tasktwo = () => {
 
     });
 
-    let wr = (SIZES.width / 391)
-    let hr = (SIZES.height / 812)
+
 
     const onchangeHandler = useCallback((value: any, name: string) => {
 
@@ -38,11 +38,11 @@ const Tasktwo = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 gap: 30,
-                marginTop:hr* -70
+                marginTop: hr * -70
             }}>
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                     <Image style={{ height: hr * 264, width: wr * 270, }} source={images.image16} resizeMode='contain' />
-                   
+
                 </View>
 
 
@@ -50,7 +50,16 @@ const Tasktwo = () => {
 
                 <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: 50, fontSize: 12, fontWeight: '500', lineHeight: 16.8, }}> Not only that, the Community Leads organise their own online and offline sessions, treasure hunts, and so on, which truly engaged members of the community stand a chance to win.</Text>
 
+                <TouchableOpacity style={[styles.button, styles.button1]}>
+                    <Text style={styles.buttonText}>Buy Licks</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={[styles.button, styles.button2]}>
+                    <Text style={styles.buttonText}>Join Without Licks</Text>
+                </TouchableOpacity>
             </View>
+
+
 
 
         </View>
@@ -66,6 +75,29 @@ const styles = StyleSheet.create({
         height: SIZES.height,
         width: SIZES.width,
         backgroundColor: '#0F111E',
-        
-    }
+
+    },
+    button: {
+        width: 130,
+        height: 40,
+        borderRadius: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+    },
+    button1: {
+        backgroundColor: '#A259FF',
+        left: wr * 80, // Adjust this value to control the position of Button 1
+        bottom: hr * 100
+    },
+    button2: {
+        backgroundColor: '#272935',
+        left: wr * 180, // Adjust this value to control the position of Button 2
+        bottom: hr * 100
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 13
+    },
 })
