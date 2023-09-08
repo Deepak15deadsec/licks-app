@@ -39,8 +39,8 @@ const Taskone = () => {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                gap: 50,
-                marginTop: hr * -300
+                gap: 30,
+                marginTop: hr * -20
             }}>
 
 
@@ -53,6 +53,10 @@ const Taskone = () => {
                     <Box title="Buy LICKS" color="#0CA569" />
                 </View>
                 <Text style={{ color: 'white', alignSelf:'flex-start',paddingHorizontal:55, fontSize:18, fontWeight:'700' }}>Popular Tasks</Text>
+                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                    <Image style={{ height: hr * 361, width: wr * 314, }} source={images.image15} resizeMode='contain' />
+
+                </View>
             </View>
          
 

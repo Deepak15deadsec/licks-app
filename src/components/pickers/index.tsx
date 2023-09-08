@@ -30,7 +30,7 @@ const MainPicker = ({ label, gendersTypes, selectedValue, onValueChange }: MainP
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
       <TouchableOpacity style={styles.dropdownButton} onPress={() => setModalVisible(true)}>
-        <Text style={styles.dropdownButtonText}>{selectedValue || 'Select Gender'}</Text>
+        <Text style={styles.dropdownButtonText}>{selectedValue || 'Sort By'}</Text>
       </TouchableOpacity>
       {modalVisible && (
         <Modal
@@ -70,10 +70,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#30D792',
-    height: hr*63,
-    paddingLeft: wr*20,
+    height: hr*53,
+    paddingLeft: wr*15,
     paddingRight: wr*15,
-    paddingTop: hr*10,
+    paddingTop: hr*0,
     paddingBottom: hr*0,
   },
   label: {
