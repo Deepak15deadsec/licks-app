@@ -5,5 +5,6 @@ import Pagethree from './ranveer/pagethree';
 import Taskone from './tasks/taksone';
 import Tasktwo from './chat';
 import Drops from './drops'
+import Trade from './trade'
 
-export {Home, Pageone, Pagetwo, Pagethree, Taskone, Tasktwo, Drops};
+export {Home, Pageone, Pagetwo, Pagethree, Taskone, Tasktwo, Drops, Trade};

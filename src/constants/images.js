@@ -41,5 +41,5 @@ export default {
     screenshot2,
     notification,
     nft1,
-    nft2
+    nft2,
 }

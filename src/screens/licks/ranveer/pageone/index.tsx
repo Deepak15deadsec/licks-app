@@ -8,6 +8,8 @@ import Svg, {
 import { useNavigation } from '@react-navigation/native';
 import { FONTS, images, SIZES } from '../../../../constants';
 
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
 
 const Pageone = () => {
     const navigation = useNavigation()
@@ -70,6 +72,14 @@ const Pageone = () => {
                     <Image style={{ height: hr * 117, width: wr * 127, }} source={images.screenshot2} resizeMode='contain' />
                 </View>
 
+                {/* <TouchableOpacity onPress={() => navigation.navigate('Pagethree' as never)} style={[styles.button, styles.button1]}>
+                    <Text style={styles.buttonText}>View Licks</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={[styles.button, styles.button2]}>
+                    <Text style={styles.buttonText}>Upcoming Drops</Text>
+                </TouchableOpacity> */}
+
             </View>
 
 
@@ -87,5 +97,28 @@ const styles = StyleSheet.create({
         width: SIZES.width,
         backgroundColor: '#0F111E',
         
-    }
+    },
+    button: {
+        width: 130,
+        height: 40,
+        borderRadius: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+    },
+    button1: {
+        backgroundColor: '#A259FF',
+        left: wr * 80, // Adjust this value to control the position of Button 1
+        bottom: hr * 100
+    },
+    button2: {
+        backgroundColor: '#272935',
+        left: wr * 180, // Adjust this value to control the position of Button 2
+        bottom: hr * 100
+    },
+    buttonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        fontSize: 13
+    },
 })

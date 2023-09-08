@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Drops, Home, Pageone, Pagethree, Pagetwo, Taskone, Tasktwo } from '../screens/licks';
+import { Drops, Home, Pageone, Pagethree, Pagetwo, Taskone, Tasktwo, Trade } from '../screens/licks';
 import { Intro } from '../screens/intro';
 import { BottomNavigation } from '../navigation';
 
@@ -24,6 +24,7 @@ export const AppStack = () => {
             <Stack.Screen name="Taskone" component={Taskone} />
             <Stack.Screen name="Tasktwo" component={Tasktwo} />
             <Stack.Screen name="Drop" component={Drops} />
+            <Stack.Screen name="Trade" component={Trade} />
         </Stack.Navigator>
     );
 };

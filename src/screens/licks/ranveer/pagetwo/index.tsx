@@ -83,14 +83,12 @@ const Pagetwo = () => {
                     <Text style={styles.priceText}>{item.rd}</Text>
                 </View>
 
-                <TouchableWithoutFeedback
-                    onPress={() => {
-                        console.log('BUY NOW!', index);
-                    }}>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('Pagthree' as never)}>
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>Buy Now!</Text>
                     </View>
-                </TouchableWithoutFeedback>
+                </TouchableOpacity>
             </MotiView>
         )
     }

@@ -12,7 +12,7 @@ import Svg, {
 } from 'react-native-svg'
 import { isIphoneX } from 'react-native-iphone-x-helper'
 import { COLORS, icons, TYPES } from "../constants"
-import { Drops, Home, Pageone, Pagethree, Pagetwo, Taskone, Tasktwo } from '../screens/licks';
+import { Drops, Home, Pageone, Pagethree, Pagetwo, Taskone, Tasktwo, Trade } from '../screens/licks';
 import { useColorScheme } from 'react-native';
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
@@ -196,7 +196,7 @@ const BottomNavigation = () => {
 
       <Tab.Screen
         name="Trade"
-        component={Pagetwo}
+        component={Trade}
         options={{
           tabBarIcon: ({ focused }) => (
 
