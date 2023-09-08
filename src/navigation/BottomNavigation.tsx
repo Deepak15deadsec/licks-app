@@ -133,7 +133,7 @@ const BottomNavigation = () => {
       )}
     >
       <Tab.Screen
-        name="More"
+        name="Drops"
         component={Drops}
         options={{
           tabBarIcon: ({ focused }) => (
@@ -152,7 +152,7 @@ const BottomNavigation = () => {
       />
 
       <Tab.Screen
-        name="Reward"
+        name="Tasks"
         component={Taskone}
         options={{
           tabBarIcon: ({ focused }) => (
@@ -193,14 +193,11 @@ const BottomNavigation = () => {
       />
 
 
-
-
       <Tab.Screen
-        name="Art"
+        name="Trade"
         component={Pagetwo}
         options={{
           tabBarIcon: ({ focused }) => (
-
 
             <Svg width="30" height="29" viewBox="0 0 30 29" fill="none" strokeWidth={1.8} stroke={theme === TYPES.dark ? COLORS.white : focused ? COLORS.white : COLORS.secondary} >
               <Path d="M8.18698 16.774L20.9999 16.7978L18.8363 20.4507M8 12.5H22M8.5 12.5L11 9M29 14.5C29 21.9558 22.732 28 15 28C7.26801 28 1 21.9558 1 14.5C1 7.04416 7.26801 1 15 1C22.732 1 29 7.04416 29 14.5Z" stroke-linecap="round" stroke-linejoin="round" />
@@ -215,7 +212,7 @@ const BottomNavigation = () => {
       />
 
       <Tab.Screen
-        name="Search"
+        name="Chat"
         component={Tasktwo}
         options={{
           tabBarIcon: ({ focused }) => (
