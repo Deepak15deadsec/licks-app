@@ -72,13 +72,13 @@ const Pageone = () => {
                     <Image style={{ height: hr * 117, width: wr * 127, }} source={images.screenshot2} resizeMode='contain' />
                 </View>
 
-                {/* <TouchableOpacity onPress={() => navigation.navigate('Pagethree' as never)} style={[styles.button, styles.button1]}>
+                <TouchableOpacity onPress={() => navigation.navigate('Pagethree' as never)} style={[styles.button, styles.button1]}>
                     <Text style={styles.buttonText}>View Licks</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={[styles.button, styles.button2]}>
                     <Text style={styles.buttonText}>Upcoming Drops</Text>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
 
             </View>
 
