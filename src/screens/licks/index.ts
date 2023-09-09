@@ -6,5 +6,6 @@ import Taskone from './tasks/taksone';
 import Tasktwo from './chat';
 import Drops from './drops'
 import Trade from './trade'
+import Creatordrop from './tasks/taksone/creatordrop';
 
-export {Home, Pageone, Pagetwo, Pagethree, Taskone, Tasktwo, Drops, Trade};
+export {Home, Pageone, Pagetwo, Pagethree, Taskone, Tasktwo, Drops, Trade, Creatordrop};

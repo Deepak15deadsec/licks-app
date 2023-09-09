@@ -7,13 +7,14 @@ import Svg, {
 } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native';
 import { FONTS, images, SIZES } from '../../../../constants';
+import { celebData } from '../../data/celebData';
 
 let wr = (SIZES.width / 391)
 let hr = (SIZES.height / 812)
 
-const Pageone = () => {
+const Pageone = ({ route: { params: { itemId } } }: { route: { params: { itemId: string } } }) => {
     const navigation = useNavigation()
-
+    const matchedCeleb = celebData.find((celeb) => celeb.id === itemId);
     const [input, setInput] = useState<any>({
         supportCat: "",
 
@@ -43,7 +44,7 @@ const Pageone = () => {
                 marginTop:hr* -70
             }}>
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Image style={{ height: hr * 161, width: wr * 286, }} source={images.image8} resizeMode='contain' />
+                    <Image style={{ height: hr * 161, width: wr * 286, }} source={matchedCeleb?.cover}  />
                     <Text style={{
                         position: 'absolute',
                         textAlign: 'center',
@@ -52,14 +53,14 @@ const Pageone = () => {
                         color: 'white', // Set the text color
 
                         padding: 10,
-                    }}>Hey, it’s me Ravs!</Text>
+                    }}>Hey, it’s me {matchedCeleb?.name}!</Text>
                 </View>
 
 
                 <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: 50, fontSize: 12, fontWeight: '500', lineHeight: 16.8, }}><Text style={{ color: '#A259FF' }}>Welcome to all things me: </Text> Every Lick you find here is personally curated by me, capturing my many moods and ideas. When you buy these, you will be part of my exclusive club and gain access to the many limited edition projects that I will be launching from time to time. Become part of my world like it was never possible before.</Text>
 
                 <View style={{ flexDirection: 'row', gap: 30 }}>
-                    <Image style={{ height: hr * 117, width: wr * 127, }} source={images.screenshot1} resizeMode='contain' />
+                    <Image style={{ height: hr * 117, width: wr * 127, }} source={matchedCeleb?.insta}  />
                     <View
                         style={{
                             borderLeftWidth: 1,
@@ -69,10 +70,10 @@ const Pageone = () => {
                             // To make the line appear seamless
                         }}
                     ></View>
-                    <Image style={{ height: hr * 117, width: wr * 127, }} source={images.screenshot2} resizeMode='contain' />
+                    <Image style={{ height: hr * 117, width: wr * 127, }} source={matchedCeleb?.twitter}  />
                 </View>
 
-                <TouchableOpacity onPress={() => navigation.navigate('Pagethree' as never)} style={[styles.button, styles.button1]}>
+                <TouchableOpacity onPress={() => navigation.navigate('Pagethree' as never,{ itemId: matchedCeleb?.id  } as never)} style={[styles.button, styles.button1]}>
                     <Text style={styles.buttonText}>View Licks</Text>
                 </TouchableOpacity>
 

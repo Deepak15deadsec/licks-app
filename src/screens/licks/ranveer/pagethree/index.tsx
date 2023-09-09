@@ -10,7 +10,7 @@ import Svg, {
 import { useNavigation } from '@react-navigation/native';
 import { FONTS, images, SIZES } from '../../../../constants';
 import Circlecard from './Circlecard';
-
+import { celebData } from '../../data/celebData';
 
 const data = [
     { title: 'Creator', data: 'Ranveer' },
@@ -21,9 +21,9 @@ const data = [
 ];
 
 
-const Pagethree = () => {
+const Pagethree = ({ route: { params: { itemId } } }: { route: { params: { itemId: string } } }) => {
     const navigation = useNavigation()
-
+    const matchedCeleb = celebData.find((celeb) => celeb.id === itemId);
     const [input, setInput] = useState<any>({
         supportCat: "",
 
@@ -82,15 +82,15 @@ const Pagethree = () => {
             <View style={{
                 flex: 1,
                 justifyContent: 'center',
-                alignItems: 'center',
+
                 gap: 30,
-                marginTop: hr * 250
+
             }}>
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Image style={{ height: hr * 332, width: wr * 256, }} source={images.image7} resizeMode='contain' />
+                    <Image style={{ height: hr * 332, width: wr * 256, }} source={matchedCeleb?.profile}  />
                     <View style={{
-                        width: 257, // Adjust the size of the square as needed
-                        height: 64, // Adjust the size of the square as needed
+                        width: wr*257, // Adjust the size of the square as needed
+                        height: hr*64, // Adjust the size of the square as needed
                         justifyContent: 'space-evenly',
                         alignItems: 'center',
 
@@ -99,8 +99,8 @@ const Pagethree = () => {
                         backgroundColor: 'white',
                     }}>
                         <View style={{
-                            width: 187, // Adjust the size of the square as needed
-                            height: 64, // Adjust the size of the square as needed
+                            width: wr*187, // Adjust the size of the square as needed
+                            height: hr*64, // Adjust the size of the square as needed
                             justifyContent: 'space-evenly',
                             alignItems: 'center',
                             borderRadius: 27,
@@ -140,8 +140,8 @@ const Pagethree = () => {
 
                 </View>
 
-                <View style={{ flexDirection: 'row', gap: 5 }}>
-                    <Text style={{ color: '#A259FF', textAlign: 'left', fontSize: 16, fontWeight: '700', lineHeight: 16.8, }}>Ranveer Singh</Text>
+                <View style={{ flexDirection: 'row', gap: 5, paddingHorizontal: 30 }}>
+                    <Text style={{ color: '#A259FF', textAlign: 'left', fontSize: 16, fontWeight: '700', lineHeight: 16.8, }}>{matchedCeleb?.name}</Text>
                     <Svg width="18" height="18" viewBox="0 0 18 18" fill="none" >
 
                         <Path id="Vector" d="M8.68063 0.911796C9.7111 -0.404729 11.7984 -0.00680594 12.2723 1.59649C12.557 2.55989 13.4961 3.1766 14.4933 3.05505C16.1529 2.85277 17.3475 4.61013 16.5488 6.07888C16.0689 6.96143 16.2968 8.06154 17.088 8.68072C18.4045 9.7112 18.0066 11.7985 16.4033 12.2724C15.4398 12.5571 14.8231 13.4962 14.9447 14.4934C15.147 16.153 13.3896 17.3476 11.9209 16.5489C11.0383 16.069 9.93821 16.2969 9.31901 17.0881C8.28856 18.4046 6.20122 18.0067 5.72737 16.4034C5.44267 15.4399 4.50357 14.8232 3.50636 14.9448C1.84677 15.1471 0.65219 13.3897 1.45084 11.921C1.93075 11.0384 1.70278 9.9383 0.911705 9.31911C-0.404823 8.28865 -0.00689905 6.20131 1.5964 5.72746C2.5598 5.44276 3.17651 4.50366 3.05495 3.50645C2.85268 1.84688 4.61002 0.652281 6.07879 1.45093C6.96133 1.93084 8.06146 1.70288 8.68063 0.911796Z" fill="#03A4FE" />
@@ -155,21 +155,53 @@ const Pagethree = () => {
                     </Svg>
                 </View>
 
-                <View style={{}}>
-                    <FlatList
-                        data={data}
-                        renderItem={({ item }) => (
-                            <Circlecard title={item.title} data={item.data} />
-                        )}
-                        keyExtractor={(item, index) => index.toString()}
-                        numColumns={2} // Set the number of columns you want
-                        contentContainerStyle={{
-                            paddingHorizontal: 10,
-                            justifyContent: 'space-between',
-                        }}
-                    />
-                </View>
 
+                <FlatList
+                    data={data}
+                    renderItem={({ item }) => (
+                        <Circlecard title={item.title} data={item.data} />
+                    )}
+                    keyExtractor={(item, index) => index.toString()}
+                    numColumns={2} // Set the number of columns you want
+
+                />
+
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 30, marginHorizontal: 20 }}>
+                    <View>
+                        <Text style={{ fontSize: 14, fontWeight: '400', color: '#9FA0A5' }}>Price</Text>
+                        <View style={{ flexDirection: 'row' }}>
+                            <Svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+                                <Path d="M14.9974 0L14.7961 0.68366V20.5201L14.9974 20.7209L24.2051 15.2782L14.9974 0Z" fill="#A259FF" />
+                                <Path d="M14.9972 0L5.78931 15.2782L14.9972 20.7209V11.0929V0Z" fill="#A259FF" />
+                                <Path d="M14.9975 22.4642L14.884 22.6026V29.6686L14.9975 29.9998L24.2108 17.0243L14.9975 22.4642Z" fill="#8247CC" />
+                                <Path d="M14.9975 29.9998V22.4642L5.78955 17.0243L14.9975 29.9998Z" fill="#A259FF" />
+                                <Path d="M14.9973 20.7209L24.205 15.2782L14.9973 11.0928V20.7209Z" fill="#8247CC" />
+                                <Path d="M5.78955 15.2782L14.9975 20.7209V11.0928L5.78955 15.2782Z" fill="#8247CC" />
+                            </Svg>
+                            <Text style={{ fontWeight: '600', fontSize: 24, color: '#E7E7E9' }}>945.50</Text>
+                        </View>
+
+                    </View>
+                    <TouchableOpacity style={{
+                        width: wr * 195,
+                        height: hr * 60,
+                        borderRadius: 20,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: '#A259FF',
+                        flexDirection: 'row', gap: 10
+                    }}>
+                        <Svg width="21" height="20" viewBox="0 0 21 20" fill="none">
+                            <Path fill-rule="evenodd" clip-rule="evenodd" d="M6.67053 12.4491C6.78055 12.7763 6.60451 13.1307 6.27734 13.2407C5.21792 13.597 4.65489 14.4863 4.35373 15.3907C4.23414 15.7498 4.16189 16.0955 4.11848 16.3814C4.40434 16.338 4.75006 16.2657 5.10917 16.1461C6.01355 15.845 6.9029 15.2819 7.25916 14.2225C7.36918 13.8954 7.7236 13.7193 8.05078 13.8293C8.37795 13.9394 8.55399 14.2938 8.44396 14.621C7.9096 16.21 6.58801 16.9712 5.50411 17.3321C4.95655 17.5144 4.44395 17.6045 4.0698 17.6493C3.88182 17.6719 3.72641 17.6833 3.616 17.6891C3.56074 17.6921 3.51658 17.6936 3.48505 17.6943C3.46928 17.6947 3.45666 17.6949 3.44737 17.6951L3.43596 17.6952L3.43217 17.6952L3.43077 17.6952L3.43019 17.6952C3.42993 17.6952 3.42969 17.6952 3.42969 17.0702C2.80469 17.0702 2.80469 17.0699 2.80469 17.0697L2.80469 17.0691L2.80469 17.0677L2.80471 17.0639L2.80481 17.0525C2.80493 17.0432 2.80514 17.0306 2.80553 17.0148C2.80631 16.9833 2.80782 16.9391 2.81072 16.8839C2.81653 16.7735 2.82797 16.618 2.85052 16.4301C2.8954 16.0559 2.98542 15.5433 3.16776 14.9958C3.5287 13.9119 4.28989 12.5903 5.87891 12.0559C6.20608 11.9459 6.5605 12.1219 6.67053 12.4491ZM3.42969 17.0702H2.80469C2.80469 17.4154 3.08451 17.6952 3.42969 17.6952V17.0702Z" fill="white" />
+                            <Path fill-rule="evenodd" clip-rule="evenodd" d="M17.0462 3.454C16.3208 3.34937 14.5351 3.30996 12.7076 5.13747L7.84482 10.0002L10.5 12.6554L15.3627 7.79265C17.1903 5.96514 17.1508 4.17945 17.0462 3.454ZM17.2275 2.21721C16.2298 2.07276 14.0058 2.07151 11.8237 4.25359L6.519 9.55827C6.40179 9.67548 6.33594 9.83446 6.33594 10.0002C6.33594 10.166 6.40179 10.3249 6.519 10.4422L10.0581 13.9812C10.3021 14.2253 10.6979 14.2253 10.9419 13.9812L16.2466 8.67653C18.4287 6.49445 18.4275 4.27046 18.283 3.27276C18.2465 3.00574 18.1235 2.75797 17.9329 2.56734C17.7422 2.37671 17.4945 2.25376 17.2275 2.21721Z" fill="white" />
+                            <Path fill-rule="evenodd" clip-rule="evenodd" d="M14.922 8.49243C15.2672 8.49243 15.547 8.77225 15.547 9.11743V14.1643L15.5469 14.1732C15.5423 14.5015 15.4086 14.8147 15.175 15.0452L12.6527 17.5753C12.4926 17.7352 12.2921 17.8486 12.0725 17.9035C11.853 17.9584 11.6227 17.9527 11.4061 17.8869C11.1896 17.8212 10.995 17.6978 10.843 17.5301C10.6912 17.3625 10.5877 17.1569 10.5435 16.9351C10.5434 16.935 10.5435 16.9353 10.5435 16.9351L9.88731 13.6622C9.81946 13.3237 10.0388 12.9944 10.3773 12.9265C10.7157 12.8587 11.0451 13.078 11.1129 13.4165L11.7694 16.6909L14.297 14.1554V9.11743C14.297 8.77225 14.5768 8.49243 14.922 8.49243Z" fill="white" />
+                            <Path fill-rule="evenodd" clip-rule="evenodd" d="M6.32698 4.95307L6.33588 4.953H11.3828C11.7279 4.953 12.0078 5.23282 12.0078 5.578C12.0078 5.92318 11.7279 6.203 11.3828 6.203H6.34472L6.33967 6.20816L6.33964 6.20813L3.80933 8.73063L3.8103 8.73082L7.08373 9.38707C7.42218 9.45492 7.64154 9.78429 7.57369 10.1227C7.50584 10.4612 7.17647 10.6805 6.83803 10.6127L3.56556 9.95663C3.56537 9.95659 3.56518 9.95655 3.565 9.95652C3.34325 9.91232 3.13764 9.8088 2.97006 9.65699C2.80235 9.50504 2.67903 9.31042 2.61327 9.09387C2.54751 8.87733 2.54176 8.647 2.59665 8.42745C2.65154 8.2079 2.765 8.00737 2.92493 7.84725L2.92587 7.84631L2.92587 7.84632L5.45498 5.32502C5.68549 5.09139 5.99869 4.95774 6.32698 4.95307Z" fill="white" />
+                        </Svg>
+                        <Text style={{ color: 'white', fontSize: 16, fontWeight: '600' }}>
+                            BUY NOW
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
 
 

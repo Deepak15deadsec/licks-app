@@ -10,12 +10,8 @@ const Circle = ({ title, data }: { data: string, title: string }) => {
             padding: 10,
             backgroundColor: 'transparent',
             borderRadius: 10,
-            marginBottom: 10,
-            elevation: 2, // Add shadow on Android
-            shadowColor: '#000', // Add shadow on iOS
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.2,
-            shadowRadius: 3,
+           marginHorizontal:20,
+           gap:10
         }}>
 
             <Image source={images.image1} style={styles.image} />
@@ -33,7 +29,7 @@ const styles = StyleSheet.create({
 
     infoContainer: {
        
-        marginRight: 10, // Add some space between image and text
+        marginRight: 40, // Add some space between image and text
     },
     name: {
         fontSize: 12,

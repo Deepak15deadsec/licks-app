@@ -103,23 +103,26 @@ const Trade = () => {
                 <Text style={{ color: '#E7E7E9', fontSize: 28, fontWeight: '700' }}>LI<Text style={{ color: '#A259FF' }}>CKS</Text></Text>
             </View>
             <View style={{
-                flex: 1,
+
                 justifyContent: 'center',
-                alignItems: 'center',
+
                 gap: 10,
                 marginTop: hr * 0
             }}>
-                <Text style={{ color: '#E7E7E9', fontSize: 18, fontWeight: '700', marginBottom: 10 }}>Ranveer</Text>
+                <Text style={{ color: '#E7E7E9', fontSize: 18, fontWeight: '700', marginBottom: 10, alignSelf: 'center', marginTop: 20 }}>Ranveer</Text>
 
 
                 <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: 50, fontSize: 12, fontWeight: '500', lineHeight: 16.8, }}><Text style={{ color: '#A259FF' }}>Buy Licks to join the community: </Text>  Watch the video on the home screen to know different attributes of a Lick. Buying Licks of any creator makes you eligible to purchase all limited edition products & experiences on the platform. So, get, set,  <Text style={{ color: '#A259FF' }}>LICK! </Text></Text>
 
-                <Picker
-                    label="Filter"
-                    selectedValue={input.gender}
-                    onValueChange={(value: any) => onchangeHandler(value, 'gender')}
-                    gendersTypes={gendersTypes}
-                />
+                <View style={{ alignSelf: 'flex-start', paddingHorizontal: 30, marginTop:10 }}>
+                    <Picker
+                        label="Filter"
+                        selectedValue={input.gender}
+                        onValueChange={(value: any) => onchangeHandler(value, 'gender')}
+                        gendersTypes={gendersTypes}
+                    />
+                </View>
+
 
 
                 <FlatList
