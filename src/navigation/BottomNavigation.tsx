@@ -12,12 +12,44 @@ import Svg, {
 } from 'react-native-svg'
 import { isIphoneX } from 'react-native-iphone-x-helper'
 import { COLORS, icons, TYPES } from "../constants"
-import { Drops, Home, Pageone, Pagethree, Pagetwo, Taskone, Tasktwo, Trade } from '../screens/licks';
+import { Creatordrop, Dropped, Drops, Home, Pageone, Pagethree, Pagetwo, Taskone, Tasktwo, Trade } from '../screens/licks';
 import { useColorScheme } from 'react-native';
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import { createStackNavigator } from '@react-navigation/stack';
 
 
 const Tab = createBottomTabNavigator()
+const Stack = createStackNavigator();
+
+const HomeStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false,}}>
+    <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Pageone" component={Pageone} />
+      <Stack.Screen name="Pagethree" component={Pagethree} />
+    </Stack.Navigator>
+  );
+};
+
+const DropStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false,}}>
+     <Stack.Screen name="Drop" component={Drops} />
+     <Stack.Screen name="Dropped" component={Dropped} />
+     
+    </Stack.Navigator>
+  );
+};
+
+const TaskStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false,}}>
+     <Stack.Screen name="Taskone" component={Taskone} />
+     <Stack.Screen name="Createdrop" component={Creatordrop} />
+     
+    </Stack.Navigator>
+  );
+};
 
 const TabBarCustomButton = ({ accessibilityLabel, accessibilityState, children, onPress }: any) => {
 
@@ -135,7 +167,7 @@ const BottomNavigation = () => {
     >
       <Tab.Screen
         name="Drops"
-        component={Drops}
+        component={DropStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <Svg width="20" height="14" viewBox="0 0 20 14">
@@ -154,7 +186,7 @@ const BottomNavigation = () => {
 
       <Tab.Screen
         name="Tasks"
-        component={Taskone}
+        component={TaskStack}
         options={{
           tabBarIcon: ({ focused }) => (
 
@@ -176,7 +208,7 @@ const BottomNavigation = () => {
 
       <Tab.Screen
         name="Home"
-        component={Home}
+        component={HomeStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <Svg width="19" height="20" viewBox="0 0 19 20">

@@ -49,6 +49,7 @@ const amit = require("../assets/images/amit.png");
 const amit1 = require("../assets/images/amit1.png");
 const amit2 = require("../assets/images/amit2.png");
 const amit3 = require("../assets/images/amit2.png");
+const phone = require("../assets/images/phone.png");
 
 export default {
 
@@ -101,5 +102,6 @@ export default {
     amit,
     amit1,
     amit2,
-    amit3
+    amit3,
+    phone
 }

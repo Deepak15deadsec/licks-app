@@ -10,6 +10,7 @@ export const celebData = [
         cover:images.image8,
         insta:images.screenshot1,
         twitter:images.screenshot2,
+        overview:"gjhhg gtnkjrethg ghjkthgr kgthtekg jgktgjgr lkgjkhnt kt5thkgnt"
     },
 
     {
@@ -20,6 +21,7 @@ export const celebData = [
         cover:images.yash,
         insta:images.yash3,
         twitter:images.yash2,
+        overview:"gjhhg gtnkjrethg ghjkthgr kgthtekg jgktgjgr lkgjkhnt kt5thkgnt"
     },
     {
         id: "3",
@@ -29,6 +31,7 @@ export const celebData = [
         cover:images.deepika,
         insta:images.deepika3,
         twitter:images.deepika2,
+        overview:"gjhhg gtnkjrethg ghjkthgr kgthtekg jgktgjgr lkgjkhnt kt5thkgnt"
     },
     {
         id: "4",
@@ -38,6 +41,7 @@ export const celebData = [
         cover:images.kom,
         insta:images.kom2,
         twitter:images.kom3,
+        overview:"gjhhg gtnkjrethg ghjkthgr kgthtekg jgktgjgr lkgjkhnt kt5thkgnt"
     },
     {
         id: "5",
@@ -47,6 +51,7 @@ export const celebData = [
         cover:images.sindhu,
         insta:images.sindhu3,
         twitter:images.sindhu2,
+        overview:"gjhhg gtnkjrethg ghjkthgr kgthtekg jgktgjgr lkgjkhnt kt5thkgnt"
     },
     {
         id: "6",
@@ -56,6 +61,7 @@ export const celebData = [
         cover:images.kholi1,
         insta:images.kholi3,
         twitter:images.kholi2,
+        overview:"gjhhg gtnkjrethg ghjkthgr kgthtekg jgktgjgr lkgjkhnt kt5thkgnt"
     },
     {
         id: "7",
@@ -65,6 +71,7 @@ export const celebData = [
         cover:images.khan,
         insta:images.khan3,
         twitter:images.khan2,
+        overview:"gjhhg gtnkjrethg ghjkthgr kgthtekg jgktgjgr lkgjkhnt kt5thkgnt"
     },
     {
         id: "8",
@@ -74,7 +81,9 @@ export const celebData = [
         cover:images.amit1,
         insta:images.amit3,
         twitter:images.amit2,
-    },
+        overview:"gjhhg gtnkjrethg ghjkthgr kgthtekg jgktgjgr lkgjkhnt kt5thkgnt"
+    }
+    
   
 
 ]

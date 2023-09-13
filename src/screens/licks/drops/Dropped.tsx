@@ -1,22 +1,24 @@
 import React, { useCallback, useState } from 'react'
-import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Platform } from 'react-native'
+import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Platform, FlatList } from 'react-native'
 
 import Svg, {
     Path,
-    Circle
+    Circle,
+    Rect,
+    ClipPath
 } from 'react-native-svg'
 import { useNavigation } from '@react-navigation/native';
-import { FONTS, images, SIZES } from '../../../../constants';
-import { celebData } from '../../data/celebData';
-import { BottomNavigation } from '../../../../navigation';
+import { FONTS, images, SIZES } from '../../../constants';
 
-let wr = (SIZES.width / 391)
-let hr = (SIZES.height / 812)
 
-const Pageone = ({ route }: any) => {
+
+
+
+
+const Dropped = () => {
     const navigation = useNavigation()
-    const { itemId } = route.params;
-    const matchedCeleb = celebData.find((celeb) => celeb.id === itemId);
+
+
     const [input, setInput] = useState<any>({
         supportCat: "",
 
@@ -67,51 +69,32 @@ const Pageone = ({ route }: any) => {
                 </TouchableOpacity>
             </View>
 
-
             <View style={{ alignItems: 'center', marginTop: hr * 37, marginHorizontal: wr * 156, position: 'absolute' }}>
 
                 <Text style={{ color: '#E7E7E9', fontSize: 28, fontWeight: '700' }}>LI<Text style={{ color: '#A259FF' }}>CKS</Text></Text>
 
             </View>
             <View style={{
-                paddingVertical: 20,
+                paddingHorizontal: 20,
+                paddingVertical: 80,
                 justifyContent: 'center',
 
-                gap: 50,
+                gap: 10
 
             }}>
-                <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Image style={{ height: hr * 161, width: wr * 286, }} source={matchedCeleb?.cover} />
-                    <Text style={{
-                        position: 'absolute',
-                        textAlign: 'center',
+                <View style={{ justifyContent: 'center', gap: 30, marginTop: 0 }}>
 
-                        fontSize: 18, // Set the font size for the text
-                        color: 'white', // Set the text color
 
-                        padding: 10,
-                    }}>Hey, it’s me {matchedCeleb?.name}!</Text>
+
+                    <Image style={{ height: hr * 307, width: wr * 261, alignSelf: 'center', marginTop: 10, borderRadius: 20 }} source={images.phone} />
+
+
                 </View>
-
-
-                <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: wr * 50, fontSize: 12, fontWeight: '500', lineHeight: 16.8, }}><Text style={{ color: '#A259FF' }}>Welcome to all things me: </Text> Every Lick you find here is personally curated by me, capturing my many moods and ideas. When you buy these, you will be part of my exclusive club and gain access to the many limited edition projects that I will be launching from time to time. Become part of my world like it was never possible before.</Text>
-
-                <View style={{ flexDirection: 'row', gap: 30, alignSelf: 'center' }}>
-                    <Image style={{ height: hr * 117, width: wr * 127, }} source={matchedCeleb?.insta} />
-                    <View
-                        style={{
-                            borderLeftWidth: 1,
-                            borderLeftColor: '#cccccc',
-                            height: hr * 108,
-                            // To make the line appear seamless
-                            // To make the line appear seamless
-                        }}
-                    ></View>
-                    <Image style={{ height: hr * 117, width: wr * 127, }} source={matchedCeleb?.twitter} />
-                </View>
+                <Text style={{ color: '#A259FF', fontSize: 12, fontWeight: '500', lineHeight: 16.8, alignSelf: 'center' }}>DROPPED!</Text>
+                <Text style={{ width: '100%', color: '#9FA0A5', paddingHorizontal: 50, fontSize: 12, fontWeight: '500', lineHeight: 16.8, alignSelf: 'center', textAlign: 'justify' }}>Limited Edition headphones designed by Ranveer in collab with Bose. Only 5000 produced exclusively for the Licks community. So if you own any Licks then you're eligible to buy it @ $79 or earn it for free by completing tasks.</Text>
 
                 <TouchableOpacity style={{
-                    width: 270,
+                    width: 270, marginTop: hr * 50,
                     height: 46, backgroundColor: '#272935', borderRadius: 20, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingRight: 10, paddingLeft: 4, alignSelf: 'center',
                 }}>
                     <TouchableOpacity style={{
@@ -122,22 +105,16 @@ const Pageone = ({ route }: any) => {
                         justifyContent: 'center',
                         backgroundColor: '#A259FF',
 
-                    }}
-                    onPress={() => navigation.navigate('Pagethree' as never, { itemId: matchedCeleb?.id } as never)}>
+                    }}>
                         <Text style={{ color: 'white' }}>
-                        View Licks
+                            Buy Now
                         </Text>
                     </TouchableOpacity>
-                    <Text style={{ color: 'white' }}>Upcoming Drops</Text>
+                    <Text style={{ color: 'white' }}>Earn For Free</Text>
                 </TouchableOpacity>
 
-                {/* <TouchableOpacity onPress={() => navigation.navigate('Pagethree' as never, { itemId: matchedCeleb?.id } as never)} style={[styles.button, styles.button1]}>
-                    <Text style={styles.buttonText}>View Licks</Text>
-                </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.button, styles.button2]}>
-                    <Text style={styles.buttonText}>Upcoming Drops</Text>
-                </TouchableOpacity> */}
+
 
             </View>
 
@@ -147,7 +124,7 @@ const Pageone = ({ route }: any) => {
     )
 }
 
-export default Pageone
+export default Dropped
 
 const styles = StyleSheet.create({
     container: {
@@ -157,27 +134,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#0F111E',
 
     },
-    button: {
-        width: wr * 130,
-        height: hr * 40,
-        borderRadius: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
-    },
-    button1: {
-        backgroundColor: '#A259FF',
-        left: wr * 80, // Adjust this value to control the position of Button 1
-        bottom: hr * 50
-    },
-    button2: {
-        backgroundColor: '#272935',
-        left: wr * 180, // Adjust this value to control the position of Button 2
-        bottom: hr * 100
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 13
-    },
+
 })

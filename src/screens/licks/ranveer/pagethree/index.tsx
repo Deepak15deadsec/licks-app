@@ -21,8 +21,9 @@ const data = [
 ];
 
 
-const Pagethree = ({ route: { params: { itemId } } }: { route: { params: { itemId: string } } }) => {
+const Pagethree = ({ route }:any) => {
     const navigation = useNavigation()
+    const { itemId } = route.params;
     const matchedCeleb = celebData.find((celeb) => celeb.id === itemId);
     const [input, setInput] = useState<any>({
         supportCat: "",
@@ -41,7 +42,7 @@ const Pagethree = ({ route: { params: { itemId } } }: { route: { params: { itemI
     return (
 
         <View style={styles.container}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between',alignItems:'center' }}>
                 <TouchableOpacity
                     onPress={() => navigation.goBack()}
                     style={{
@@ -80,10 +81,10 @@ const Pagethree = ({ route: { params: { itemId } } }: { route: { params: { itemI
 
             </View>
             <View style={{
-                flex: 1,
+         
                 justifyContent: 'center',
 
-                gap: 30,
+               gap:10
 
             }}>
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Creatordrop, Drops, Home, Pageone, Pagethree, Pagetwo, Taskone, Tasktwo, Trade } from '../screens/licks';
+import { Creatordrop, Dropped, Drops, Home, Pageone, Pagethree, Pagetwo, Taskone, Tasktwo, Trade } from '../screens/licks';
 import { Intro } from '../screens/intro';
 import { BottomNavigation } from '../navigation';
 
@@ -9,12 +9,15 @@ import { BottomNavigation } from '../navigation';
 
 const Stack = createStackNavigator();
 
+
+
 export const AppStack = () => {
     return (
         <Stack.Navigator
             screenOptions={{
                 headerShown: false,
             }}>
+                    
             <Stack.Screen name="Intro" component={Intro} />
             <Stack.Screen name="Licks" component={BottomNavigation} />
             <Stack.Screen name="Home" component={Home} />
@@ -26,6 +29,7 @@ export const AppStack = () => {
             <Stack.Screen name="Drop" component={Drops} />
             <Stack.Screen name="Trade" component={Trade} />
             <Stack.Screen name="Createdrop" component={Creatordrop} />
+            <Stack.Screen name="Dropped" component={Dropped} />
         </Stack.Navigator>
     );
 };

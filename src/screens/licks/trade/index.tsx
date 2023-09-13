@@ -84,9 +84,7 @@ const Trade = () => {
                 </View>
 
                 <TouchableWithoutFeedback
-                    onPress={() => {
-                        console.log('BUY NOW!', index);
-                    }}>
+                   >
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>Buy Now!</Text>
                     </View>
