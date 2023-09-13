@@ -20,6 +20,9 @@ const data = [
 
 ];
 
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
+
 
 const Pagethree = ({ route }:any) => {
     const navigation = useNavigation()
@@ -30,8 +33,7 @@ const Pagethree = ({ route }:any) => {
 
     });
 
-    let wr = (SIZES.width / 391)
-    let hr = (SIZES.height / 812)
+  
 
     const onchangeHandler = useCallback((value: any, name: string) => {
 
@@ -141,7 +143,7 @@ const Pagethree = ({ route }:any) => {
 
                 </View>
 
-                <View style={{ flexDirection: 'row', gap: 5, paddingHorizontal: 30 }}>
+                <View style={{ flexDirection: 'row', gap: 5, paddingHorizontal: wr*30 }}>
                     <Text style={{ color: '#A259FF', textAlign: 'left', fontSize: 16, fontWeight: '700', lineHeight: 16.8, }}>{matchedCeleb?.name}</Text>
                     <Svg width="18" height="18" viewBox="0 0 18 18" fill="none" >
 
@@ -167,7 +169,7 @@ const Pagethree = ({ route }:any) => {
 
                 />
 
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 30, marginHorizontal: 20 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: hr*30, marginHorizontal: wr*20 }}>
                     <View>
                         <Text style={{ fontSize: 14, fontWeight: '400', color: '#9FA0A5' }}>Price</Text>
                         <View style={{ flexDirection: 'row' }}>

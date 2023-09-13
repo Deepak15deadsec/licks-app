@@ -10,7 +10,7 @@ import { FONTS, images, SIZES } from '../../../constants';
 
 let wr = (SIZES.width / 391)
 let hr = (SIZES.height / 812)
-const Tasktwo = () => {
+const Chat = () => {
     const navigation = useNavigation()
 
     const [input, setInput] = useState<any>({
@@ -54,7 +54,7 @@ const Tasktwo = () => {
                     <Text style={styles.buttonText}>Buy Licks</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.button, styles.button2]}>
+                <TouchableOpacity onPress={() => navigation.navigate('Community' as never)} style={[styles.button, styles.button2]}>
                     <Text style={styles.buttonText}>Join Without Licks</Text>
                 </TouchableOpacity>
             </View>
@@ -67,7 +67,7 @@ const Tasktwo = () => {
     )
 }
 
-export default Tasktwo
+export default Chat
 
 const styles = StyleSheet.create({
     container: {

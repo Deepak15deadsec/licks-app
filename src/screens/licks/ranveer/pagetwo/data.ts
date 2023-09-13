@@ -31,6 +31,36 @@ export const rewardJson = [
     maxLevel: 5,
     advertiser_id:'234'
   },
+
+  {
+    id: "346",
+    name: "Walmart ",
+    reward: 1450,
+    rd: 4.00,
+    icon: images.nft1,
+    qrImage: "",
+    qrCode: "",
+    discount: "$20 Off on 5th shopping",
+    expiry: "30th June, 2023",
+    level: 2,
+    maxLevel: 5,
+    advertiser_id:'234'
+  },
+
+  {
+    id: "347",
+    name: "Walmart ",
+    reward: 1450,
+    rd: 4.00,
+    icon: images.nft2,
+    qrImage: "",
+    qrCode: "",
+    discount: "$20 Off on 5th shopping",
+    expiry: "30th June, 2023",
+    level: 2,
+    maxLevel: 5,
+    advertiser_id:'234'
+  },
   
   
 

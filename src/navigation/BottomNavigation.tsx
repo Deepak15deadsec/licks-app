@@ -12,7 +12,7 @@ import Svg, {
 } from 'react-native-svg'
 import { isIphoneX } from 'react-native-iphone-x-helper'
 import { COLORS, icons, TYPES } from "../constants"
-import { Creatordrop, Dropped, Drops, Home, Pageone, Pagethree, Pagetwo, Taskone, Tasktwo, Trade } from '../screens/licks';
+import { Chat, Community, Creatordrop, Dropped, Drops, Group, Home, Pageone, Pagethree, Pagetwo, Taskone,  Trade } from '../screens/licks';
 import { useColorScheme } from 'react-native';
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { createStackNavigator } from '@react-navigation/stack';
@@ -47,6 +47,16 @@ const TaskStack = () => {
      <Stack.Screen name="Taskone" component={Taskone} />
      <Stack.Screen name="Createdrop" component={Creatordrop} />
      
+    </Stack.Navigator>
+  );
+};
+
+const ChatStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{headerShown: false,}}>
+   <Stack.Screen name="Chat" component={Chat} />
+   <Stack.Screen name="Community" component={Community} />
+   <Stack.Screen name="Group" component={Group} />
     </Stack.Navigator>
   );
 };
@@ -246,7 +256,7 @@ const BottomNavigation = () => {
 
       <Tab.Screen
         name="Chat"
-        component={Tasktwo}
+        component={ChatStack}
         options={{
           tabBarIcon: ({ focused }) => (
             <Svg width="30" height="25" viewBox="0 0 53 55" fill="none" >

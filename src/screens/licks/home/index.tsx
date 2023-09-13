@@ -10,7 +10,8 @@ import { FONTS, images, SIZES } from '../../../constants';
 import { celebData } from '../data/celebData';
 
 
-
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
 
 const Home = () => {
     const navigation = useNavigation()
@@ -20,8 +21,7 @@ const Home = () => {
 
     });
 
-    let wr = (SIZES.width / 391)
-    let hr = (SIZES.height / 812)
+
 
     const onchangeHandler = useCallback((value: any, name: string) => {
 
@@ -30,7 +30,7 @@ const Home = () => {
     }, []);
 
     const renderItem = ({ item }: any) => (
-        <TouchableOpacity style={{ width: Dimensions.get('window').width / 2 - 110,}} onPress={() => navigation.navigate('Pageone' as never,{ itemId: item.id  } as never)}>
+        <TouchableOpacity style={{ width: Dimensions.get('window').width / 2 - 110,height:Dimensions.get('window').height / 2-320 }} onPress={() => navigation.navigate('Pageone' as never, { itemId: item.id } as never)}>
             <Image
                 source={item.profile}
                 style={{
@@ -56,8 +56,20 @@ const Home = () => {
                 gap: 50,
                 marginTop: hr * 50
             }}>
-                <Image style={{ height: hr * 161, width: wr * 286, }} source={images.image5} resizeMode='contain' />
-                <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: 50, fontSize: 12, fontWeight: '500', lineHeight: 22.4, }}><Text style={{ color: '#A259FF' }}>Pick a lick:</Text> select your creator and buy a unique collectible to join the community</Text>
+               <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                    <Image style={{ height: hr * 161, width: wr * 286, }} source={images.image5} resizeMode='contain' />
+                    <Text style={{
+                        position: 'absolute',
+                        textAlign: 'center',
+
+                        fontSize: 18, // Set the font size for the text
+                        color: 'white', // Set the text color
+
+                        padding: 10,
+                    }}>How does <Text style={{color:'#A259FF'}}>Licks</Text> work?</Text>
+                </View>
+
+                <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: wr * 50, fontSize: 12, fontWeight: '500', lineHeight: 22.4, }}><Text style={{ color: '#A259FF' }}>Pick a lick:</Text> select your creator and buy a unique collectible to join the community</Text>
                 {/* <TouchableOpacity onPress={() => navigation.navigate('Pageone' as never)} ><Image style={{ height: hr * 291, width: wr * 305, }} source={images.image6} resizeMode='contain' /></TouchableOpacity> */}
                 <FlatList
                     data={celebData}

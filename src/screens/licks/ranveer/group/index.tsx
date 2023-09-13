@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Platform } from 'react-native'
+import { StyleSheet, Text, View, Image, useColorScheme, TouchableOpacity, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Platform, FlatList } from 'react-native'
 
 import Svg, {
     Path,
@@ -9,11 +9,14 @@ import { useNavigation } from '@react-navigation/native';
 import { FONTS, images, SIZES } from '../../../../constants';
 import { celebData } from '../../data/celebData';
 import { BottomNavigation } from '../../../../navigation';
+import Postcard from './Postcard';
 
 let wr = (SIZES.width / 391)
 let hr = (SIZES.height / 812)
 
-const Pageone = ({ route }: any) => {
+
+
+const Group = ({ route }: any) => {
     const navigation = useNavigation()
     const { itemId } = route.params;
     const matchedCeleb = celebData.find((celeb) => celeb.id === itemId);
@@ -21,14 +24,19 @@ const Pageone = ({ route }: any) => {
         supportCat: "",
 
     });
+    const getCommunityForUser = (userId: any) => {
+        const user = celebData.find((u) => u.id === userId);
+        return user ? user.community : [];
+    };
+    const communityData = getCommunityForUser(itemId);
 
-  
 
-    const onchangeHandler = useCallback((value: any, name: string) => {
 
-        setInput((prevState: any) => ({ ...prevState, [name]: value }));
 
-    }, []);
+
+    const renderItem = ({ item }: any) => (
+        <Postcard title={item.title} description={item.description} image={item.image} />
+    );
 
     return (
 
@@ -73,14 +81,14 @@ const Pageone = ({ route }: any) => {
 
             </View>
             <View style={{
-                paddingVertical: hr*20,
+                paddingVertical: hr * 20,
                 justifyContent: 'center',
 
-                gap: 50,
+                gap: 30,
 
             }}>
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Image style={{ height: hr * 161, width: wr * 286, }} source={matchedCeleb?.cover} />
+                    <Image style={{ height: hr * 194, width: wr * 375, }} source={images.image34} />
                     <Text style={{
                         position: 'absolute',
                         textAlign: 'center',
@@ -91,27 +99,24 @@ const Pageone = ({ route }: any) => {
                         padding: 10,
                     }}>Hey, it’s me {matchedCeleb?.name}!</Text>
                 </View>
+                <View style={{ gap: 30, paddingHorizontal: wr * 30 }}>
+                    <View >
+                        <Text style={{ color: '#A259FF', fontSize: 12, fontWeight: '500', lineHeight: 16.8 }}>Choose a Ranveer Licks Community</Text>
+                        <Text style={{ color: '#9FA0A5', fontSize: 12, fontWeight: '500', lineHeight: 16.8 }}>(Note: The admins are hand-picked by Ranveer and have full authority to moderate, add or remove members)</Text>
+                    </View>
 
 
-                <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: wr * 50, fontSize: 12, fontWeight: '500', lineHeight: 16.8, }}><Text style={{ color: '#A259FF' }}>Welcome to all things me: </Text> Every Lick you find here is personally curated by me, capturing my many moods and ideas. When you buy these, you will be part of my exclusive club and gain access to the many limited edition projects that I will be launching from time to time. Become part of my world like it was never possible before.</Text>
-
-                <View style={{ flexDirection: 'row', gap: 30, alignSelf: 'center' }}>
-                    <Image style={{ height: hr * 117, width: wr * 127, }} source={matchedCeleb?.insta} />
-                    <View
-                        style={{
-                            borderLeftWidth: 1,
-                            borderLeftColor: '#cccccc',
-                            height: hr * 108,
-                            // To make the line appear seamless
-                            // To make the line appear seamless
-                        }}
-                    ></View>
-                    <Image style={{ height: hr * 117, width: wr * 127, }} source={matchedCeleb?.twitter} />
+                    <FlatList
+                        data={communityData}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}// Use a better key extraction logic if possible
+                    />
                 </View>
+
 
                 <TouchableOpacity style={{
                     width: 270,
-                    height: 46, backgroundColor: '#272935', borderRadius: 20, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingRight: wr*10, paddingLeft: wr*4, alignSelf: 'center',
+                    height: 46, backgroundColor: '#272935', borderRadius: 20, justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center', paddingRight: wr * 10, paddingLeft: wr * 4, alignSelf: 'center',
                 }}>
                     <TouchableOpacity style={{
                         width: wr * 130,
@@ -122,7 +127,7 @@ const Pageone = ({ route }: any) => {
                         backgroundColor: '#A259FF',
 
                     }}
-                        onPress={() => navigation.navigate('Pagetwo' as never, { itemId: matchedCeleb?.id } as never)}>
+                    >
                         <Text style={{ color: 'white' }}>
                             View Licks
                         </Text>
@@ -130,13 +135,7 @@ const Pageone = ({ route }: any) => {
                     <Text style={{ color: 'white' }}>Upcoming Drops</Text>
                 </TouchableOpacity>
 
-                {/* <TouchableOpacity onPress={() => navigation.navigate('Pagethree' as never, { itemId: matchedCeleb?.id } as never)} style={[styles.button, styles.button1]}>
-                    <Text style={styles.buttonText}>View Licks</Text>
-                </TouchableOpacity>
 
-                <TouchableOpacity style={[styles.button, styles.button2]}>
-                    <Text style={styles.buttonText}>Upcoming Drops</Text>
-                </TouchableOpacity> */}
 
             </View>
 
@@ -146,7 +145,7 @@ const Pageone = ({ route }: any) => {
     )
 }
 
-export default Pageone
+export default Group
 
 const styles = StyleSheet.create({
     container: {
@@ -156,27 +155,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#0F111E',
 
     },
-    button: {
-        width: wr * 130,
-        height: hr * 40,
-        borderRadius: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
-    },
-    button1: {
-        backgroundColor: '#A259FF',
-        left: wr * 80, // Adjust this value to control the position of Button 1
-        bottom: hr * 50
-    },
-    button2: {
-        backgroundColor: '#272935',
-        left: wr * 180, // Adjust this value to control the position of Button 2
-        bottom: hr * 100
-    },
-    buttonText: {
-        color: 'white',
-        fontWeight: 'bold',
-        fontSize: 13
-    },
+
 })

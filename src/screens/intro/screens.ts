@@ -5,20 +5,20 @@ export const DATA = [
   {
     key: '3571572',
     title: 'WELCOME TO THE CLUB',
-    description: 'Discover your favourite creator’s unique collectibles',
+    description: 'Buy your favourite creator’s unique collectibles',
     image: images.image1,
   },
   {
     key: '3571747',
     title: 'ALL IN ONCE PLACE',
     description:
-      'Complete tasks to earn their exclusive merch curated by them',
+      'Complete tasks to earn exclusive merch curated by them',
     image: images.image3,
   },
   {
     key: '3571680',
     title: 'YOU ARE SPECIAL',
-    description: 'Trade the collectibles & rewards on the marketplace',
+    description: 'Trade the collectibles & merch on the marketplace',
     image: images.image4,
   },
 ];

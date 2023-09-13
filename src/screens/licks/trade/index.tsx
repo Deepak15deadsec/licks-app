@@ -13,6 +13,9 @@ import { FONTS, images, SIZES } from '../../../constants';
 import gendersTypes from './gender-types.json';
 import { MotiView } from 'moti';
 
+let wr = (SIZES.width / 391)
+let hr = (SIZES.height / 812)
+
 const Trade = () => {
     const navigation = useNavigation()
 
@@ -21,8 +24,7 @@ const Trade = () => {
 
     });
 
-    let wr = (SIZES.width / 391)
-    let hr = (SIZES.height / 812)
+
 
     const onchangeHandler = useCallback((value: any, name: string) => {
 
@@ -84,7 +86,7 @@ const Trade = () => {
                 </View>
 
                 <TouchableWithoutFeedback
-                   >
+                >
                     <View style={styles.button}>
                         <Text style={styles.buttonText}>Buy Now!</Text>
                     </View>
@@ -101,18 +103,19 @@ const Trade = () => {
                 <Text style={{ color: '#E7E7E9', fontSize: 28, fontWeight: '700' }}>LI<Text style={{ color: '#A259FF' }}>CKS</Text></Text>
             </View>
             <View style={{
-
+                flex: 1,
                 justifyContent: 'center',
 
                 gap: 10,
-                marginTop: hr * 0
+                marginTop: hr * 0,
+                marginBottom: hr * 50,
             }}>
-                <Text style={{ color: '#E7E7E9', fontSize: 18, fontWeight: '700', marginBottom: 10, alignSelf: 'center', marginTop: 20 }}>Ranveer</Text>
+                <Text style={{ color: '#E7E7E9', fontSize: 18, fontWeight: '700', marginBottom: hr * 10, alignSelf: 'center', marginTop: hr * 20 }}>Licks Marketplace</Text>
 
 
-                <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: 50, fontSize: 12, fontWeight: '500', lineHeight: 16.8, }}><Text style={{ color: '#A259FF' }}>Buy Licks to join the community: </Text>  Watch the video on the home screen to know different attributes of a Lick. Buying Licks of any creator makes you eligible to purchase all limited edition products & experiences on the platform. So, get, set,  <Text style={{ color: '#A259FF' }}>LICK! </Text></Text>
+                <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: wr * 50, fontSize: 12, fontWeight: '500', lineHeight: 16.8, }}><Text style={{ color: '#A259FF' }}>Don your trading hats: </Text>   Licks & Drops are not just to add to your collection. Follow the Licks community channel <Text style={{ color: '#A259FF' }}>HERE</Text> and understand how you can profit from trading them on the secondary market.</Text>
 
-                <View style={{ alignSelf: 'flex-start', paddingHorizontal: 30, marginTop:10 }}>
+                <View style={{ alignSelf: 'flex-end', paddingHorizontal: wr * 30, marginTop: hr * 10 }}>
                     <Picker
                         label="Filter"
                         selectedValue={input.gender}
@@ -156,11 +159,11 @@ const styles = StyleSheet.create({
     name: {
 
         fontSize: 10,
-        marginTop: 10,
+        marginTop: hr * 10,
         color: 'white',
     },
     date: {
-        marginTop: 10,
+        marginTop: hr * 10,
         fontSize: 10,
         color: 'white',
     },
@@ -185,7 +188,7 @@ const styles = StyleSheet.create({
     priceText: {
         color: 'white',
         fontWeight: 'bold',
-        marginRight: 15,
+        marginRight: wr * 15,
 
     },
     button: {

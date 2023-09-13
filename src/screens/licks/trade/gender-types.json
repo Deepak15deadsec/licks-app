@@ -1,11 +1,11 @@
 [
     {
-        "label": "Price:Low to High",
-        "value": "Price:Low to High"
+        "label": "My NFTs",
+        "value": "My NFTs"
     },
     {
-        "label": "Price:High to Low",
-        "value": "Price:High to Low"
+        "label": "All NFTs",
+        "value": "All NFTs"
     }
     
    
