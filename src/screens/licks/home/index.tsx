@@ -46,7 +46,7 @@ const Home = () => {
     return (
 
         <View style={styles.container}>
-            <View style={{ alignItems: 'center', marginTop: hr * 37 }}>
+            <View style={{ alignItems: 'center', marginTop: hr * 20 }}>
                 <Text style={{ color: '#E7E7E9', fontSize: 28, fontWeight: '700' }}>LI<Text style={{ color: '#A259FF' }}>CKS</Text></Text>
             </View>
             <View style={{

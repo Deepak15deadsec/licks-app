@@ -50,7 +50,7 @@ const MainPicker = ({ label, gendersTypes, selectedValue, onValueChange }: MainP
                   style={styles.modalItem}
                   onPress={() => handleValueChange(item.value)}
                 >
-                  <Text>{item.label}</Text>
+                  <Text style={{color:'black'}}>{item.label}</Text>
                 </TouchableOpacity>
               )}
             />
