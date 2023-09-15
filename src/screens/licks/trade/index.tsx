@@ -100,7 +100,7 @@ const Trade = () => {
         <View style={styles.container}>
 
             <View style={{ alignItems: 'center', marginTop: hr * 20 }}>
-                <Text style={{ color: '#E7E7E9', fontSize: 28, fontWeight: '700' }}>LI<Text style={{ color: '#A259FF' }}>CKS</Text></Text>
+                <Text style={{ color: '#E7E7E9', fontSize: 33, fontWeight: '700' }}>LI<Text style={{ color: '#A259FF' }}>CKS</Text></Text>
             </View>
             <View style={{
                 flex: 1,
@@ -113,7 +113,7 @@ const Trade = () => {
                 <Text style={{ color: '#E7E7E9', fontSize: 18, fontWeight: '700', marginBottom: hr * 10, alignSelf: 'center', marginTop: hr * 20 }}>Licks Marketplace</Text>
 
 
-                <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: wr * 50, fontSize: 12, fontWeight: '500', lineHeight: 16.8, }}><Text style={{ color: '#A259FF' }}>Don your trading hats: </Text>   Licks & Drops are not just to add to your collection. Follow the Licks community channel <Text style={{ color: '#A259FF' }}>HERE</Text> and understand how you can profit from trading them on the secondary market.</Text>
+                <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: wr * 50, fontSize: 12, fontWeight: '500', lineHeight: 16.8, }}><Text style={{ color: '#A259FF' }}>Don your trading hats: </Text>Licks & Drops are not just to add to your collection. Follow the Licks community channel <Text style={{ color: '#A259FF' }}>HERE</Text> and understand how you can profit from trading them on the secondary market.</Text>
 
                 <View style={{ alignSelf: 'flex-end', paddingHorizontal: wr * 30, marginTop: hr * 10 }}>
                     <Picker

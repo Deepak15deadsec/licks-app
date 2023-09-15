@@ -47,7 +47,7 @@ const Home = () => {
 
         <View style={styles.container}>
             <View style={{ alignItems: 'center', marginTop: hr * 20 }}>
-                <Text style={{ color: '#E7E7E9', fontSize: 28, fontWeight: '700' }}>LI<Text style={{ color: '#A259FF' }}>CKS</Text></Text>
+                <Text style={{ color: '#E7E7E9', fontSize: 33, fontWeight: '700' }}>LI<Text style={{ color: '#A259FF' }}>CKS</Text></Text>
             </View>
             <View style={{
                 flex: 1,
@@ -69,7 +69,7 @@ const Home = () => {
                     }}>How does <Text style={{color:'#A259FF'}}>Licks</Text> work?</Text>
                 </View>
 
-                <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: wr * 50, fontSize: 12, fontWeight: '500', lineHeight: 22.4, }}><Text style={{ color: '#A259FF' }}>Pick a lick:</Text> select your creator and buy a unique collectible to join the community</Text>
+                <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: wr * 50, fontSize: 14, fontWeight: '500', lineHeight: 22.4, }}><Text style={{ color: '#A259FF' }}>Pick a lick:</Text> select your creator and buy a unique collectible to join the community</Text>
                 {/* <TouchableOpacity onPress={() => navigation.navigate('Pageone' as never)} ><Image style={{ height: hr * 291, width: wr * 305, }} source={images.image6} resizeMode='contain' /></TouchableOpacity> */}
                 <FlatList
                     data={celebData}
