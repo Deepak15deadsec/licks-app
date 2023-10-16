@@ -46,9 +46,9 @@ const Chat = () => {
                 </View>
 
 
-                <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: 50, fontSize: 12, fontWeight: '500', lineHeight: 16.8, }}><Text style={{ color: '#A259FF' }}>Handpicked by creators: </Text> Licks Community is a space intended for all things related to a specific creator. These communities are run by Community Leads who are personally selected by the creators.</Text>
+                <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: wr*50, fontSize: 12, fontWeight: '500', lineHeight: 16.8, }}><Text style={{ color: '#A259FF' }}>Handpicked by creators: </Text> Licks Community is a space intended for all things related to a specific creator. These communities are run by Community Leads who are personally selected by the creators.</Text>
 
-                <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: 50, fontSize: 12, fontWeight: '500', lineHeight: 16.8, }}> Not only that, the Community Leads organise their own online and offline sessions, treasure hunts, and so on, which truly engaged members of the community stand a chance to win.</Text>
+                <Text style={{ color: '#9FA0A5', textAlign: 'left', paddingHorizontal: wr*50, fontSize: 12, fontWeight: '500', lineHeight: 16.8, }}> Not only that, the Community Leads organise their own online and offline sessions, treasure hunts, and so on, which truly engaged members of the community stand a chance to win.</Text>
 
                 <TouchableOpacity style={[styles.button, styles.button1]}>
                     <Text style={styles.buttonText}>Buy Licks</Text>

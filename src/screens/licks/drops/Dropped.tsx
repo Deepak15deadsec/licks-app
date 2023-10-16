@@ -11,10 +11,6 @@ import { useNavigation } from '@react-navigation/native';
 import { FONTS, images, SIZES } from '../../../constants';
 
 
-
-
-
-
 const Dropped = () => {
     const navigation = useNavigation()
 
@@ -75,18 +71,18 @@ const Dropped = () => {
 
             </View>
             <View style={{
-                paddingHorizontal: 20,
-                paddingVertical: 80,
+                paddingHorizontal: wr*20,
+                paddingVertical: hr*80,
                 justifyContent: 'center',
 
                 gap: 10
 
             }}>
-                <View style={{ justifyContent: 'center', gap: 30, marginTop: 0 }}>
+                <View style={{ justifyContent: 'center', gap: 30, marginTop: hr*0 }}>
 
 
 
-                    <Image style={{ height: hr * 307, width: wr * 261, alignSelf: 'center', marginTop: 10, borderRadius: 20 }} source={images.phone} />
+                    <Image style={{ height: hr * 307, width: wr * 261, alignSelf: 'center', marginTop: hr*10, borderRadius: 20 }} source={images.phone} />
 
 
                 </View>
@@ -112,9 +108,6 @@ const Dropped = () => {
                     </TouchableOpacity>
                     <Text style={{ color: 'white' }}>Earn For Free</Text>
                 </TouchableOpacity>
-
-
-
 
             </View>
 
